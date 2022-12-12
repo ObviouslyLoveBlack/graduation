@@ -1,0 +1,51 @@
+<template>
+  <div>
+    <div class="home-header">
+    <Header/>
+    </div>
+    <div class="home-main">
+      <router-view></router-view>
+    </div>
+    <div class="home-footer">
+      <Footer/>
+    </div>
+  </div>
+</template>
+
+<script>
+import Header from "@/layout/header.vue";
+import Footer from "@/layout/footer.vue";
+export default {
+ // eslint-disable-next-line vue/multi-word-component-names
+ name:'layout',
+ components:{
+  Header,
+  Footer
+ }
+}
+</script>
+
+<style lang="scss">
+// .home-header {
+//   width: 100%;
+//   height: 70px;
+//   min-width: 1200px;
+//   border: 1px solid #efefef;
+//   display: flex;
+//   margin-bottom: 40px;
+// }
+// .home-main {
+//   width: 80%;
+//   min-width: 1200px;
+//   // height: 3630px;
+//   margin: 0 auto;
+//   display: flex;
+//   justify-content: space-between;
+// }
+// .home-footer {
+//   width: 100%;
+//   background: #000;
+//   height: 28.5rem;
+// }
+
+</style>

@@ -1,0 +1,1320 @@
+<template>
+  <div class="home-main">
+    <div class="home-main-left">
+      <div class="main-left-icon1">
+        <div class="left-header">
+          <span>{{
+            hotInfo.title + "(" + `${hotInfo.total}` + "部" + ")"
+          }}</span>
+          <span @click="all('hot')">全部 ></span>
+        </div>
+        <div class="left-main">
+          <div class="item" v-for="action in hotInfo.data" :key="action.id">
+            <div class="image">
+              <img :src="`${action.img}`" alt="" />
+              <div class="shadow"></div>
+              <span>{{ action.moviename }}</span>
+            </div>
+            <p>购票</p>
+          </div>
+        </div>
+      </div>
+      <div class="main-left-icon2">
+        <div class="icon2-header">
+          <span>{{
+            releaseInfo.title + "(" + `${releaseInfo.total}` + "部" + ")"
+          }}</span>
+          <span>全部 ></span>
+        </div>
+        <div class="icon2-main">
+          <div class="item" v-for="action in releaseInfo.data" :key="action.id">
+            <img :src="action.img" alt="" />
+            <div class="shadow"></div>
+            <span>{{ action.moviename }}</span>
+            <p>{{ action.num }}人想看</p>
+            <div class="want-look">
+              <div class="icon">预告片</div>
+              <div class="icon">预售</div>
+            </div>
+            <p>{{ action.releaseTime }}上映</p>
+          </div>
+        </div>
+      </div>
+      <div class="main-left-icon3">
+        <div class="icon3-header">
+          <span>{{ hotPlayInfo.title }}</span>
+          <ul>
+            <li><a href="">爱情</a></li>
+            <li><a href="">喜剧</a></li>
+            <li><a href="">动作</a></li>
+            <li><a href="">恐怖</a></li>
+            <li><a href="">动画</a></li>
+          </ul>
+          <span>全部 > </span>
+        </div>
+        <div class="icon3-main">
+          <div class="item" v-for="action in hotPlayInfo.data" :key="action.id">
+            <img :src="action.img" alt="" />
+            <div class="shadow"></div>
+            <span>{{ action.moviename }}</span>
+            <i>{{ action.score }}</i>
+          </div>
+        </div>
+      </div>
+      <div class="main-left-icon4">
+       <div class="icon4-header">
+        <span>{{ hotTvPlayInfo.title }}</span>
+        <ul>
+          <li
+            @click="changeType('domestic')"
+            :class="type.domestic ? 'active' : ''"
+          >
+            国产剧
+          </li>
+          <li
+            @click="changeType('variety')"
+            :class="type.variety ? 'active' : ''"
+          >
+            综艺
+          </li>
+          <li @click="changeType('UsTv')" :class="type.UsTv ? 'active' : ''">
+            美剧
+          </li>
+          <li
+            @click="changeType('KoreanTv')"
+            :class="type.KoreanTv ? 'active' : ''"
+          >
+            韩剧
+          </li>
+          <li
+            @click="changeType('documentary')"
+            :class="type.documentary ? 'active' : ''"
+          >
+            纪录片
+          </li>
+        </ul>
+        <span>全部 ></span>
+       </div>
+       <div class="swiper" ref="mySwiper">
+        <div class="swiper-wrapper">
+          <div
+            class="swiper-slide"
+            v-for="(action, index) in hotTvPlayList"
+            :key="index"
+          >
+            <div class="icon4-main">
+              <div
+                class="item"
+                v-for="item in action.moviceList"
+                :key="item.id"
+              >
+                <img :src="item.img" alt="" />
+                <div class="shadow"></div>
+                <p>{{ item.update }}</p>
+                <span>{{ item.moviename }}</span>
+                <i :class="item.score ?'':'isactive'">{{ item.score ? item.score : "暂无评分" }}</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+       </div>
+      </div>
+      <div class="main-left-icon5">
+        <div class="icon5-header">
+          <span>{{hotFilmsReview.title}}</span>
+          <span>更多热门影评>></span>
+        </div>
+        <div class="icon5-main">
+          <ul>
+            <li v-for="action in hotFilmsReview.data" :key="action.id">
+              <img :src="action.img" alt="" />
+              <div class="icon5-title">
+                <span> {{action.title}}</span>
+                <p>{{action.name}} 评论{{action.works}}</p>
+                <p>
+                  {{action.content}}
+                 <span>(全文)</span>
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="home-main-right">
+      <div class="main-right-icon1">
+        <div class="right-header">
+          <span>{{boxOfficeInfo.title}}</span>
+        </div>
+        <div class="right-main">
+          <div class="icon">
+            <img :src="`${boxOfficeInfo.data[0].img}`" alt="" />
+            <span>{{boxOfficeInfo.data[0].title}}</span>
+            <i>{{boxOfficeInfo.data[0].num}}万</i>
+          </div>
+          <div class="right-main-rank">
+            <ul>
+              <li class="item" v-for="action in boxOfficeList" :key="action.key">
+                <div>
+                  <p>{{action.key}} <span>{{action.title}}</span></p>
+                  <i>{{action.num}}万</i>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="main-right-icon2">
+        <div class="right-earn">{{profitInfo.title}}</div>
+        <div class="right-data">
+          <p>{{realData}}<span>万</span></p>
+          <p>查看更多<span>></span></p>
+        </div>
+        <div class="box-office-data">
+          <span>北京时间：{{nowDate}}</span>
+          <span>专业版实时票房数据</span>
+        </div>
+      </div>
+      <div class="main-right-icon3">
+        <div class="icon3-header">
+          <span>{{mostexpectInfo.title}}</span>
+          <span>查看完整榜单></span>
+        </div>
+        <div class="icon3-main">
+          <img :src="`${mostexpectInfo.data[0].img}`" alt="" />
+          <p>{{mostexpectInfo.data[0].title}}</p>
+          <p>上映时间:{{mostexpectInfo.data[0].updateTime}}</p>
+          <p>{{mostexpectInfo.data[0].num}}想看</p>
+        </div>
+        <div class="icon3-intrdus">
+          <div class="icon3-intrdus-item">
+            <img :src="`${mostexpectInfo.data[1].img}`" alt="" />
+            <div class="intrdus-detail">
+              <p>{{mostexpectInfo.data[1].title}}</p>
+              <p>{{mostexpectInfo.data[1].num}}想看</p>
+            </div>
+          </div>
+          <div class="icon3-intrdus-item">
+            <img :src="`${mostexpectInfo.data[2].img}`" alt="" />
+            <div class="intrdus-detail">
+              <p>{{mostexpectInfo.data[2].title}}</p>
+              <p>{{mostexpectInfo.data[2].num}}想看</p>
+            </div>
+          </div>
+        </div>
+        <div class="icon3-main-rank">
+          <ul>
+            <li class="item" v-for="action in mostexpectList" :key="action.key">
+              <div>
+                <p>{{action.key}}<span>{{action.title}}</span></p>
+                <i>{{action.num}}人想看</i>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="main-right-icon4">
+        <div class="icon4-header">
+          <span>{{TophundredInfo.title}}</span>
+          <span>查看完整榜单 ></span>
+        </div>
+        <div class="icon4-image">
+          <img :src="`${TophundredInfo.data[0].img}`" alt="" />
+          <span>{{TophundredInfo.data[0].title}}</span>
+          <i>{{TophundredInfo.data[0].score}}分</i>
+        </div>
+        <div class="icon4-main-rank">
+          <ul>
+            <li class="item" v-for="action in TophundredList" :key="action.key">
+              <div>
+                <p>{{action.key}}<span>{{action.title}}</span></p>
+                <i>{{action.score}}分</i>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="main-right-icon5">
+        <div class="icon5-header">
+          <span>{{moviemakerInfo.title}}</span>
+        </div>
+        <div class="icon5-image">
+          <img :src="`${moviemakerInfo.data[0].img}`" alt="" />
+          <span>{{moviemakerInfo.data[0].name}}</span>
+        </div>
+        <div class="icon5-main-rank">
+          <ul>
+            <li class="item" v-for="action in moviemakerList" :key="action.key">
+              <div>
+                <p>{{action.key}}<span>{{action.name}}</span></p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Swiper from 'swiper'
+export default {
+  // eslint-disable-next-line vue/multi-word-component-names
+  name: "home",
+  data() {
+    return {
+      hotInfo: {}, //正在热映
+      releaseInfo: {}, //即将上映
+      hotPlayInfo: {}, //热播电影
+      hotTvPlayInfo: {}, //热播电视剧
+      hotTvPlayList:[],
+      hotFilmsReview: {}, //热门影评
+      boxOfficeInfo:{}, //今日票房|
+      boxOfficeList:[],
+      profitInfo:{}, //今日收益
+      mostexpectInfo:{}, //最受期待
+      mostexpectList:[],
+      TophundredInfo:{}, //TOP100
+      TophundredList:[],
+      moviemakerInfo:{}, //热门影人
+      moviemakerList:[],
+      nowDate:'',
+      nowhour:'',
+      type:{
+        domestic:true,
+        variety:false,
+        UsTv:false,
+        KoreanTv:false,
+        documentary:false
+      },
+    };
+  },
+  created() {
+    this.getHotMovies();
+    this.getsoonRelease();
+    this.getHotPlay();
+    this.getHotTvPlay('domestic');
+    this.getFilmReview()
+    this.getboxoffice()
+    this.getprofit()
+    this.getmostexpect()
+    this.getTophundred()
+    this.getmoviemaker()
+    setInterval(() => {
+       this.getnewDate()
+    }, 1000);
+  },
+  // mounted(){
+  //   // eslint-disable-next-line no-unused-vars
+  //   var mySwiper = new Swiper(this.$refs.mySwiper, {
+  //           loop: true, // 循环模式选项
+  //           // 如果需要分页器
+  //           pagination: {
+  //             el: ".swiper-pagination",
+  //             clickable: true,
+  //           },
+  //           // 如果需要前进后退按钮
+  //           navigation: {
+  //             nextEl: ".swiper-button-next",
+  //             prevEl: ".swiper-button-prev",
+  //           },
+  //           slidesPerView: 1,
+  //         });
+  // },
+  watch: {
+    hotTvPlayList: {
+      immediate: true,
+      handler() {
+        this.$nextTick(() => {
+          // eslint-disable-next-line no-unused-vars
+          var mySwiper = new Swiper(this.$refs.mySwiper, {
+            loop: true, // 循环模式选项
+            // 如果需要分页器
+            pagination: {
+              el: ".swiper-pagination",
+              clickable: true,
+            },
+            // 如果需要前进后退按钮
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+            slidesPerView: 1,
+          });
+        });
+      },
+    },
+  },
+  computed:{
+    realData:function(){
+      return this.nowhour < 8 ? this.profitInfo.data[0].num :this.nowhour < 16 ? this.profitInfo.data[1].num
+      : this.nowhour < 24 ? this.profitInfo.data[2].num :'暂无数据'
+    }
+  },
+  methods: {
+    changeType(type){
+      this.getHotTvPlay(type)
+      this.type ={
+        domestic:false,
+        variety:false,
+        UsTv:false,
+        KoreanTv:false,
+        documentary:false
+      }
+      this.type[`${type}`] =true
+    },
+    all(type){
+      console.log(type);
+    },
+    getHotMovies() {
+      this.$req.getHotMovies().then((res) => {
+        this.hotInfo = res.data;
+      });
+    },
+    getsoonRelease() {
+      this.$req.getsoonRelease().then((res) => {
+        this.releaseInfo = res.data;
+      });
+    },
+    getHotPlay() {
+      this.$req.getHotPlay().then((res) => {
+        this.hotPlayInfo = res.data;
+      });
+    },
+    getHotTvPlay(type) {
+      this.$req.getHotTvPlay().then((res) => {
+        this.hotTvPlayInfo = res.data;
+        this.hotTvPlayList = this.hotTvPlayInfo[`${type}`]
+      });
+    },
+    getFilmReview() {
+      this.$req.getFilmReview().then((res) => {
+        this.hotFilmsReview = res.data;
+      });
+    },
+    getboxoffice() {
+      this.$req.getboxoffice().then((res) => {
+        this.boxOfficeInfo = res.data;
+        this.boxOfficeList = this.boxOfficeInfo.data.slice(1)
+      });
+    },
+    getprofit() {
+      this.$req.getprofit().then((res) => {
+        this.profitInfo = res.data;
+      });
+    },  
+    getnewDate(){
+      var time =new Date()
+      var hour = time.getHours()
+      this.nowhour = hour
+      this.nowDate = this.$moment(time).format('HH:mm:ss')
+    },
+    getmostexpect() {
+      this.$req.getmostexpect().then((res) => {
+        this.mostexpectInfo = res.data;
+        this.mostexpectList = this.mostexpectInfo.data.slice(3)
+      });
+    }, 
+    getTophundred() {
+      this.$req.getTophundred().then((res) => {
+        this.TophundredInfo = res.data;
+        this.TophundredList = this.TophundredInfo.data.slice(1)
+      });
+    }, 
+    getmoviemaker() {
+      this.$req.getmoviemaker().then((res) => {
+        this.moviemakerInfo = res.data;
+        this.moviemakerList = this.moviemakerInfo.data.slice(1)
+      });
+    }, 
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.home-main {
+  width: 80%;
+  min-width: 1200px;
+  height: 3580px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  .home-main-left {
+    width: 62%;
+    .main-left-icon1 {
+      width: 100%;
+      height: 620px;
+      .left-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        span {
+          color: #ef4638;
+          font-size: 27px;
+          &:nth-child(2) {
+            font-size: 18px;
+            padding-top: 12px;
+            &:hover{
+              color: #37a;
+              cursor: default;
+            }
+          }
+        }
+      }
+      .left-main {
+        width: 100%;
+        height: 620px;
+        // background: pink;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .item {
+          width: 21.5%;
+          height: 269px;
+          box-sizing: border-box;
+          border: 1px solid #efefef;
+          .image {
+            width: 160px;
+            height: 220px;
+            position: relative;
+            img {
+              width: 100%;
+            }
+            span {
+              color: #fff;
+              position: absolute;
+              bottom: 8px;
+              left: 10px;
+              z-index: 3;
+            }
+            .shadow {
+              width: 100%;
+              height: 36px;
+              background: url(../../assets/image/猫眼/yin.png);
+              position: absolute;
+              bottom: 0px;
+              left: 0px;
+              z-index: 2;
+            }
+            i {
+              color: #ffb401;
+              font-size: 17px;
+              position: absolute;
+              right: 10px;
+              bottom: 6px;
+            }
+          }
+          P {
+            width: 160px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            color: #ef4638;
+            &:hover {
+              background: #ef4638;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+    .main-left-icon2 {
+      width: 100%;
+      margin-top: 80px;
+      .icon2-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        span {
+          color: #ef4638;
+          font-size: 27px;
+          &:nth-child(2) {
+            font-size: 18px;
+            padding-top: 12px;
+             &:hover{
+              color: #37a;
+              cursor: default;
+            }
+          }
+        }
+      }
+      .icon2-main {
+        width: 100%;
+        height: 700px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .item {
+          width: 21.5%;
+          height: 290px;
+          box-sizing: border-box;
+          border: 1px solid #eaeaea;
+          position: relative;
+          img {
+            width: 100%;
+          }
+          span {
+            color: #fff;
+            position: absolute;
+            bottom: 75px;
+            left: 10px;
+            z-index: 3;
+          }
+          .shadow {
+            width: 100%;
+            height: 36px;
+            background: url(../../assets/image/猫眼/yin.png);
+            position: absolute;
+            bottom: 70px;
+            left: 0px;
+            z-index: 2;
+          }
+          p {
+            color: #999;
+            padding: 10px 0px 10px 10px;
+            font-size: 14px;
+            &:last-child {
+              position: absolute;
+              bottom: -55px;
+              left: 30px;
+            }
+          }
+          .want-look {
+            width: 100%;
+            height: 25px;
+            display: flex;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            // border: 1px solid red;
+            .icon {
+              width: 50%;
+              height: 25px;
+              border-right: 1px solid #e1e1e1;
+              text-align: center;
+              line-height: 25px;
+              &:nth-child(2) {
+                border-right: none;
+                &:hover {
+                  background: #ef4638;
+                  color: #fff;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .main-left-icon3 {
+      width: 100%;
+      height: 560px;
+      margin-top: 50px;
+      .icon3-header {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin-bottom: 20px;
+        span {
+          color: #ef4638;
+          font-size: 27px;
+          &:last-child {
+            font-size: 18px;
+            padding-top: 12px;
+             &:hover{
+              color: #37a;
+              cursor: default;
+            }
+          }
+        }
+        ul {
+          width: 200px;
+          display: flex;
+          justify-content: space-between;
+          position: absolute;
+          top: 13px;
+          left: 135px;
+          a {
+            color: #999;
+            &:hover{
+              color: #ef4638;
+              cursor: default;
+            }
+          }
+        }
+      }
+      .icon3-main {
+        height: 500px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .item {
+          width: 160px;
+          height: 220px;
+          position: relative;
+          &:first-child {
+            width: 350px;
+          }
+          span {
+            color: #fff;
+            position: absolute;
+            bottom: 3px;
+            left: 10px;
+            z-index: 3;
+          }
+          .shadow {
+            width: 100%;
+            height: 36px;
+            background: url(../../assets/image/猫眼/yin.png);
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            z-index: 2;
+          }
+          i {
+            color: #ffb401;
+            font-size: 17px;
+            position: absolute;
+            right: 10px;
+            bottom: 0px;
+          }
+        }
+      }
+    }
+    .main-left-icon4 {
+      width: 100%;
+      height: 670px;
+      margin-top: 50px;
+
+      .icon4-header {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin-bottom: 20px;
+        span {
+          color: #ef4638;
+          font-size: 27px;
+          &:last-child {
+            font-size: 18px;
+            padding-top: 12px;
+            &:hover{
+              color: #37a;
+              cursor: default;
+            }
+          }
+        }
+        ul {
+          width: 240px;
+          display: flex;
+          justify-content: space-between;
+          position: absolute;
+          top: 13px;
+          left: 155px;
+          li {
+            color: #999;
+             &:hover{
+              color: #ef4638;
+              cursor: default;
+            }
+          }
+        }
+      }
+      .icon4-main {
+        height: 560px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .item {
+          width: 160px;
+          height: 230px;
+          position: relative;
+          text-align: center;
+          img {
+            width: 160px;
+            height: 230px;
+            object-fit: cover;
+          }
+          .shadow {
+            width: 100%;
+            height: 36px;
+            background: url(../../assets/image/猫眼/yin.png);
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            z-index: 2;
+          }
+          p {
+            color: #fff;
+            position: absolute;
+            bottom: -9px;
+            left: 10px;
+            z-index: 3;
+          }
+          span {
+            color: #37a;
+            font-size: 15px;
+            padding: 10px 0px 0px 8px;
+          }
+          i {
+            color: #e09015;
+            font-size: 13px;
+            padding: 6px 0px 0px 8px;
+          }
+        }
+      }
+    }
+    .main-left-icon5 {
+      width: 100%;
+      height: 400px;
+      // background: #ef4638;
+      .icon5-header {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        border-bottom: 1px solid #e1e1e1;
+        span {
+          font-size: 16px;
+          &:nth-child(2) {
+            font-size: 14px;
+            color: #37a;
+            padding-left: 5px;
+            &:hover {
+              background: #37a;
+              color: #fff;
+            }
+          }
+        }
+      }
+      .icon5-main {
+        width: 100%;
+        height: 740px;
+        ul {
+          li {
+            padding-top: 15px;
+            height: 180px;
+            border-bottom: 1px solid #eaeaea;
+            display: flex;
+            img {
+              height: 135px;
+            }
+            .icon5-title {
+              span {
+                color: #37a;
+                font-size: 18px;
+                margin-left: 20px;
+                &:hover {
+                  background: #37a;
+                  color: #fff;
+                }
+              }
+              p {
+                color: #666;
+                font-size: 13px;
+                padding: 10px 0px 0px 20px;
+                &:nth-child(3) {
+                  color: #111;
+                  font-size: 14px;
+                  line-height: 24px;
+                  padding-top: 0px;
+                  span {
+                    font-size: 16px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .home-main-right {
+    width: 32%;
+    height: 400px;
+    .main-right-icon1 {
+      width: 100%;
+      height: 465px;
+      .right-header {
+        margin-bottom: 20px;
+        span {
+          color: #ef4638;
+          font-size: 27px;
+        }
+      }
+      .right-main {
+        .icon {
+          width: 100%;
+          height: 80px;
+          border: 1px solid #efefef;
+          box-sizing: border-box;
+          position: relative;
+          span {
+            font-size: 23px;
+            position: absolute;
+            top: 15px;
+            left: 135px;
+          }
+          i {
+            color: #ef4638;
+            font-size: 15px;
+            position: absolute;
+            bottom: 10px;
+            left: 135px;
+          }
+          &:hover {
+            background: #e1e1e1;
+          }
+        }
+        .right-main-rank {
+          width: 100%;
+          height: 305px;
+          ul {
+            width: 100%;
+            height: 305px;
+            display: flex;
+            flex-direction: column;
+            line-height: 61.25px;
+            li.item {
+              height: 25%;
+              div {
+                width: 100%;
+                height: 55px;
+                margin-top: 9px;
+                display: flex;
+                line-height: 55px;
+                justify-content: space-between;
+                p {
+                  color: #ef4638;
+                  font-size: 17px;
+                  span {
+                    color: #333333;
+                    margin-left: 5px;
+                  }
+                }
+                i {
+                  color: #ef4638;
+                  font-size: 15px;
+                  padding-right: 2px;
+                }
+                &:hover {
+                  width: 100%;
+                  background: #e1e1e1;
+                }
+              }
+              &:nth-child(3),
+              &:nth-child(4) {
+                p {
+                  color: #999;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .main-right-icon2 {
+      width: 100%;
+      height: 130px;
+      box-sizing: border-box;
+      border: 1px solid #e1e1e1;
+      position: relative;
+      margin-bottom: 70px;
+      .right-earn {
+        width: 50px;
+        height: 130px;
+        background: #ef4638;
+        color: #fff;
+        font-size: 22px;
+        padding: 0px 15px;
+        box-sizing: border-box;
+      }
+      .right-data {
+        width: 305px;
+        height: 100%;
+        display: flex;
+        position: absolute;
+        top: 37px;
+        left: 68px;
+        justify-content: space-between;
+        p {
+          font-size: 29px;
+          color: #ef4638;
+          span {
+            font-size: 15px;
+          }
+          &:nth-child(2) {
+            font-size: 17px;
+            margin-top: 10px;
+            &:hover{
+              color: #37a;
+              cursor: default;
+            }
+          }
+        }
+      }
+      .box-office-data {
+        position: absolute;
+        bottom: 20px;
+        left: 68px;
+        span {
+          color: #999;
+          &:nth-child(2) {
+            margin-left: 15px;
+          }
+        }
+      }
+    }
+    .main-right-icon3 {
+      width: 100%;
+      // height: 194px;
+      .icon3-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        span {
+          color: #ef4638;
+          font-size: 27px;
+          &:nth-child(2) {
+            font-size: 16px;
+            padding: 13px 15px 0px 0px;
+             &:hover{
+              color: #37a;
+              cursor: default;
+            }
+          }
+        }
+      }
+      .icon3-main {
+        width: 100%;
+        height: 194px;
+        border: 1px solid #e1e1e1;
+        position: relative;
+        margin-bottom: 30px;
+        p {
+          color: #ef4638;
+          font-size: 20px;
+          position: absolute;
+          top: 50px;
+          left: 155px;
+          &:nth-child(3),
+          &:nth-child(4) {
+            color: #999;
+            font-size: 16px;
+            position: absolute;
+            top: 80px;
+            left: 150px;
+          }
+          &:nth-child(4) {
+            position: absolute;
+            top: 105px;
+            left: 152px;
+            font-size: 15px;
+          }
+        }
+        &:hover {
+          background: #e1e1e1;
+        }
+      }
+      .icon3-intrdus {
+        width: 100%;
+        height: 198px;
+        display: flex;
+        justify-content: space-between;
+        .icon3-intrdus-item {
+          width: 180px;
+          height: 198px;
+          border: 1px solid #e1e1e1;
+          box-sizing: border-box;
+          img {
+            width: 100%;
+          }
+          .intrdus-detail {
+            p {
+              color: #ef4638;
+              font-size: 18px;
+              margin-bottom: 0px;
+              padding: 10px 0px 0px 10px;
+              &:nth-child(2) {
+                color: #999;
+                font-size: 15px;
+                // padding: 8px 0px 0px 10px;
+              }
+            }
+          }
+          &:hover {
+            background: #e1e1e1;
+          }
+        }
+      }
+      .icon3-main-rank {
+        width: 100%;
+        height: 530px;
+        ul {
+          width: 100%;
+          height: 305px;
+          display: flex;
+          flex-direction: column;
+          line-height: 61.25px;
+          li.item {
+            height: 25%;
+            div {
+              width: 100%;
+              height: 55px;
+              margin-top: 9px;
+              display: flex;
+              line-height: 55px;
+              justify-content: space-between;
+              p {
+                color: #999;
+                font-size: 17px;
+                span {
+                  color: #333333;
+                  margin-left: 14px;
+                }
+              }
+              i {
+                color: #ef4638;
+                font-size: 15px;
+                padding-right: 2px;
+              }
+              &:hover {
+                width: 100%;
+                background: #e1e1e1;
+              }
+            }
+            &:nth-child(1),
+            &:nth-child(2) {
+              p {
+                color: #ef4638;
+              }
+            }
+          }
+        }
+      }
+    }
+    .main-right-icon4 {
+      width: 100%;
+      height: 790px;
+      .icon4-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        span {
+          color: #ef4638;
+          font-size: 27px;
+          &:nth-child(2) {
+            font-size: 16px;
+            padding: 13px 15px 0px 0px;
+             &:hover{
+              color: #37a;
+              cursor: default;
+            }
+          }
+        }
+      }
+      .icon4-image {
+        width: 100%;
+        height: 80px;
+        border: 1px solid #e1e1e1;
+        position: relative;
+        span {
+          font-size: 23px;
+          position: absolute;
+          top: 15px;
+          left: 135px;
+        }
+        i {
+          color: #999;
+          font-size: 15px;
+          position: absolute;
+          bottom: 10px;
+          left: 135px;
+        }
+        &:hover {
+          background: #e1e1e1;
+        }
+      }
+      .icon4-main-rank {
+        width: 100%;
+        height: 550px;
+        ul {
+          width: 100%;
+          height: 305px;
+          display: flex;
+          flex-direction: column;
+          line-height: 61.25px;
+          li.item {
+            height: 25%;
+            div {
+              width: 100%;
+              height: 55px;
+              margin-top: 9px;
+              display: flex;
+              line-height: 55px;
+              justify-content: space-between;
+              p {
+                color: #999;
+                font-size: 17px;
+                span {
+                  color: #333333;
+                  margin-left: 14px;
+                }
+              }
+              i {
+                color: #ef4638;
+                font-size: 15px;
+                padding-right: 2px;
+              }
+              &:hover {
+                width: 100%;
+                background: #e1e1e1;
+              }
+            }
+            &:nth-child(1),
+            &:nth-child(2) {
+              p {
+                color: #ef4638;
+              }
+            }
+          }
+        }
+      }
+    }
+    .main-right-icon5 {
+      width: 100%;
+      height: 790px;
+      .icon5-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        span {
+          color: #ef4638;
+          font-size: 27px;
+          &:nth-child(2) {
+            font-size: 16px;
+            padding: 13px 15px 0px 0px;
+          }
+        }
+      }
+      .icon5-image {
+        width: 100%;
+        height: 72px;
+        border: 1px solid #e1e1e1;
+        position: relative;
+        span {
+          font-size: 23px;
+          position: absolute;
+          top: 15px;
+          left: 135px;
+        }
+        i {
+          color: #999;
+          font-size: 15px;
+          position: absolute;
+          bottom: 10px;
+          left: 135px;
+        }
+        &:hover {
+          background: #e1e1e1;
+        }
+      }
+      .icon5-main-rank {
+        width: 100%;
+        height: 550px;
+        ul {
+          width: 100%;
+          height: 305px;
+          display: flex;
+          flex-direction: column;
+          line-height: 61.25px;
+          li.item {
+            height: 25%;
+            div {
+              width: 100%;
+              height: 55px;
+              margin-top: 9px;
+              display: flex;
+              line-height: 55px;
+              justify-content: space-between;
+              p {
+                color: #999;
+                font-size: 17px;
+                span {
+                  color: #333333;
+                  margin-left: 14px;
+                }
+              }
+            }
+            &:nth-child(1),
+            &:nth-child(2) {
+              p {
+                color: #ef4638;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.active{
+  color: #ef4638 !important;
+}
+.isactive{
+  color: #e1e1e1 !important;
+}
+.swiper {
+  width: 744px;
+  height: 570px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  // border: 1px solid red;
+  overflow: hidden;
+  position: relative;
+  img {
+    width: 270px;
+    height: 382px;
+  }
+}
+.swiper-button-next:after, .swiper-container-rtl .swiper-button-prev:after{
+  font-size: 10px;
+  position: absolute;
+  bottom: -262px;
+  right: 294px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  border-radius: 10px;
+  text-align: center;
+  background: #6d98d2;
+  color: #fff;
+  font-weight: 900;
+}
+.swiper-button-prev:after, .swiper-container-rtl .swiper-button-next:after{
+  font-size: 11px;
+  font-weight: 800;
+  position: absolute;
+  bottom: -262px;
+  left: 294px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  border-radius: 10px;
+  background: #6d98d2;
+  color: #fff;
+}
+:root{
+  --swiper-theme-color: #6d98d2;
+} 
+.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets{
+  bottom: 2px;
+}
+.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet{
+  background: #6d98D7;
+}
+</style>
