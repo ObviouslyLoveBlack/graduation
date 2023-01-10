@@ -24,7 +24,7 @@
           <span>{{
             releaseInfo.title + "(" + `${releaseInfo.total}` + "部" + ")"
           }}</span>
-          <span>全部 ></span>
+          <span @click="all('release')">全部 ></span>
         </div>
         <div class="icon2-main">
           <div class="item" v-for="action in releaseInfo.data" :key="action.id">
@@ -44,13 +44,13 @@
         <div class="icon3-header">
           <span>{{ hotPlayInfo.title }}</span>
           <ul>
-            <li><a href="">爱情</a></li>
-            <li><a href="">喜剧</a></li>
-            <li><a href="">动作</a></li>
-            <li><a href="">恐怖</a></li>
-            <li><a href="">动画</a></li>
+            <li @click="hotDetail('love')"><a href="javascript:;">爱情</a></li>
+            <li @click="hotDetail('comedy')"><a href="javascript:;">喜剧</a></li>
+            <li @click="hotDetail('action')"><a href="javascript:;">动作</a></li>
+            <li @click="hotDetail('plot')"><a href="javascript:;">剧情</a></li>
+            <li @click="hotDetail('animation')"><a href="javascript:;">动画</a></li>
           </ul>
-          <span>全部 > </span>
+          <span @click="all('classic')">全部 > </span>
         </div>
         <div class="icon3-main">
           <div class="item" v-for="action in hotPlayInfo.data" :key="action.id">
@@ -61,82 +61,84 @@
           </div>
         </div>
       </div>
-      <div class="main-left-icon4">
-       <div class="icon4-header">
-        <span>{{ hotTvPlayInfo.title }}</span>
-        <ul>
-          <li
-            @click="changeType('domestic')"
-            :class="type.domestic ? 'active' : ''"
-          >
-            国产剧
-          </li>
-          <li
-            @click="changeType('variety')"
-            :class="type.variety ? 'active' : ''"
-          >
-            综艺
-          </li>
-          <li @click="changeType('UsTv')" :class="type.UsTv ? 'active' : ''">
-            美剧
-          </li>
-          <li
-            @click="changeType('KoreanTv')"
-            :class="type.KoreanTv ? 'active' : ''"
-          >
-            韩剧
-          </li>
-          <li
-            @click="changeType('documentary')"
-            :class="type.documentary ? 'active' : ''"
-          >
-            纪录片
-          </li>
-        </ul>
-        <span>全部 ></span>
-       </div>
-       <div class="swiper" ref="mySwiper">
-        <div class="swiper-wrapper">
-          <div
-            class="swiper-slide"
-            v-for="(action, index) in hotTvPlayList"
-            :key="index"
-          >
-            <div class="icon4-main">
-              <div
-                class="item"
-                v-for="item in action.moviceList"
-                :key="item.id"
-              >
-                <img :src="item.img" alt="" />
-                <div class="shadow"></div>
-                <p>{{ item.update }}</p>
-                <span>{{ item.moviename }}</span>
-                <i :class="item.score ?'':'isactive'">{{ item.score ? item.score : "暂无评分" }}</i>
+      <div class="main-left-icon4" v-if="hotTvPlayInfo && hotTvPlayList">
+        <div class="icon4-header">
+          <span>{{ hotTvPlayInfo.title }}</span>
+          <ul>
+            <li
+              @click="changeType('domestic')"
+              :class="type.domestic ? 'active' : ''"
+            >
+              国产剧
+            </li>
+            <li
+              @click="changeType('variety')"
+              :class="type.variety ? 'active' : ''"
+            >
+              综艺
+            </li>
+            <li @click="changeType('UsTv')" :class="type.UsTv ? 'active' : ''">
+              美剧
+            </li>
+            <li
+              @click="changeType('KoreanTv')"
+              :class="type.KoreanTv ? 'active' : ''"
+            >
+              韩剧
+            </li>
+            <li
+              @click="changeType('documentary')"
+              :class="type.documentary ? 'active' : ''"
+            >
+              纪录片
+            </li>
+          </ul>
+          <!-- <span>全部 ></span> -->
+        </div>
+        <div class="swiper" ref="mySwiper">
+          <div class="swiper-wrapper">
+            <div
+              class="swiper-slide"
+              v-for="(action, index) in hotTvPlayList"
+              :key="index"
+            >
+              <div class="icon4-main">
+                <div
+                  class="item"
+                  v-for="item in action.moviceList"
+                  :key="item.id"
+                >
+                  <img :src="item.img" alt="" />
+                  <div class="shadow"></div>
+                  <p>{{ item.update }}</p>
+                  <span>{{ item.moviename }}</span>
+                  <i :class="item.score ? '' : 'isactive'">{{
+                    item.score ? item.score : "暂无评分"
+                  }}</i>
+                </div>
               </div>
             </div>
           </div>
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-       </div>
       </div>
       <div class="main-left-icon5">
         <div class="icon5-header">
-          <span>{{hotFilmsReview.title}}</span>
-          <span>更多热门影评>></span>
+          <span>{{ hotFilmsReview.title }}</span>
+          <span @click="moreReview">更多热门影评>></span>
         </div>
         <div class="icon5-main">
           <ul>
             <li v-for="action in hotFilmsReview.data" :key="action.id">
               <img :src="action.img" alt="" />
               <div class="icon5-title">
-                <span> {{action.title}}</span>
-                <p>{{action.name}} 评论{{action.works}}</p>
+                <span> {{ action.title }}</span>
+                <p>{{ action.name }} 评论{{ action.works }}</p>
                 <p>
-                  {{action.content}}
-                 <span>(全文)</span>
+                  {{ action.content }}
+                  <span>(全文)</span>
                 </p>
               </div>
             </li>
@@ -144,64 +146,70 @@
         </div>
       </div>
     </div>
-    <div class="home-main-right">
+    <div class="home-main-right" v-if="boxOfficeInfo">
       <div class="main-right-icon1">
         <div class="right-header">
-          <span>{{boxOfficeInfo.title}}</span>
+          <span>{{ boxOfficeInfo.title }}</span>
         </div>
         <div class="right-main">
           <div class="icon">
             <img :src="`${boxOfficeInfo.data[0].img}`" alt="" />
-            <span>{{boxOfficeInfo.data[0].title}}</span>
-            <i>{{boxOfficeInfo.data[0].num}}万</i>
+            <span>{{ boxOfficeInfo.data[0].title }}</span>
+            <i>{{ boxOfficeInfo.data[0].num }}万</i>
           </div>
           <div class="right-main-rank">
             <ul>
-              <li class="item" v-for="action in boxOfficeList" :key="action.key">
+              <li
+                class="item"
+                v-for="action in boxOfficeList"
+                :key="action.key"
+              >
                 <div>
-                  <p>{{action.key}} <span>{{action.title}}</span></p>
-                  <i>{{action.num}}万</i>
+                  <p>
+                    {{ action.key }} <span>{{ action.title }}</span>
+                  </p>
+                  <i>{{ action.num }}万</i>
                 </div>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <div class="main-right-icon2">
-        <div class="right-earn">{{profitInfo.title}}</div>
+      <div class="main-right-icon2" v-if="profitInfo">
+        <div class="right-earn">{{ profitInfo.title }}</div>
         <div class="right-data">
-          <p>{{realData}}<span>万</span></p>
-          <p>查看更多<span>></span></p>
+          <p>{{ realData }}<span>万</span></p>
+          <p> 查看更多<span>></span></p>
         </div>
         <div class="box-office-data">
-          <span>北京时间：{{nowDate}}</span>
+          <span>北京时间：{{ nowDate }}</span>
           <span>专业版实时票房数据</span>
         </div>
       </div>
-      <div class="main-right-icon3">
+      <div class="main-right-icon3" v-if="mostexpectInfo">
         <div class="icon3-header">
-          <span>{{mostexpectInfo.title}}</span>
-          <span>查看完整榜单></span>
+          <span>{{ mostexpectInfo.title }}</span>
+          <span @click="getcomplete('expect')">查看完整榜单></span>
         </div>
         <div class="icon3-main">
           <img :src="`${mostexpectInfo.data[0].img}`" alt="" />
-          <p>{{mostexpectInfo.data[0].title}}</p>
-          <p>上映时间:{{mostexpectInfo.data[0].updateTime}}</p>
-          <p>{{mostexpectInfo.data[0].num}}想看</p>
+          <p>{{ mostexpectInfo.data[0].title }}</p>
+          <p>上映时间:{{ mostexpectInfo.data[0].updateTime }}</p>
+          <p>{{ mostexpectInfo.data[0].num }}想看</p>
         </div>
         <div class="icon3-intrdus">
           <div class="icon3-intrdus-item">
             <img :src="`${mostexpectInfo.data[1].img}`" alt="" />
             <div class="intrdus-detail">
-              <p>{{mostexpectInfo.data[1].title}}</p>
-              <p>{{mostexpectInfo.data[1].num}}想看</p>
+              <p>{{ mostexpectInfo.data[1].title }}</p>
+              <p>{{ mostexpectInfo.data[1].num }}想看</p>
             </div>
           </div>
           <div class="icon3-intrdus-item">
             <img :src="`${mostexpectInfo.data[2].img}`" alt="" />
             <div class="intrdus-detail">
-              <p>{{mostexpectInfo.data[2].title}}</p>
-              <p>{{mostexpectInfo.data[2].num}}想看</p>
+              <p>{{ mostexpectInfo.data[2].title }}</p>
+              <p>{{ mostexpectInfo.data[2].num }}想看</p>
             </div>
           </div>
         </div>
@@ -209,47 +217,53 @@
           <ul>
             <li class="item" v-for="action in mostexpectList" :key="action.key">
               <div>
-                <p>{{action.key}}<span>{{action.title}}</span></p>
-                <i>{{action.num}}人想看</i>
+                <p>
+                  {{ action.key }}<span>{{ action.title }}</span>
+                </p>
+                <i>{{ action.num }}人想看</i>
               </div>
             </li>
           </ul>
         </div>
       </div>
-      <div class="main-right-icon4">
+      <div class="main-right-icon4" v-if="TophundredInfo">
         <div class="icon4-header">
-          <span>{{TophundredInfo.title}}</span>
-          <span>查看完整榜单 ></span>
+          <span>{{ TophundredInfo.title }}</span>
+          <span @click="getcomplete('tophundred')">查看完整榜单 ></span>
         </div>
         <div class="icon4-image">
           <img :src="`${TophundredInfo.data[0].img}`" alt="" />
-          <span>{{TophundredInfo.data[0].title}}</span>
-          <i>{{TophundredInfo.data[0].score}}分</i>
+          <span>{{ TophundredInfo.data[0].title }}</span>
+          <i>{{ TophundredInfo.data[0].score }}分</i>
         </div>
         <div class="icon4-main-rank">
           <ul>
             <li class="item" v-for="action in TophundredList" :key="action.key">
               <div>
-                <p>{{action.key}}<span>{{action.title}}</span></p>
-                <i>{{action.score}}分</i>
+                <p>
+                  {{ action.key }}<span>{{ action.title }}</span>
+                </p>
+                <i>{{ action.score }}分</i>
               </div>
             </li>
           </ul>
         </div>
       </div>
-      <div class="main-right-icon5">
+      <div class="main-right-icon5" v-if="moviemakerInfo">
         <div class="icon5-header">
-          <span>{{moviemakerInfo.title}}</span>
+          <span>{{ moviemakerInfo.title }}</span>
         </div>
-        <div class="icon5-image">
+        <div class="icon5-image" @click="movieMaker(moviemakerInfo.data[0])">
           <img :src="`${moviemakerInfo.data[0].img}`" alt="" />
-          <span>{{moviemakerInfo.data[0].name}}</span>
+          <span>{{ moviemakerInfo.data[0].name }}</span>
         </div>
         <div class="icon5-main-rank">
           <ul>
             <li class="item" v-for="action in moviemakerList" :key="action.key">
               <div>
-                <p>{{action.key}}<span>{{action.name}}</span></p>
+                <p @click="movieMaker(action)">
+                  {{ action.key }}<span>{{ action.name }}</span>
+                </p>
               </div>
             </li>
           </ul>
@@ -260,7 +274,7 @@
 </template>
 
 <script>
-import Swiper from 'swiper'
+import Swiper from "swiper";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "home",
@@ -269,26 +283,27 @@ export default {
       hotInfo: {}, //正在热映
       releaseInfo: {}, //即将上映
       hotPlayInfo: {}, //热播电影
-      hotTvPlayInfo: {}, //热播电视剧
-      hotTvPlayList:[],
+      hotTvPlayInfo: null, //热播电视剧
+      hotTvPlayList: [],
       hotFilmsReview: {}, //热门影评
-      boxOfficeInfo:{}, //今日票房|
-      boxOfficeList:[],
-      profitInfo:{}, //今日收益
-      mostexpectInfo:{}, //最受期待
-      mostexpectList:[],
-      TophundredInfo:{}, //TOP100
-      TophundredList:[],
-      moviemakerInfo:{}, //热门影人
-      moviemakerList:[],
-      nowDate:'',
-      nowhour:'',
-      type:{
-        domestic:true,
-        variety:false,
-        UsTv:false,
-        KoreanTv:false,
-        documentary:false
+      boxOfficeInfo: null, //今日票房|
+      boxOfficeList: [],
+      profitInfo: null, //今日收益
+      mostexpectInfo: null, //最受期待
+      mostexpectList: [],
+      TophundredInfo: null, //TOP100
+      TophundredList: [],
+      moviemakerInfo: null, //热门影人
+      moviemakerList: [],
+      nowDate: "",
+      nowhour: "",
+      swiper: null,
+      type: {
+        domestic: true,
+        variety: false,
+        UsTv: false,
+        KoreanTv: false,
+        documentary: false,
       },
     };
   },
@@ -296,34 +311,28 @@ export default {
     this.getHotMovies();
     this.getsoonRelease();
     this.getHotPlay();
-    this.getHotTvPlay('domestic');
-    this.getFilmReview()
-    this.getboxoffice()
-    this.getprofit()
-    this.getmostexpect()
-    this.getTophundred()
-    this.getmoviemaker()
+    this.getHotTvPlay("domestic");
+    this.getFilmReview();
+    this.getboxoffice();
+    this.getprofit();
+    this.getmostexpect();
+    this.getTophundred();
+    this.getmoviemaker();
     setInterval(() => {
-       this.getnewDate()
+      this.getnewDate();
     }, 1000);
   },
-  // mounted(){
-  //   // eslint-disable-next-line no-unused-vars
-  //   var mySwiper = new Swiper(this.$refs.mySwiper, {
-  //           loop: true, // 循环模式选项
-  //           // 如果需要分页器
-  //           pagination: {
-  //             el: ".swiper-pagination",
-  //             clickable: true,
-  //           },
-  //           // 如果需要前进后退按钮
-  //           navigation: {
-  //             nextEl: ".swiper-button-next",
-  //             prevEl: ".swiper-button-prev",
-  //           },
-  //           slidesPerView: 1,
-  //         });
-  // },
+  computed: {
+    realData: function () {
+      return this.nowhour < 8
+        ? this.profitInfo.data[0].num
+        : this.nowhour < 16
+        ? this.profitInfo.data[1].num
+        : this.nowhour < 24
+        ? this.profitInfo.data[2].num
+        : "暂无数据";
+    },
+  },
   watch: {
     hotTvPlayList: {
       immediate: true,
@@ -331,6 +340,8 @@ export default {
         this.$nextTick(() => {
           // eslint-disable-next-line no-unused-vars
           var mySwiper = new Swiper(this.$refs.mySwiper, {
+            // direction: "horizontal", // 垂直切换选项
+            // autoplay: true,
             loop: true, // 循环模式选项
             // 如果需要分页器
             pagination: {
@@ -348,26 +359,23 @@ export default {
       },
     },
   },
-  computed:{
-    realData:function(){
-      return this.nowhour < 8 ? this.profitInfo.data[0].num :this.nowhour < 16 ? this.profitInfo.data[1].num
-      : this.nowhour < 24 ? this.profitInfo.data[2].num :'暂无数据'
-    }
-  },
   methods: {
-    changeType(type){
-      this.getHotTvPlay(type)
-      this.type ={
-        domestic:false,
-        variety:false,
-        UsTv:false,
-        KoreanTv:false,
-        documentary:false
-      }
-      this.type[`${type}`] =true
+    changeType(type) {
+      this.getHotTvPlay(type);
+      this.type = {
+        domestic: false,
+        variety: false,
+        UsTv: false,
+        KoreanTv: false,
+        documentary: false,
+      };
+      this.type[`${type}`] = true;
     },
-    all(type){
-      console.log(type);
+    all(type) {
+      sessionStorage.setItem("path", '/films');
+      this.$router.push({
+        path:`/films/${type}`,
+      })
     },
     getHotMovies() {
       this.$req.getHotMovies().then((res) => {
@@ -387,7 +395,7 @@ export default {
     getHotTvPlay(type) {
       this.$req.getHotTvPlay().then((res) => {
         this.hotTvPlayInfo = res.data;
-        this.hotTvPlayList = this.hotTvPlayInfo[`${type}`]
+        this.hotTvPlayList = this.hotTvPlayInfo[`${type}`];
       });
     },
     getFilmReview() {
@@ -398,38 +406,67 @@ export default {
     getboxoffice() {
       this.$req.getboxoffice().then((res) => {
         this.boxOfficeInfo = res.data;
-        this.boxOfficeList = this.boxOfficeInfo.data.slice(1)
+        this.boxOfficeList = this.boxOfficeInfo.data.slice(1);
       });
     },
     getprofit() {
       this.$req.getprofit().then((res) => {
         this.profitInfo = res.data;
       });
-    },  
-    getnewDate(){
-      var time =new Date()
-      var hour = time.getHours()
-      this.nowhour = hour
-      this.nowDate = this.$moment(time).format('HH:mm:ss')
+    },
+    getnewDate() {
+      var time = new Date();
+      var hour = time.getHours();
+      this.nowhour = hour;
+      this.nowDate = this.$moment(time).format("HH:mm:ss");
     },
     getmostexpect() {
       this.$req.getmostexpect().then((res) => {
         this.mostexpectInfo = res.data;
-        this.mostexpectList = this.mostexpectInfo.data.slice(3)
+        this.mostexpectList = this.mostexpectInfo.data.slice(3);
       });
-    }, 
+    },
     getTophundred() {
       this.$req.getTophundred().then((res) => {
         this.TophundredInfo = res.data;
-        this.TophundredList = this.TophundredInfo.data.slice(1)
+        this.TophundredList = this.TophundredInfo.data.slice(1);
       });
-    }, 
+    },
     getmoviemaker() {
       this.$req.getmoviemaker().then((res) => {
         this.moviemakerInfo = res.data;
-        this.moviemakerList = this.moviemakerInfo.data.slice(1)
+        this.moviemakerList = this.moviemakerInfo.data.slice(1);
       });
-    }, 
+    },
+    hotDetail(type){
+      sessionStorage.setItem("path", '/films');
+      this.$router.push({
+        path:'/films/classic',
+        query:{
+          type,
+        }
+      })
+    },
+    moreReview(){
+      sessionStorage.setItem("path", '/hotspot');
+      this.$router.push({
+        path:'/hotspot'
+      })
+    },
+    getcomplete(path){
+      sessionStorage.setItem("path", '/billboard');
+      this.$router.push({
+        path:`/billboard/${path}`,
+      })
+    },
+    movieMaker(action){
+      this.$router.push({
+        path:'/movie/maker',
+        query:{
+          target:encodeURIComponent(JSON.stringify(action))
+        }
+      })
+    }
   },
 };
 </script>
@@ -442,6 +479,7 @@ export default {
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  margin-top: 40px;
   .home-main-left {
     width: 62%;
     .main-left-icon1 {
@@ -458,7 +496,7 @@ export default {
           &:nth-child(2) {
             font-size: 18px;
             padding-top: 12px;
-            &:hover{
+            &:hover {
               color: #37a;
               cursor: default;
             }
@@ -535,7 +573,7 @@ export default {
           &:nth-child(2) {
             font-size: 18px;
             padding-top: 12px;
-             &:hover{
+            &:hover {
               color: #37a;
               cursor: default;
             }
@@ -624,7 +662,7 @@ export default {
           &:last-child {
             font-size: 18px;
             padding-top: 12px;
-             &:hover{
+            &:hover {
               color: #37a;
               cursor: default;
             }
@@ -639,7 +677,7 @@ export default {
           left: 135px;
           a {
             color: #999;
-            &:hover{
+            &:hover {
               color: #ef4638;
               cursor: default;
             }
@@ -700,7 +738,7 @@ export default {
           &:last-child {
             font-size: 18px;
             padding-top: 12px;
-            &:hover{
+            &:hover {
               color: #37a;
               cursor: default;
             }
@@ -715,7 +753,7 @@ export default {
           left: 155px;
           li {
             color: #999;
-             &:hover{
+            &:hover {
               color: #ef4638;
               cursor: default;
             }
@@ -947,7 +985,7 @@ export default {
           &:nth-child(2) {
             font-size: 17px;
             margin-top: 10px;
-            &:hover{
+            &:hover {
               color: #37a;
               cursor: default;
             }
@@ -979,7 +1017,7 @@ export default {
           &:nth-child(2) {
             font-size: 16px;
             padding: 13px 15px 0px 0px;
-             &:hover{
+            &:hover {
               color: #37a;
               cursor: default;
             }
@@ -1107,7 +1145,7 @@ export default {
           &:nth-child(2) {
             font-size: 16px;
             padding: 13px 15px 0px 0px;
-             &:hover{
+            &:hover {
               color: #37a;
               cursor: default;
             }
@@ -1259,10 +1297,10 @@ export default {
     }
   }
 }
-.active{
+.active {
   color: #ef4638 !important;
 }
-.isactive{
+.isactive {
   color: #e1e1e1 !important;
 }
 .swiper {
@@ -1279,7 +1317,8 @@ export default {
     height: 382px;
   }
 }
-.swiper-button-next:after, .swiper-container-rtl .swiper-button-prev:after{
+.swiper-button-next:after,
+.swiper-container-rtl .swiper-button-prev:after {
   font-size: 10px;
   position: absolute;
   bottom: -262px;
@@ -1294,7 +1333,8 @@ export default {
   color: #fff;
   font-weight: 900;
 }
-.swiper-button-prev:after, .swiper-container-rtl .swiper-button-next:after{
+.swiper-button-prev:after,
+.swiper-container-rtl .swiper-button-next:after {
   font-size: 11px;
   font-weight: 800;
   position: absolute;
@@ -1308,13 +1348,15 @@ export default {
   background: #6d98d2;
   color: #fff;
 }
-:root{
-  --swiper-theme-color: #6d98d2;
-} 
-.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets{
+.swiper-pagination-fraction,
+.swiper-pagination-custom,
+.swiper-container-horizontal > .swiper-pagination-bullets {
   bottom: 2px;
+  --swiper-theme-color: #6d98d7;
 }
-.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet{
-  background: #6d98D7;
+.swiper-container-horizontal
+  > .swiper-pagination-bullets
+  .swiper-pagination-bullet {
+  background: #6d98d7 !important;
 }
 </style>

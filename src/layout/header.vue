@@ -57,11 +57,15 @@ export default {
       },
       menuList: [],
       isActive: "",
+      active:''
     };
   },
   created() {
     this.newBackground();
     this.getMenuList();
+    setInterval(() => {
+      this.newBackground();
+    }, 10);
   },
   methods: {
     more() {
@@ -74,9 +78,8 @@ export default {
     },
     go(path) {
       this.$router.push({
-        path: path,
+        path:`/${path}`,
       });
-      sessionStorage.setItem("path", path);
       this.newBackground();
     },
     getMenuList() {
@@ -85,8 +88,7 @@ export default {
       });
     },
     newBackground() {
-      var active = sessionStorage.getItem("path");
-      this.isActive = active ? active : "/home";
+      this.isActive = this.$route.path.split('/')[1];
     },
   },
 };
@@ -99,7 +101,7 @@ export default {
   min-width: 1200px;
   border: 1px solid #efefef;
   display: flex;
-  margin-bottom: 40px;
+  // margin-bottom: 40px;
   .home-header-logo {
     width: 25%;
     height: 70px;
