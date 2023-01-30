@@ -395,6 +395,29 @@ const hotspotUrl = {
   hotspotother9:require("@/assets/image/hotspot/其他/9.jpg"),
   hotspotother10:require("@/assets/image/hotspot/其他/10.jpg")
 };
+// workers图片
+const wokersUrl = {
+  worker1: require("@/assets/image/maker/makercon/l1.jpg"),
+  worker2: require("@/assets/image/maker/makercon/l2.jpg"),
+  worker3: require("@/assets/image/maker/makercon/l3.jpg"),
+  worker4: require("@/assets/image/maker/makercon/l4.jpg"),
+  worker5: require("@/assets/image/maker/makercon/l5.jpg"),
+  contactworker1: require("@/assets/image/maker/makercon/l11.jpg"),
+  contactworker2: require("@/assets/image/maker/makercon/l22.jpg"),
+  contactworker3: require("@/assets/image/maker/makercon/l33.jpg"),
+  contactworker4: require("@/assets/image/maker/makercon/l44.jpg"),
+  contactworker5: require("@/assets/image/maker/makercon/l55.jpg"),
+  contactfilms1: require("@/assets/image/maker/makercon/ly1.jpg"),
+  contactflims2: require("@/assets/image/maker/makercon/ly2.jpg"),
+  contactfilms3: require("@/assets/image/maker/makercon/ly3.jpg"),
+  awards1: require("@/assets/image/maker/awards/1.jpg"),
+  awards2: require("@/assets/image/maker/awards/2.jpg"),
+  awards3: require("@/assets/image/maker/awards/3.jpg"),
+  awards4: require("@/assets/image/maker/awards/4.jpg"),
+  awards5: require("@/assets/image/maker/awards/5.jpg"),
+  awards6: require("@/assets/image/maker/awards/6.jpg"),
+  awards7: require("@/assets/image/maker/awards/7.jpg"),
+}
 
 //设置拦截axios请求的时间
 Mock.setup({
@@ -1586,7 +1609,37 @@ Mock.mock(getRegExpUrl("/getmoviemaker"), "get", () => {
     data: {
       title: "热门影人",
       data: [
-        { key: "1", name: "贾冰", img: image.img41 },
+        { 
+          key: "1", 
+          name: "雷佳音", 
+          EndName:'jiayin Lei',
+          profession:'演员 | 1983-08-29 | 184cm',
+          fans:4060,
+          introduce:'雷佳音，出生于辽宁省鞍山市铁东区，中国内地影视男演员，毕业于上海戏剧学院表演系。2004年，出演个人首部电视剧《江湖俏佳人》，从而正式进入演艺圈。2006年，他以第一名的成绩考进上海话剧中心。2009年，出演个人首部电影《高考1977》。2011年，获得第15届佐临话剧艺术奖最具潜质新人奖。2012年，凭借动作喜剧电影《黄金大劫案》获得第11届中国长春电影节最佳男主角奖等多个奖项。2013年，获得国剧盛典演技飞跃男演员奖。2017年，凭借古装武侠电影《绣春刀Ⅱ：修罗战场》入围第54届台湾电影金马奖最佳男配角奖。2018年，主演爱情奇幻电影《超时空同居》；同年，凭借电视剧《我的前半生》入围第24届上海电视节白玉兰最佳男主角奖。2019年6月，主演的古装悬疑剧《长安十二时辰》播出，因此获得第24届韩国釜山电影节亚洲内容奖最佳男演员奖。8月，雷佳音名列《2019福布斯中国名人榜》第62位；同年，获第三届网影盛典年度剧集最佳男演员奖、第三届银川互联网电影节最佳男演员奖和中国大学生电视节最受大学生瞩目电视剧男演员奖。2020年1月，获得新浪微博之夜微博年度影响力演员奖；7月，凭借《长安十二时辰》入围第26届上海电视节白玉兰最佳男主角奖；同年，雷佳音名列《2020福布斯中国名人榜》第61位；2021年，主演的电影《刺杀小说家》上映；同年，获得微博电影之夜年度实力演员奖；2022年，领衔主演的现实题材大剧《人世间》，11月6日获得第31届中国电视金鹰奖最佳男主角。',
+          introduceTable:[{title:'别名',content:'雷子',title2:'血型',content2:'B型'},{title:'出生日期',content:'1983-08-29',title2:'身高',content2:'184cm'},{title:'出生地',content:'辽宁省鞍山市铁东区',title2:'星座',content2:'处女座'},{title:'身份',content:'演员',title2:'毕业学校',content2:'上海戏剧学院'},{title:'国籍',content:'中国',title2:'经济公司',content2:'霍尔果斯十间影视传媒有限公司'},{title:'民族',content:'汉族'}],
+          accumulate:203.72,
+          img: image.img41,
+          detailData:[ {
+          key:1,
+          award:[
+            {id:1,img:wokersUrl.awards5,name:'台湾电影金马奖',nominate:[{title:'第五十四界-最佳男配角(提名)',filmsName:'《绣春刀Ⅱ:修罗战场》2017/饰:裴纶'}]},
+            {id:2,img:wokersUrl.awards2,name:'北京大学生电影节',nominate:[{title:'第二十界-最佳男演员奖(提名)',filmsName:'《黄金大劫案》2012/饰:小东北'}]},
+            {id:3,img:wokersUrl.awards6,name:'长春电影节',nominate:[{title:'第十一界-最佳男主角',filmsName:'《黄金大劫案》2012/饰:小东北'}]},
+            {id:4,img:wokersUrl.awards1,name:'澳门国际电影节',nominate:[{title:'第14界-金莲花奖-最佳男主角(提名)',filmsName:'《古董局中局》2021/饰:许愿'}]},
+            {id:5,img:wokersUrl.awards3,name:'上海电视节白兰玉奖',nominate:[{title:'第26界-电视连续剧-最佳男配角(提名)',filmsName:'《长安十二时辰》2019/饰:张小敬'},{title:'第24界-电视连续剧-最佳男配角(提名)',filmsName:'《我的前半生》2017/饰:陈俊生'}]}
+          ]
+        },
+        {
+          key:2,
+          award:[
+            {id:6,img:wokersUrl.awards4,name:'中国电视金鹰奖',nominate:[{title:'第31界-最佳男主角',filmsName:'《人世间》2022/饰:周秉昆'}]},
+            {id:7,img:wokersUrl.awards7,name:'华鼎奖',nominate:[{title:'第26界-全国观众最喜爱十佳电视明星',filmsName:''},{title:'第24界-中国近代现代题材电视剧最佳男演员',filmsName:'《和平饭店》2018/饰:王大顶'}]}
+          ]
+          }],
+          images:[{img:wokersUrl.worker1},{img:wokersUrl.worker2},{img:wokersUrl.worker3},{img:wokersUrl.worker4},{img:wokersUrl.worker5}],
+          concatctUrl:[{img:wokersUrl.contactworker1,name:'岳云鹏'},{img:wokersUrl.contactworker2,name:'郭京飞'},{img:wokersUrl.contactworker3,name:'贾乃亮'},{img:wokersUrl.contactworker4,name:'黄渤'},{img:wokersUrl.contactworker5,name:'翟煦飞'}],
+          filmsUrl:[{img:wokersUrl.contactfilms1},{img:wokersUrl.contactflims2},{img:wokersUrl.contactfilms3}],
+        },
         { key: "2", name: "张璐瑶" },
         { key: "3", name: "晋松" },
         { key: "4", name: "吕良伟" },
@@ -7258,3 +7311,33 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
     ],
   };
 });
+
+
+//影人信息
+
+//影人详细信息轮播图片
+Mock.mock(getRegExpUrl('getfilms/wokers/detail'),'get',()=>{
+  return {
+    status: 0,
+    msg:'操作成功',
+    data:[
+      {
+        key:1,
+        award:[
+          {id:1,img:image.img1,name:'台湾电影金马奖',nominate:[{title:'第五十四界-最佳男配角(提名)',filmsName:'《绣春刀Ⅱ:修罗战场》2017/饰:裴纶'}]},
+          {id:2,img:image.img2,name:'北京大学生电影节',nominate:[{title:'第二十界-最佳男演员奖(提名)',filmsName:'《黄金大劫案》2012/饰:小东北'}]},
+          {id:3,img:image.img3,name:'长春电影节',nominate:[{title:'第十一界-最佳男主角',filmsName:'《黄金大劫案》2012/饰:小东北'}]},
+          {id:4,img:image.img4,name:'澳门国际电影节',nominate:[{title:'第14界-金莲花奖-最佳男主角(提名)',filmsName:'《古董局中局》2021/饰:许愿'}]},
+          {id:5,img:image.img5,name:'上海电视节白兰玉奖',nominate:[{title:'第26界-电视连续剧-最佳男配角(提名)',filmsName:'《长安十二时辰》2019/饰:张小敬'},{title:'第24界-电视连续剧-最佳男配角(提名)',filmsName:'《我的前半生》2017/饰:陈俊生'}]}
+        ]
+      },
+      {
+        key:2,
+        award:[
+          {id:7,img:image.img6,name:'中国电视金鹰奖',nominate:[{title:'第31界-最佳男主角',filmsName:'《人世间》2022/饰:周秉昆'}]},
+          {id:8,img:image.img7,name:'华鼎奖',nominate:[{title:'第26界-全国观众最喜爱十佳电视明星',filmsName:''},{title:'第24界-中国近代现代题材电视剧最佳男演员',filmsName:'《和平饭店》2018/饰:王大顶'}]}
+        ]
+      }
+    ]
+  }
+})
