@@ -3,13 +3,13 @@
     <div class="maker-container">
       <div class="maker-header">
         <div class="image">
-          <img src="@/assets/image/maker/1.jpg" alt="" />
+          <img :src="targetObj.portrait" alt="" />
         </div>
         <div class="maker-info">
           <p class="info-name">{{targetObj.name}}</p>
           <p class="info-name">{{targetObj.EndName}}</p>
           <p>{{targetObj.profession}}</p>
-          <div class="symbol-worker">
+          <div class="symbol-worker" :class="attention ? 'active' :''" @click="getattention">
             <a-icon type="plus" />
             关注
           </div>
@@ -123,7 +123,7 @@
         <div class="relevantWorker">
           <h2>相关影人</h2>
           <div class="wokers">
-            <div class="workers-item" v-for="(action,index) in targetObj.concatctUrl" :key="index">
+            <div class="workers-item" v-for="(action,index) in targetObj.concatctUrl" :key="index" @click="relevantDetail(action)">
               <div class="item-image">
                 <img :src="action.img" alt="">
               </div>
@@ -144,6 +144,8 @@ export default {
     return {
       ispagina: false,
       targetObj: {},
+      id:'',
+      attention:false, //判断是否点击关注
       openAll: true,
       bannerList: [], // 获奖类型
       awardsList: [], //详细获奖情况
@@ -151,11 +153,16 @@ export default {
     };
   },
   created() {
-    const { target } = this.$route.query;
-    this.targetObj = JSON.parse(decodeURIComponent(target));
-    console.log(this.targetObj);
-    this.bannerList = this.targetObj.detailData;
-    this.awardsList = this.bannerList[0].award[0].nominate;
+    const { target,id } = this.$route.query;
+    if(id){
+     this.getDetail(id)
+     return
+    }
+    if(target){
+      this.targetObj = JSON.parse(decodeURIComponent(target));
+      this.bannerList = this.targetObj.detailData;
+      this.awardsList = this.bannerList[0].award[0].nominate;
+    }
     this.getFilmworksdetail();
   },
   watch: {
@@ -181,6 +188,12 @@ export default {
     },
   },
   methods: {
+    async getDetail(id){
+      const {data:res} = await this.$req.getmoviemaker()
+      this.targetObj = res.data[id]
+      this.bannerList = this.targetObj.detailData;
+      this.awardsList = this.bannerList[0].award[0].nominate;
+    },
     open() {
       this.openAll = !this.openAll;
     },
@@ -202,6 +215,19 @@ export default {
       this.location = 6;
       this.awardsList = this.bannerList[1].award[0].nominate;
     },
+    relevantDetail(action){
+      let routerUrl = this.$router.resolve({
+        path:'/movie/maker',
+        query:{
+          id:action.id
+        }
+      })
+      window.open(routerUrl.href,'_blank')
+    },
+    getattention(){
+      this.attention = !this.attention
+      this.attention ? this.targetObj.fans += 1 : this.targetObj.fans -= 1
+    }
   },
 };
 </script>
@@ -481,5 +507,8 @@ h2 {
   position: absolute;
   top: -20px;
   left: -10px;
+}
+.active{
+  background: #ef4238 !important;
 }
 </style>

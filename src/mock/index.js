@@ -397,19 +397,56 @@ const hotspotUrl = {
 };
 // workers图片
 const wokersUrl = {
+  workercover:require("@/assets/image/maker/l.jpg"),
+  workers1: require("@/assets/image/maker/1.jpg"),
+  workers2: require("@/assets/image/maker/2.jpg"),
+  workers3: require("@/assets/image/maker/3.jpg"),
+  workers4: require("@/assets/image/maker/4.jpg"),
+  workers5: require("@/assets/image/maker/5.jpg"),
+  workers6: require("@/assets/image/maker/6.jpg"),
+  workers7: require("@/assets/image/maker/7.jpg"),
+  workers8: require("@/assets/image/maker/8.jpg"),
+  workers9: require("@/assets/image/maker/9.jpg"),
+  workers10: require("@/assets/image/maker/10.jpg"),
   worker1: require("@/assets/image/maker/makercon/l1.jpg"),
   worker2: require("@/assets/image/maker/makercon/l2.jpg"),
   worker3: require("@/assets/image/maker/makercon/l3.jpg"),
   worker4: require("@/assets/image/maker/makercon/l4.jpg"),
   worker5: require("@/assets/image/maker/makercon/l5.jpg"),
+  worker6: require("@/assets/image/maker/makercon/lcw1.jpg"),
+  worker7: require("@/assets/image/maker/makercon/lcw2.jpg"),
+  worker8: require("@/assets/image/maker/makercon/lcw3.jpg"),
+  worker9: require("@/assets/image/maker/makercon/lcw4.jpg"),
+  worker10: require("@/assets/image/maker/makercon/lcw5.jpg"),
+  worker11: require("@/assets/image/maker/makercon/yyp1.jpg"),
+  worker12: require("@/assets/image/maker/makercon/yyp2.jpg"),
+  worker13: require("@/assets/image/maker/makercon/yyp3.jpg"),
+  worker14: require("@/assets/image/maker/makercon/yyp4.jpg"),
+  worker15: require("@/assets/image/maker/makercon/yyp5.jpg"),
   contactworker1: require("@/assets/image/maker/makercon/l11.jpg"),
   contactworker2: require("@/assets/image/maker/makercon/l22.jpg"),
   contactworker3: require("@/assets/image/maker/makercon/l33.jpg"),
   contactworker4: require("@/assets/image/maker/makercon/l44.jpg"),
   contactworker5: require("@/assets/image/maker/makercon/l55.jpg"),
+  contactworker6: require("@/assets/image/maker/makercon/lcw11.jpg"),
+  contactworker7: require("@/assets/image/maker/makercon/lcw22.jpg"),
+  contactworker8: require("@/assets/image/maker/makercon/lcw33.jpg"),
+  contactworker9: require("@/assets/image/maker/makercon/lcw44.jpg"),
+  contactworker10: require("@/assets/image/maker/makercon/lcw55.jpg"),
+  contactworker11: require("@/assets/image/maker/makercon/lcw66.jpg"),
+  contactworker15: require("@/assets/image/maker/makercon/yyp11.jpg"),
+  contactworker12: require("@/assets/image/maker/makercon/yyp22.png"),
+  contactworker13: require("@/assets/image/maker/makercon/yyp33.png"),
+  contactworker14: require("@/assets/image/maker/makercon/yyp44.jpg"),
   contactfilms1: require("@/assets/image/maker/makercon/ly1.jpg"),
   contactflims2: require("@/assets/image/maker/makercon/ly2.jpg"),
   contactfilms3: require("@/assets/image/maker/makercon/ly3.jpg"),
+  contactfilms4: require("@/assets/image/maker/makercon/lcwy1.jpg"),
+  contactflims5: require("@/assets/image/maker/makercon/lcwy2.jpg"),
+  contactfilms6: require("@/assets/image/maker/makercon/lcwy3.jpg"),
+  contactfilms7: require("@/assets/image/maker/makercon/yypy1.jpg"),
+  contactflims8: require("@/assets/image/maker/makercon/yypy2.jpg"),
+  contactfilms9: require("@/assets/image/maker/makercon/yypy3.jpg"),
   awards1: require("@/assets/image/maker/awards/1.jpg"),
   awards2: require("@/assets/image/maker/awards/2.jpg"),
   awards3: require("@/assets/image/maker/awards/3.jpg"),
@@ -417,6 +454,14 @@ const wokersUrl = {
   awards5: require("@/assets/image/maker/awards/5.jpg"),
   awards6: require("@/assets/image/maker/awards/6.jpg"),
   awards7: require("@/assets/image/maker/awards/7.jpg"),
+  awards8: require("@/assets/image/maker/awards/8.jpg"),
+  awards9: require("@/assets/image/maker/awards/9.jpg"),
+  awards10: require("@/assets/image/maker/awards/10.jpg"),
+  awards11: require("@/assets/image/maker/awards/11.jpg"),
+  awards12: require("@/assets/image/maker/awards/12.jpg"),
+  awards13: require("@/assets/image/maker/awards/13.jpg"),
+  awards14: require("@/assets/image/maker/awards/14.jpg"),
+  awards15: require("@/assets/image/maker/awards/15.jpg"),
 }
 
 //设置拦截axios请求的时间
@@ -1618,7 +1663,8 @@ Mock.mock(getRegExpUrl("/getmoviemaker"), "get", () => {
           introduce:'雷佳音，出生于辽宁省鞍山市铁东区，中国内地影视男演员，毕业于上海戏剧学院表演系。2004年，出演个人首部电视剧《江湖俏佳人》，从而正式进入演艺圈。2006年，他以第一名的成绩考进上海话剧中心。2009年，出演个人首部电影《高考1977》。2011年，获得第15届佐临话剧艺术奖最具潜质新人奖。2012年，凭借动作喜剧电影《黄金大劫案》获得第11届中国长春电影节最佳男主角奖等多个奖项。2013年，获得国剧盛典演技飞跃男演员奖。2017年，凭借古装武侠电影《绣春刀Ⅱ：修罗战场》入围第54届台湾电影金马奖最佳男配角奖。2018年，主演爱情奇幻电影《超时空同居》；同年，凭借电视剧《我的前半生》入围第24届上海电视节白玉兰最佳男主角奖。2019年6月，主演的古装悬疑剧《长安十二时辰》播出，因此获得第24届韩国釜山电影节亚洲内容奖最佳男演员奖。8月，雷佳音名列《2019福布斯中国名人榜》第62位；同年，获第三届网影盛典年度剧集最佳男演员奖、第三届银川互联网电影节最佳男演员奖和中国大学生电视节最受大学生瞩目电视剧男演员奖。2020年1月，获得新浪微博之夜微博年度影响力演员奖；7月，凭借《长安十二时辰》入围第26届上海电视节白玉兰最佳男主角奖；同年，雷佳音名列《2020福布斯中国名人榜》第61位；2021年，主演的电影《刺杀小说家》上映；同年，获得微博电影之夜年度实力演员奖；2022年，领衔主演的现实题材大剧《人世间》，11月6日获得第31届中国电视金鹰奖最佳男主角。',
           introduceTable:[{title:'别名',content:'雷子',title2:'血型',content2:'B型'},{title:'出生日期',content:'1983-08-29',title2:'身高',content2:'184cm'},{title:'出生地',content:'辽宁省鞍山市铁东区',title2:'星座',content2:'处女座'},{title:'身份',content:'演员',title2:'毕业学校',content2:'上海戏剧学院'},{title:'国籍',content:'中国',title2:'经济公司',content2:'霍尔果斯十间影视传媒有限公司'},{title:'民族',content:'汉族'}],
           accumulate:203.72,
-          img: image.img41,
+          img: wokersUrl.workercover,
+          portrait:wokersUrl.workers1,
           detailData:[ {
           key:1,
           award:[
@@ -1637,18 +1683,278 @@ Mock.mock(getRegExpUrl("/getmoviemaker"), "get", () => {
           ]
           }],
           images:[{img:wokersUrl.worker1},{img:wokersUrl.worker2},{img:wokersUrl.worker3},{img:wokersUrl.worker4},{img:wokersUrl.worker5}],
-          concatctUrl:[{img:wokersUrl.contactworker1,name:'岳云鹏'},{img:wokersUrl.contactworker2,name:'郭京飞'},{img:wokersUrl.contactworker3,name:'贾乃亮'},{img:wokersUrl.contactworker4,name:'黄渤'},{img:wokersUrl.contactworker5,name:'翟煦飞'}],
+          concatctUrl:[{img:wokersUrl.contactworker1,name:'岳云鹏',id:1},{img:wokersUrl.contactworker2,name:'郭京飞',id:2},{img:wokersUrl.contactworker3,name:'贾乃亮',id:3},{img:wokersUrl.contactworker4,name:'黄渤',id:4},{img:wokersUrl.contactworker5,name:'翟煦飞',id:5}],
           filmsUrl:[{img:wokersUrl.contactfilms1},{img:wokersUrl.contactflims2},{img:wokersUrl.contactfilms3}],
         },
-        { key: "2", name: "张璐瑶" },
-        { key: "3", name: "晋松" },
-        { key: "4", name: "吕良伟" },
-        { key: "5", name: "张晞临" },
-        { key: "6", name: "李宜娟" },
-        { key: "7", name: "秦海璐" },
-        { key: "8", name: "王劲松" },
-        { key: "9", name: "张智霖" },
-        { key: "10", name: "曾志伟" },
+        { 
+          key: "2", 
+          name: "梁朝伟",
+          EndName:'Tony Leung',
+          profession:'演员 | 歌手 | 1962-06-27 | 174cm',
+          fans:3377,
+          accumulate:52.23,
+          portrait:wokersUrl.workers2,
+          filmsUrl:[{img:wokersUrl.contactfilms4},{img:wokersUrl.contactflims5},{img:wokersUrl.contactfilms6}],
+          images:[{img:wokersUrl.worker6},{img:wokersUrl.worker7},{img:wokersUrl.worker8},{img:wokersUrl.worker9},{img:wokersUrl.worker10}],
+          concatctUrl:[{img:wokersUrl.contactworker6,name:'刘嘉玲',id:'6'},{img:wokersUrl.contactworker7,name:'金城武',id:'7'},{img:wokersUrl.contactworker8,name:'张学友',id:'8'},{img:wokersUrl.contactworker9,name:'张曼玉',id:'9'},{img:wokersUrl.contactworker10,name:'刘德华',id:'3'},{img:wokersUrl.contactworker11,name:'黎美娴',id:'5'}],
+          introduce:'梁朝伟，国家一级演员、歌手、配音，1994年，凭借电影《重庆森林》获得香港电影金像奖和台湾电影金马奖的最佳男主角。1997年，凭借电影《春光乍泄》获得香港电影金像奖和香港电影金紫荆奖最佳男主角。2000年，凭电影《花样年华》获第53届戛纳国际电影节"最佳男主角"奖。2007年，凭《色·戒》获第2届亚洲电影大奖最佳男主角奖等。2008年7月21日，与刘嘉玲在不丹举行婚礼。2014年，担任第61届柏林国际电影节评委。2015年，接拍由王家卫监制的电影《摆渡人》。2016年12月14日，携手李宇春献唱《摆渡人》岁月版主题曲《十年》。2018年2月16日，主演的电影《捉妖记2》上映。2018年8月17日，主演的电影《欧洲攻略》在中国上映。其他作品有《无间道》《2046》《一代宗师》《大魔术师》等。',
+          introduceTable:[{title:'别名',content:'伟仔,老虎',title2:'民族',content2:'汉族'},{title:'出生日期',content:'1962-06-27',title2:'身高',content2:'174cm'},{title:'出生地',content:'中国香港',title2:'毕业学校',content2:'香港无线电视台训练班'},{title:'身份',content:'演员 | 歌手',title2:'经纪公司',content2:'泽东电影集团有限公司'},{title:'国籍',content:'中国'}],
+          detailData:[ {
+            key:1,
+            award:[
+              {id:1,img:wokersUrl.awards14,name:'戛纳电影节',nominate:[{title:'第53界-最佳男演员',filmsName:'《花样年华》2000/饰:周慕云'},{title:'第52界-最佳男演员',filmsName:'《花样年华》2000/饰:周慕云'}]},
+              {id:2,img:wokersUrl.awards10,name:'香港金像奖',nominate:[{title:'第33界-最佳男主角(提名)',filmsName:'《一代宗师 (终极版)》2015/饰:叶问'},{title:'第33界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第32界-最佳男主角(提名)',filmsName:'《听风者》2012/饰:何兵'},{title:'第28界-最佳男主角(提名)',filmsName:'《赤壁 (上) 》2008/饰:周瑜'},{title:'第26界-最佳男主角(提名)',filmsName:'《伤城》2006/饰:刘正熙'},{title:'第24界-最佳男主角',filmsName:'《2046》2004/饰:周慕云'},{title:'第22界-最佳男主角',filmsName:'《无间道》2003/饰:陈永仁'},{title:'第20界-最佳男主角',filmsName:'《花样年华》2000/饰:周慕云'},{title:'第14界-最佳男主角',filmsName:'《重庆森林》1994/饰:警察'},{title:'第7界-最佳男配角',filmsName:'《人民英雄》1987/饰:阿小'}]},
+              {id:3,img:wokersUrl.awards5,name:'台湾电影金马奖',nominate:[{title:'第50界-最佳男主角(提名)',filmsName:'《一代宗师 (终极版)》2015/饰:叶问'},{title:'第50界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第44界-最佳男主角',filmsName:'《色·戒》2007/饰:易先生(易默成)'},{title:'第41界-最佳男主角(提名)',filmsName:'《2046》2004/饰:周慕云'},{title:'第40界-最佳男主角',filmsName:'《无间道》2003/饰:陈永仁'},{title:'第37界-最佳男主角(提名)',filmsName:'《花样年华》2000/饰:周慕云'},{title:'第31界-最佳男主角',filmsName:'《重庆森林》1994/饰:警察'}]},
+              {id:4,img:wokersUrl.awards11,name:'亚洲电影大奖',nominate:[{title:'第16界-最佳男主角(提名)',filmsName:'《风再起时》2023/饰:南江'},{title:'第8界-最佳男主角(提名)',filmsName:'《一代宗师(终极版)》2015/饰:叶问'},{title:'第8界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第2界-最佳男主角',filmsName:'《色·戒》2007/饰:易先生(易默成)'}]},
+              {id:5,img:wokersUrl.awards8,name:'华语电影传媒大奖',nominate:[{title:'第14界-最佳男主角(提名)',filmsName:'《一代宗师(终极版)》2015/饰:叶问'},{title:'第14界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第8界-最佳男主角',filmsName:'《色·戒》2007/饰:易先生(易默成)'},{title:'第5界-最佳男主角(提名)',filmsName:'《2046》2004/饰:周慕云'},{title:'第4界-观众票选最受瞩目男演员'}]},
+            ]
+          },
+          {
+            key:2,
+            award:[
+              {id:6,img:wokersUrl.awards13,name:'独立精神奖',nominate:[{title:'第23界-最佳男主角(提名)'}]},
+              {id:7,img:wokersUrl.awards9,name:'塔林黑夜电视节',nominate:[{title:'第7界-评审团奖-最佳男演员',filmsName:'《2046》2004/饰:周慕云'}]},
+              {id:8,img:wokersUrl.awards12,name:'香港电影评论协会',nominate:[{title:'第20界-最佳男演员(提名)',filmsName:'《一代宗师(终极版)》2015/饰:叶问'},{title:'第13界-最佳男演员(提名)',filmsName:'《伤城》2006/饰:刘正熙'},{title:'第11界-最佳男演员',filmsName:'《2046》2004/饰:周慕云'}]},
+              {id:9,img:wokersUrl.awards7,name:'华鼎奖',nominate:[{title:'第1界-最受公众尊敬的港台表演艺术家'}]}
+            ]
+            }],
+        },
+        { 
+          key: "3", 
+          name: "岳云鹏",
+          EndName:'YunPeng Yue',
+          profession:'演员 | 1985-04-15 | 175cm',
+          fans:4441,
+          accumulate:123.52,
+          portrait:wokersUrl.workers3,
+          filmsUrl:[{img:wokersUrl.contactfilms7},{img:wokersUrl.contactflims8},{img:wokersUrl.contactfilms9}],
+          images:[{img:wokersUrl.worker11},{img:wokersUrl.worker12},{img:wokersUrl.worker13},{img:wokersUrl.worker14},{img:wokersUrl.worker15}],
+          concatctUrl:[{img:wokersUrl.contactworker12,name:'郭德纲',id:'1'},{img:wokersUrl.contactworker13,name:'孙越',id:'5'},{img:wokersUrl.contactworker14,name:'郭麒麟',id:'4'},{img:wokersUrl.contactworker15,name:'黄景瑜',id:'7'}],
+          introduce:'岳云鹏，本名岳龙刚，出生于河南省濮阳市南乐县，中国内地相声、影视男演员。2005年，首次登台演出。2012年，主演卢卫国执导的喜剧电影《就是闹着玩的》。2013年在北京举办相声专场。2014年中央电视台春节联欢晚会参演小品《扰民了您》获得春晚节目三等奖。2015年中央电视台春节联欢晚会与孙越表演相声《我忍不了》。 [2]  同年主演喜剧电影《煎饼侠》和电视剧《先生，你哪位》，其改编的《五环之歌》也成为了《煎饼侠》的推广曲。2015年12月加盟央视一套户外真人秀《了不起的挑战》和浙江卫视真人秀《西游奇遇记》。2016年1月加盟东方卫视明星喜剧竞赛真人秀《欢乐喜剧人第二季》并获得总冠军；4月主演电影《大闹天竺》；5月主演电影《从你的全世界路过》；7月主演电影《疯岳撬佳人》8月主演电影《欢乐喜剧人》；9月加盟浙江卫视喜剧竞演综艺节目《喜剧总动员》、主演电影《断片之险途夺宝》；12月加盟江苏卫视户外明星挑战类真人秀《我们的挑战》。2017年2月加盟浙江卫视美食传情感恩真人秀《熟悉的味道第二季》；4月主演电影《妖铃铃》，饰演徐天宇；8月主演电影《祖宗十九代》，饰演贝小贝；12月主演电影《鼠胆英雄》，饰演闫大海。2018年4月加盟江苏卫视音乐唱作真人秀《无限歌谣季》；6月加盟《SNL》中国版《周六夜现场》。2019年8月，福布斯发布中国100名人榜，岳云鹏位列93位。',
+          introduceTable:[{title:'别名',content:'小岳岳',title2:'民族',content2:'汉族'},{title:'出生日期',content:'1985-04-15',title2:'血型',content2:'B型'},{title:'出生地',content:'中国河南濮阳',title2:'身高',content2:'175cm'},{title:'身份',content:'演员',title2:'星座',content2:'白羊座'},{title:'性别',content:'男',title2:'国籍',content2:'中国'}],
+          detailData:[
+            {
+              key:1,
+              award:[
+                {id:1,img:wokersUrl.awards15,name:'上海国际电影节',nominate:[{title:'第22界-电影频道传媒大奖-最受传媒关注男主角',filmsName:'《鼠胆英雄》2019/饰:闫大海'}]},
+              ]
+            }
+          ]
+        },
+        { 
+          key: "4", 
+          name: "沙溢",
+          EndName:'Yi Sha',
+          profession:'演员 | 1978-02-15 | 178cm',
+          fans:1221,
+          accumulate:60.08,
+          portrait:wokersUrl.workers4,
+          filmsUrl:[{img:wokersUrl.contactfilms7},{img:wokersUrl.contactflims8},{img:wokersUrl.contactfilms9}],
+          images:[{img:wokersUrl.worker11},{img:wokersUrl.worker12},{img:wokersUrl.worker13},{img:wokersUrl.worker14},{img:wokersUrl.worker15}],
+          concatctUrl:[{img:wokersUrl.contactworker12,name:'郭德纲',id:'5'},{img:wokersUrl.contactworker13,name:'孙越',id:'8'},{img:wokersUrl.contactworker14,name:'郭麒麟',id:'6'},{img:wokersUrl.contactworker15,name:'黄景瑜',id:'6'}],
+          introduce:'沙溢，1978年2月15日出生于 吉林省 长春市，中国大陆影视演员。 1997年考入 中国人民解放军艺术学院戏剧系，2001年毕业进入了 空军政治部话剧团，2002年，参演情景喜剧《 炊事班的故事》系列，获得第16届 “ 金星奖”优秀演员奖。2006年凭借情景喜剧《 武林外传》中 白展堂，而被观众所熟知。2012年因历史题材电影《 王的盛宴》中 萧何的出色表现，获得 中国电影表演艺术学会奖，被赞是一个可以驾驭多种角色的演员。2014年主演抗战剧《 秀才遇到兵》。2016年3月出演年代剧《 平凡岁月》。9月加盟综艺节目《 爸爸去哪儿》第四季。2017年7月，主演科幻都市电影《 回到昨天》。10月，加盟湖南卫视军旅成长励志节目《 奇兵神犬》。',
+          introduceTable:[{title:'别名',content:'小岳岳',title2:'民族',content2:'汉族'},{title:'出生日期',content:'1985-04-15',title2:'血型',content2:'B型'},{title:'出生地',content:'中国河南濮阳',title2:'身高',content2:'175cm'},{title:'身份',content:'演员',title2:'星座',content2:'白羊座'},{title:'性别',content:'男',title2:'国籍',content2:'中国'}],
+          detailData:[
+            {
+              key:1,
+              award:[
+                {id:1,img:wokersUrl.awards15,name:'上海国际电影节',nominate:[{title:'第22界-电影频道传媒大奖-最受传媒关注男主角',filmsName:'《鼠胆英雄》2019/饰:闫大海'}]},
+              ]
+            }
+          ]
+        },
+        { 
+          key: "5", 
+          name: "吴京",
+          EndName:'Jing Wu',
+          profession:'导演 | 演员 | 编剧 | 1974-04-03 | 174cm',
+          fans:52142,
+          accumulate:402.22,
+          portrait:wokersUrl.workers5,
+          filmsUrl:[{img:wokersUrl.contactfilms4},{img:wokersUrl.contactflims5},{img:wokersUrl.contactfilms6}],
+          images:[{img:wokersUrl.worker6},{img:wokersUrl.worker7},{img:wokersUrl.worker8},{img:wokersUrl.worker9},{img:wokersUrl.worker10}],
+          concatctUrl:[{img:wokersUrl.contactworker6,name:'刘嘉玲',id:'1'},{img:wokersUrl.contactworker7,name:'金城武',id:'6'},{img:wokersUrl.contactworker8,name:'张学友',id:'2'},{img:wokersUrl.contactworker9,name:'张曼玉',id:'6'},{img:wokersUrl.contactworker10,name:'刘德华',id:'2'},{img:wokersUrl.contactworker11,name:'黎美娴',id:'9'}],
+          introduce:'吴京，中国著名演员、导演、编剧，中国电影家协会副主席。致力于弘扬中国文化，拓展中国电影类型片市场，并热心公益事业。吴京执导并出演电影《战狼》和《战狼2》，投资出品并出演电影《流浪地球》，参与献礼片《攀登者》《我和我的祖国》《我和我的家乡》《我和我的父辈》拍摄，参与抗美援朝题材《金刚川》《长津湖》《长津湖之水门桥》等党和国家重大题材影片拍摄。2019年，吴京入选文化名家暨“四个一批”人才，2021年入选第五届全国青年德艺双馨文艺工作者提名。1994年吴京获得全国武术比赛精英赛枪术、对练冠军。1995年，因出演电影《功夫小子闯情关》正式进入演艺圈，凭借《太极宗师》《杀破狼》等影视作品被观众熟知。2007年，凭借动作警匪片《男儿本色》获得第44届台湾电影金马奖最佳男配角提名。2008年，吴京首次自导自演电影《狼牙》。2012年，主演电视剧《我是特种兵之利刃出鞘》，首次饰演军人。2014年，吴京与著名主持人谢楠结婚，婚后育有两子。2015年，吴京自编自导自演的军事题材电影《战狼》上映，开辟国产现代军事动作电影新方向，票房口碑双丰收，获国家“五个一工程”奖、第20届华鼎奖最佳编剧奖、最佳新锐导演奖、第33届大众电影百花奖优秀影片奖。2017年，再次自编自导自演军事题材电影《战狼2》，影片累计票房56.94亿，打破中国内地市场票房纪录、全球单一市场单片票房纪录，成为首部进入全球TOP100票房影片榜的亚洲电影，并获得第23届华鼎奖中国最佳导演奖、国家“五个一工程”奖、中国电影华表奖优秀影片奖。吴京凭借冷锋一角获得第34届大众电影百花奖最佳男主角奖、第17届中国电影华表奖优秀男演员奖、第23届华鼎奖中国最佳男主角奖。吴京与中国儿童少年基金会合作创立“听·见计划”，为0-7岁贫困家庭的听障儿童提供听力恢复医疗支持和救助，帮助他们恢复听力并组织后期的语言培训工作。',
+          introduceTable:[{title:'别名',content:'伟仔,老虎',title2:'民族',content2:'汉族'},{title:'出生日期',content:'1962-06-27',title2:'身高',content2:'174cm'},{title:'出生地',content:'中国香港',title2:'毕业学校',content2:'香港无线电视台训练班'},{title:'身份',content:'演员 | 歌手',title2:'经纪公司',content2:'泽东电影集团有限公司'},{title:'国籍',content:'中国'}],
+          detailData:[ {
+            key:1,
+            award:[
+              {id:1,img:wokersUrl.awards14,name:'戛纳电影节',nominate:[{title:'第53界-最佳男演员',filmsName:'《花样年华》2000/饰:周慕云'},{title:'第52界-最佳男演员',filmsName:'《花样年华》2000/饰:周慕云'}]},
+              {id:2,img:wokersUrl.awards10,name:'香港金像奖',nominate:[{title:'第33界-最佳男主角(提名)',filmsName:'《一代宗师 (终极版)》2015/饰:叶问'},{title:'第33界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第32界-最佳男主角(提名)',filmsName:'《听风者》2012/饰:何兵'},{title:'第28界-最佳男主角(提名)',filmsName:'《赤壁 (上) 》2008/饰:周瑜'},{title:'第26界-最佳男主角(提名)',filmsName:'《伤城》2006/饰:刘正熙'},{title:'第24界-最佳男主角',filmsName:'《2046》2004/饰:周慕云'},{title:'第22界-最佳男主角',filmsName:'《无间道》2003/饰:陈永仁'},{title:'第20界-最佳男主角',filmsName:'《花样年华》2000/饰:周慕云'},{title:'第14界-最佳男主角',filmsName:'《重庆森林》1994/饰:警察'},{title:'第7界-最佳男配角',filmsName:'《人民英雄》1987/饰:阿小'}]},
+              {id:3,img:wokersUrl.awards5,name:'台湾电影金马奖',nominate:[{title:'第50界-最佳男主角(提名)',filmsName:'《一代宗师 (终极版)》2015/饰:叶问'},{title:'第50界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第44界-最佳男主角',filmsName:'《色·戒》2007/饰:易先生(易默成)'},{title:'第41界-最佳男主角(提名)',filmsName:'《2046》2004/饰:周慕云'},{title:'第40界-最佳男主角',filmsName:'《无间道》2003/饰:陈永仁'},{title:'第37界-最佳男主角(提名)',filmsName:'《花样年华》2000/饰:周慕云'},{title:'第31界-最佳男主角',filmsName:'《重庆森林》1994/饰:警察'}]},
+              {id:4,img:wokersUrl.awards11,name:'亚洲电影大奖',nominate:[{title:'第16界-最佳男主角(提名)',filmsName:'《风再起时》2023/饰:南江'},{title:'第8界-最佳男主角(提名)',filmsName:'《一代宗师(终极版)》2015/饰:叶问'},{title:'第8界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第2界-最佳男主角',filmsName:'《色·戒》2007/饰:易先生(易默成)'}]},
+              {id:5,img:wokersUrl.awards8,name:'华语电影传媒大奖',nominate:[{title:'第14界-最佳男主角(提名)',filmsName:'《一代宗师(终极版)》2015/饰:叶问'},{title:'第14界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第8界-最佳男主角',filmsName:'《色·戒》2007/饰:易先生(易默成)'},{title:'第5界-最佳男主角(提名)',filmsName:'《2046》2004/饰:周慕云'},{title:'第4界-观众票选最受瞩目男演员'}]},
+            ]
+          },
+          {
+            key:2,
+            award:[
+              {id:6,img:wokersUrl.awards13,name:'独立精神奖',nominate:[{title:'第23界-最佳男主角(提名)'}]},
+              {id:7,img:wokersUrl.awards9,name:'塔林黑夜电视节',nominate:[{title:'第7界-评审团奖-最佳男演员',filmsName:'《2046》2004/饰:周慕云'}]},
+              {id:8,img:wokersUrl.awards12,name:'香港电影评论协会',nominate:[{title:'第20界-最佳男演员(提名)',filmsName:'《一代宗师(终极版)》2015/饰:叶问'},{title:'第13界-最佳男演员(提名)',filmsName:'《伤城》2006/饰:刘正熙'},{title:'第11界-最佳男演员',filmsName:'《2046》2004/饰:周慕云'}]},
+              {id:9,img:wokersUrl.awards7,name:'华鼎奖',nominate:[{title:'第1界-最受公众尊敬的港台表演艺术家'}]}
+            ]
+            }],
+        },
+        { 
+          key: "6", 
+          name: "王智", 
+          EndName:'Zhi Wang',
+          profession:'演员 | 歌手 | 1983-07-29 | 166cm',
+          fans:5424,
+          introduce:'王智，毕业于中央戏剧学院表演系。七岁开始拜师学武，2007年首次出演电视剧《目击者》，自此开始演艺事业。电视剧代表作有《马永贞》《妻子的秘密》《我爱灰太狼2》。后因出演电影《夏洛特烦恼》饰演女主角之一秋雅，被大众所熟知。毕业后曾在北京怀柔区杨宋镇张自口村当村官，成为了中戏表演系第一个也是目前唯一的一个大学生村官，被村民们誉为“京城最美女大学生村官”。王智，毕业于中央戏剧学院表演系。七岁开始拜师学武，2007年首次出演电视剧《目击者》，自此开始演艺事业。电视剧代表作有《马永贞》《妻子的秘密》《我爱灰太狼2》。后因出演电影《夏洛特烦恼》饰演女主角之一秋雅，被大众所熟知。毕业后曾在北京怀柔区杨宋镇张自口村当村官，成为了中戏表演系第一个也是目前唯一的一个大学生村官，被村民们誉为“京城最美女大学生村官”。',
+          introduceTable:[{title:'别名',content:'雷子',title2:'血型',content2:'B型'},{title:'出生日期',content:'1983-08-29',title2:'身高',content2:'184cm'},{title:'出生地',content:'辽宁省鞍山市铁东区',title2:'星座',content2:'处女座'},{title:'身份',content:'演员',title2:'毕业学校',content2:'上海戏剧学院'},{title:'国籍',content:'中国',title2:'经济公司',content2:'霍尔果斯十间影视传媒有限公司'},{title:'民族',content:'汉族'}],
+          accumulate:142.93,
+          portrait:wokersUrl.workers6,
+          detailData:[ {
+          key:1,
+          award:[
+            {id:1,img:wokersUrl.awards5,name:'台湾电影金马奖',nominate:[{title:'第五十四界-最佳男配角(提名)',filmsName:'《绣春刀Ⅱ:修罗战场》2017/饰:裴纶'}]},
+            {id:2,img:wokersUrl.awards2,name:'北京大学生电影节',nominate:[{title:'第二十界-最佳男演员奖(提名)',filmsName:'《黄金大劫案》2012/饰:小东北'}]},
+            {id:3,img:wokersUrl.awards6,name:'长春电影节',nominate:[{title:'第十一界-最佳男主角',filmsName:'《黄金大劫案》2012/饰:小东北'}]},
+            {id:4,img:wokersUrl.awards1,name:'澳门国际电影节',nominate:[{title:'第14界-金莲花奖-最佳男主角(提名)',filmsName:'《古董局中局》2021/饰:许愿'}]},
+            {id:5,img:wokersUrl.awards3,name:'上海电视节白兰玉奖',nominate:[{title:'第26界-电视连续剧-最佳男配角(提名)',filmsName:'《长安十二时辰》2019/饰:张小敬'},{title:'第24界-电视连续剧-最佳男配角(提名)',filmsName:'《我的前半生》2017/饰:陈俊生'}]}
+          ]
+        },
+        {
+          key:2,
+          award:[
+            {id:6,img:wokersUrl.awards4,name:'中国电视金鹰奖',nominate:[{title:'第31界-最佳男主角',filmsName:'《人世间》2022/饰:周秉昆'}]},
+            {id:7,img:wokersUrl.awards7,name:'华鼎奖',nominate:[{title:'第26界-全国观众最喜爱十佳电视明星',filmsName:''},{title:'第24界-中国近代现代题材电视剧最佳男演员',filmsName:'《和平饭店》2018/饰:王大顶'}]}
+          ]
+          }],
+          images:[{img:wokersUrl.worker1},{img:wokersUrl.worker2},{img:wokersUrl.worker3},{img:wokersUrl.worker4},{img:wokersUrl.worker5}],
+          concatctUrl:[{img:wokersUrl.contactworker1,name:'岳云鹏',id:'0'},{img:wokersUrl.contactworker2,name:'郭京飞',id:'3'},{img:wokersUrl.contactworker3,name:'贾乃亮',id:'5'},{img:wokersUrl.contactworker4,name:'黄渤',id:'7'},{img:wokersUrl.contactworker5,name:'翟煦飞',id:'9'}],
+          filmsUrl:[{img:wokersUrl.contactfilms1},{img:wokersUrl.contactflims2},{img:wokersUrl.contactfilms3}],
+        },
+        { 
+          key: "7", 
+          name: "沈腾", 
+          EndName:'Teng Shen',
+          profession:'演员 | 导演 | 编剧 | 1979-10-23 | 180cm',
+          fans:5424,
+          introduce:'沈腾，出生于黑龙江省齐齐哈尔市，中国内地男演员、影视导演、编剧，开心麻花舞台剧签约艺人，毕业于解放军艺术学院戏剧表演系。2003年出演开心麻花第一部舞台剧《想吃麻花现给你拧》。2004年参演电视剧《青春正步走》。2006年出演话剧《我在天堂等你》。2012年首次登上央视春晚，并在春晚上表演小品《今天的幸福》，凭借小品中饰演的“郝建”获得广泛关注。2013年再次登上央视春晚，并表演小品《今天的幸福2》；2013年获得第2届中国大学生微电影节最佳男主角奖；4月25日获得第四届现代戏剧谷2013壹戏剧大赏年度新锐男演员奖。2014年第三次登上央视春晚，表演小品《扶不扶》；4月参与电视剧《你是我的眼》的拍摄，在剧中饰演男主角张三斤。2015年第四次登上央视春晚表演小品《投其所好》。2015年参加《欢乐喜剧人》第一季，并获得冠军；9月30日与马丽领衔主演的喜剧电影《夏洛特烦恼》上映。2016年特别出演的电影《王牌逗王牌》公映。2017年在央视春晚上表演小品《一个女婿半个儿》；同年参演开心麻花第三部电影《羞羞的铁拳》。2018年特别出演动作电影《龙虾刑警》；7月27日主演的电影《西虹市首富》全国公映。2019年大年初一主演的电影《飞驰人生》、《疯狂的外星人》同步上映。2020年主演爆笑喜剧《创客联盟》；8月27日名列《2020福布斯中国名人榜》第28位；同年主演电影《独行月球》。2021年大年初一主演的电影《你好，李焕英》上映；同年主演电影《光天化日》。',
+          introduceTable:[{title:'别名',content:'雷子',title2:'血型',content2:'B型'},{title:'出生日期',content:'1983-08-29',title2:'身高',content2:'184cm'},{title:'出生地',content:'辽宁省鞍山市铁东区',title2:'星座',content2:'处女座'},{title:'身份',content:'演员',title2:'毕业学校',content2:'上海戏剧学院'},{title:'国籍',content:'中国',title2:'经济公司',content2:'霍尔果斯十间影视传媒有限公司'},{title:'民族',content:'汉族'}],
+          accumulate:142.93,
+          portrait:wokersUrl.workers8,
+          detailData:[ {
+          key:1,
+          award:[
+            {id:1,img:wokersUrl.awards5,name:'台湾电影金马奖',nominate:[{title:'第五十四界-最佳男配角(提名)',filmsName:'《绣春刀Ⅱ:修罗战场》2017/饰:裴纶'}]},
+            {id:2,img:wokersUrl.awards2,name:'北京大学生电影节',nominate:[{title:'第二十界-最佳男演员奖(提名)',filmsName:'《黄金大劫案》2012/饰:小东北'}]},
+            {id:3,img:wokersUrl.awards6,name:'长春电影节',nominate:[{title:'第十一界-最佳男主角',filmsName:'《黄金大劫案》2012/饰:小东北'}]},
+            {id:4,img:wokersUrl.awards1,name:'澳门国际电影节',nominate:[{title:'第14界-金莲花奖-最佳男主角(提名)',filmsName:'《古董局中局》2021/饰:许愿'}]},
+            {id:5,img:wokersUrl.awards3,name:'上海电视节白兰玉奖',nominate:[{title:'第26界-电视连续剧-最佳男配角(提名)',filmsName:'《长安十二时辰》2019/饰:张小敬'},{title:'第24界-电视连续剧-最佳男配角(提名)',filmsName:'《我的前半生》2017/饰:陈俊生'}]}
+          ]
+        },
+        {
+          key:2,
+          award:[
+            {id:6,img:wokersUrl.awards4,name:'中国电视金鹰奖',nominate:[{title:'第31界-最佳男主角',filmsName:'《人世间》2022/饰:周秉昆'}]},
+            {id:7,img:wokersUrl.awards7,name:'华鼎奖',nominate:[{title:'第26界-全国观众最喜爱十佳电视明星',filmsName:''},{title:'第24界-中国近代现代题材电视剧最佳男演员',filmsName:'《和平饭店》2018/饰:王大顶'}]}
+          ]
+          }],
+          images:[{img:wokersUrl.worker1},{img:wokersUrl.worker2},{img:wokersUrl.worker3},{img:wokersUrl.worker4},{img:wokersUrl.worker5}],
+          concatctUrl:[{img:wokersUrl.contactworker1,name:'岳云鹏',id:'0'},{img:wokersUrl.contactworker2,name:'郭京飞',id:'3'},{img:wokersUrl.contactworker3,name:'贾乃亮',id:'5'},{img:wokersUrl.contactworker4,name:'黄渤',id:'7'},{img:wokersUrl.contactworker5,name:'翟煦飞',id:'9'}],
+          filmsUrl:[{img:wokersUrl.contactfilms1},{img:wokersUrl.contactflims2},{img:wokersUrl.contactfilms3}],
+        },
+        { 
+          key: "8", 
+          name: "张译",
+          EndName:'Yi Zhang',
+          profession:'演员 | 1978-02-17 | 178cm',
+          fans:16857,
+          accumulate:262.56,
+          portrait:wokersUrl.workers7,
+          filmsUrl:[{img:wokersUrl.contactfilms4},{img:wokersUrl.contactflims5},{img:wokersUrl.contactfilms6}],
+          images:[{img:wokersUrl.worker6},{img:wokersUrl.worker7},{img:wokersUrl.worker8},{img:wokersUrl.worker9},{img:wokersUrl.worker10}],
+          concatctUrl:[{img:wokersUrl.contactworker6,name:'刘嘉玲',id:'1'},{img:wokersUrl.contactworker7,name:'金城武',id:'6'},{img:wokersUrl.contactworker8,name:'张学友',id:'2'},{img:wokersUrl.contactworker9,name:'张曼玉',id:'6'},{img:wokersUrl.contactworker10,name:'刘德华',id:'2'},{img:wokersUrl.contactworker11,name:'黎美娴',id:'9'}],
+          introduce:'张译，出生于黑龙江省哈尔滨市，中国内地男演员。1997年至2006年服役于北京军区政治部战友话剧团。2006年，主演电视剧《士兵突击》。2009年，主演抗战剧《我的团长我的团》，并凭借该角色获得2009中国电视榜“最深入人心电视形象”的荣誉；9月，主演孔笙执导的抗战剧《生死线》。2014年9月，主演打拐题材电影《亲爱的》，并凭借饰演的韩德忠一角获得第30届中国电影金鸡奖最佳男配角奖。2015年5月，主演电影《山河故人》。2016年9月，主演悬疑影片《追凶者也》，并凭借该片获得第八届中国电影导演协会年度男演员奖。2017年6月，凭借电视剧《鸡毛飞上天》获第23届上海电视节白玉兰奖最佳男主角奖。2018年2月16日，主演中国首部现代化海军题材电影《红海行动》全国上映，获得36亿的票房成绩。2019年1月，主演的剧情片《一秒钟》入围柏林电影节主竞赛单元，电影《攀登者》《我和我的祖国》于国庆档上映 。2020年3月，主演并担任艺术总监的刑侦剧《重生》播出；同年8月21日，主演的抗战电影《八佰》全国公映。9月，通过《光荣时代》荣获第四届网影盛典年度最佳剧集男演员；10月1日，出演的电影《我和我的家乡》上映；10月23日，主演的抗美援朝题材电影《金刚川》上映；11月27日，主演的《一秒钟》上映。2021年4月30日，领衔主演由张艺谋执导的谍战影片《悬崖之上》上映，并于2021年12月30日获得第34届中国电影金鸡奖最佳男主角奖。',
+          introduceTable:[{title:'别名',content:'伟仔,老虎',title2:'民族',content2:'汉族'},{title:'出生日期',content:'1962-06-27',title2:'身高',content2:'174cm'},{title:'出生地',content:'中国香港',title2:'毕业学校',content2:'香港无线电视台训练班'},{title:'身份',content:'演员 | 歌手',title2:'经纪公司',content2:'泽东电影集团有限公司'},{title:'国籍',content:'中国'}],
+          detailData:[ {
+            key:1,
+            award:[
+              {id:1,img:wokersUrl.awards14,name:'戛纳电影节',nominate:[{title:'第53界-最佳男演员',filmsName:'《花样年华》2000/饰:周慕云'},{title:'第52界-最佳男演员',filmsName:'《花样年华》2000/饰:周慕云'}]},
+              {id:2,img:wokersUrl.awards10,name:'香港金像奖',nominate:[{title:'第33界-最佳男主角(提名)',filmsName:'《一代宗师 (终极版)》2015/饰:叶问'},{title:'第33界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第32界-最佳男主角(提名)',filmsName:'《听风者》2012/饰:何兵'},{title:'第28界-最佳男主角(提名)',filmsName:'《赤壁 (上) 》2008/饰:周瑜'},{title:'第26界-最佳男主角(提名)',filmsName:'《伤城》2006/饰:刘正熙'},{title:'第24界-最佳男主角',filmsName:'《2046》2004/饰:周慕云'},{title:'第22界-最佳男主角',filmsName:'《无间道》2003/饰:陈永仁'},{title:'第20界-最佳男主角',filmsName:'《花样年华》2000/饰:周慕云'},{title:'第14界-最佳男主角',filmsName:'《重庆森林》1994/饰:警察'},{title:'第7界-最佳男配角',filmsName:'《人民英雄》1987/饰:阿小'}]},
+              {id:3,img:wokersUrl.awards5,name:'台湾电影金马奖',nominate:[{title:'第50界-最佳男主角(提名)',filmsName:'《一代宗师 (终极版)》2015/饰:叶问'},{title:'第50界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第44界-最佳男主角',filmsName:'《色·戒》2007/饰:易先生(易默成)'},{title:'第41界-最佳男主角(提名)',filmsName:'《2046》2004/饰:周慕云'},{title:'第40界-最佳男主角',filmsName:'《无间道》2003/饰:陈永仁'},{title:'第37界-最佳男主角(提名)',filmsName:'《花样年华》2000/饰:周慕云'},{title:'第31界-最佳男主角',filmsName:'《重庆森林》1994/饰:警察'}]},
+              {id:4,img:wokersUrl.awards11,name:'亚洲电影大奖',nominate:[{title:'第16界-最佳男主角(提名)',filmsName:'《风再起时》2023/饰:南江'},{title:'第8界-最佳男主角(提名)',filmsName:'《一代宗师(终极版)》2015/饰:叶问'},{title:'第8界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第2界-最佳男主角',filmsName:'《色·戒》2007/饰:易先生(易默成)'}]},
+              {id:5,img:wokersUrl.awards8,name:'华语电影传媒大奖',nominate:[{title:'第14界-最佳男主角(提名)',filmsName:'《一代宗师(终极版)》2015/饰:叶问'},{title:'第14界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第8界-最佳男主角',filmsName:'《色·戒》2007/饰:易先生(易默成)'},{title:'第5界-最佳男主角(提名)',filmsName:'《2046》2004/饰:周慕云'},{title:'第4界-观众票选最受瞩目男演员'}]},
+            ]
+          },
+          {
+            key:2,
+            award:[
+              {id:6,img:wokersUrl.awards13,name:'独立精神奖',nominate:[{title:'第23界-最佳男主角(提名)'}]},
+              {id:7,img:wokersUrl.awards9,name:'塔林黑夜电视节',nominate:[{title:'第7界-评审团奖-最佳男演员',filmsName:'《2046》2004/饰:周慕云'}]},
+              {id:8,img:wokersUrl.awards12,name:'香港电影评论协会',nominate:[{title:'第20界-最佳男演员(提名)',filmsName:'《一代宗师(终极版)》2015/饰:叶问'},{title:'第13界-最佳男演员(提名)',filmsName:'《伤城》2006/饰:刘正熙'},{title:'第11界-最佳男演员',filmsName:'《2046》2004/饰:周慕云'}]},
+              {id:9,img:wokersUrl.awards7,name:'华鼎奖',nominate:[{title:'第1界-最受公众尊敬的港台表演艺术家'}]}
+            ]
+            }],
+        },
+        { 
+          key: "9", 
+          name: "刘德华",
+          EndName:'DeHua Liu',
+          profession:'演员 | 歌手 | 制片人 | 1961-09-27 | 174cm',
+          fans:26720,
+          accumulate:229.37,
+          portrait:wokersUrl.workers9,
+          filmsUrl:[{img:wokersUrl.contactfilms4},{img:wokersUrl.contactflims5},{img:wokersUrl.contactfilms6}],
+          images:[{img:wokersUrl.worker6},{img:wokersUrl.worker7},{img:wokersUrl.worker8},{img:wokersUrl.worker9},{img:wokersUrl.worker10}],
+          concatctUrl:[{img:wokersUrl.contactworker6,name:'刘嘉玲',id:'1'},{img:wokersUrl.contactworker7,name:'金城武',id:'6'},{img:wokersUrl.contactworker8,name:'张学友',id:'2'},{img:wokersUrl.contactworker9,name:'张曼玉',id:'6'},{img:wokersUrl.contactworker10,name:'刘德华',id:'2'},{img:wokersUrl.contactworker11,name:'黎美娴',id:'9'}],
+          introduce:' 刘德华，歌手、演员、作词、制片人、监制，香港太平绅士，中国残疾人福利基金会副理事长，香港残疾人奥委会暨伤残人士体育协会副会长。曾获香港特别行政区荣誉勋章，是华人娱乐圈影、视、歌多栖发展的代表之一。作为歌手，他是90年代香港乐坛“四大天王”之一，吉尼斯世界纪录大全中获奖最多的香港歌手，《忘情水》《笨小孩》《爱你一万年》等均成为金曲佳作。作为演员，他曾因《暗战》《大块头有大智慧》等电影获香港电影金像奖最佳男主角。1981年，出演电影《彩云曲》。1985年，加入华星唱片公司；同年，发行首张个人专辑《只知道此刻爱你》。1989年2月，发行个人首张国语专辑《回到你身边·法内情》。1991年，创办天幕电影公司。2004年，凭借《无间道3:终极无间》获台湾金马奖最佳男主角；同年第六次获得十大劲歌金曲最受欢迎男歌星奖。2005年，获得香港UA院线颁发的“1985-2005年全港最高累积票房香港男演员”奖。2006年，获得釜山国际电影节亚洲最有贡献电影人奖。2008年6月23日，与朱丽倩注册结婚。2010年5月2日，获颁第12届世界杰出华人奖，同时获颁加拿大纽奔驰域蓝仕桥大学荣誉博士学位。2011年，主演剧情片《桃姐》，并凭借该片先后获得台湾金马奖最佳男主角奖、香港电影金像奖最佳男主角奖；同年，担任第49届台湾电影金马奖评审团主席。2012年5月9日，妻子朱丽倩生下一女。2013年1月16日，担任第7届亚洲电影大奖评审团主席；6月9日，主演的3D特工电影《富春山居图》在中国内地上映；同年，主演3D警匪动作片《风暴》。2014年5月，主演中国首部打拐题材的电影《失孤》，并凭借此片获得第16届中国电影华表奖优秀男演员奖。2015年，阔别十年再登央视羊年春晚，并演唱歌曲《回家的路》。2016年2月8日，主演的电影《澳门风云3》上映；10月1日，主演的喜剧动作片《王牌逗王牌》上映；同年，连任中国残疾人福利基金会副理事长，并参与填词的歌曲《原谅我》正式发行。2017年4月28日，主演并担任制作人的警匪动作片《拆弹专家》在中国内地上映，在片中饰演一名卧底拆弹专家；8月11日，主演的电影《侠盗联盟》中国内地上映；9月30日，主演的电影《追龙》上映；同年，作词并演唱歌曲《慢慢习惯》。影视作品还有《天狼劫》《盲探》《墨攻》《未来警察》《解救吾先生》《长城》《我的特工爷爷》《我的少女时代》等。',
+          introduceTable:[{title:'别名',content:'伟仔,老虎',title2:'民族',content2:'汉族'},{title:'出生日期',content:'1962-06-27',title2:'身高',content2:'174cm'},{title:'出生地',content:'中国香港',title2:'毕业学校',content2:'香港无线电视台训练班'},{title:'身份',content:'演员 | 歌手',title2:'经纪公司',content2:'泽东电影集团有限公司'},{title:'国籍',content:'中国'}],
+          detailData:[ {
+            key:1,
+            award:[
+              {id:1,img:wokersUrl.awards14,name:'戛纳电影节',nominate:[{title:'第53界-最佳男演员',filmsName:'《花样年华》2000/饰:周慕云'},{title:'第52界-最佳男演员',filmsName:'《花样年华》2000/饰:周慕云'}]},
+              {id:2,img:wokersUrl.awards10,name:'香港金像奖',nominate:[{title:'第33界-最佳男主角(提名)',filmsName:'《一代宗师 (终极版)》2015/饰:叶问'},{title:'第33界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第32界-最佳男主角(提名)',filmsName:'《听风者》2012/饰:何兵'},{title:'第28界-最佳男主角(提名)',filmsName:'《赤壁 (上) 》2008/饰:周瑜'},{title:'第26界-最佳男主角(提名)',filmsName:'《伤城》2006/饰:刘正熙'},{title:'第24界-最佳男主角',filmsName:'《2046》2004/饰:周慕云'},{title:'第22界-最佳男主角',filmsName:'《无间道》2003/饰:陈永仁'},{title:'第20界-最佳男主角',filmsName:'《花样年华》2000/饰:周慕云'},{title:'第14界-最佳男主角',filmsName:'《重庆森林》1994/饰:警察'},{title:'第7界-最佳男配角',filmsName:'《人民英雄》1987/饰:阿小'}]},
+              {id:3,img:wokersUrl.awards5,name:'台湾电影金马奖',nominate:[{title:'第50界-最佳男主角(提名)',filmsName:'《一代宗师 (终极版)》2015/饰:叶问'},{title:'第50界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第44界-最佳男主角',filmsName:'《色·戒》2007/饰:易先生(易默成)'},{title:'第41界-最佳男主角(提名)',filmsName:'《2046》2004/饰:周慕云'},{title:'第40界-最佳男主角',filmsName:'《无间道》2003/饰:陈永仁'},{title:'第37界-最佳男主角(提名)',filmsName:'《花样年华》2000/饰:周慕云'},{title:'第31界-最佳男主角',filmsName:'《重庆森林》1994/饰:警察'}]},
+              {id:4,img:wokersUrl.awards11,name:'亚洲电影大奖',nominate:[{title:'第16界-最佳男主角(提名)',filmsName:'《风再起时》2023/饰:南江'},{title:'第8界-最佳男主角(提名)',filmsName:'《一代宗师(终极版)》2015/饰:叶问'},{title:'第8界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第2界-最佳男主角',filmsName:'《色·戒》2007/饰:易先生(易默成)'}]},
+              {id:5,img:wokersUrl.awards8,name:'华语电影传媒大奖',nominate:[{title:'第14界-最佳男主角(提名)',filmsName:'《一代宗师(终极版)》2015/饰:叶问'},{title:'第14界-最佳男主角(提名)',filmsName:'《一代宗师》2013/饰:叶问'},{title:'第8界-最佳男主角',filmsName:'《色·戒》2007/饰:易先生(易默成)'},{title:'第5界-最佳男主角(提名)',filmsName:'《2046》2004/饰:周慕云'},{title:'第4界-观众票选最受瞩目男演员'}]},
+            ]
+          },
+          {
+            key:2,
+            award:[
+              {id:6,img:wokersUrl.awards13,name:'独立精神奖',nominate:[{title:'第23界-最佳男主角(提名)'}]},
+              {id:7,img:wokersUrl.awards9,name:'塔林黑夜电视节',nominate:[{title:'第7界-评审团奖-最佳男演员',filmsName:'《2046》2004/饰:周慕云'}]},
+              {id:8,img:wokersUrl.awards12,name:'香港电影评论协会',nominate:[{title:'第20界-最佳男演员(提名)',filmsName:'《一代宗师(终极版)》2015/饰:叶问'},{title:'第13界-最佳男演员(提名)',filmsName:'《伤城》2006/饰:刘正熙'},{title:'第11界-最佳男演员',filmsName:'《2046》2004/饰:周慕云'}]},
+              {id:9,img:wokersUrl.awards7,name:'华鼎奖',nominate:[{title:'第1界-最受公众尊敬的港台表演艺术家'}]}
+            ]
+            }],
+        },
+        { 
+          key: "10", 
+          name: "王一博", 
+          EndName:'YiBo Wang',
+          profession:'演员 | 歌手 | | 主持人 | 1997-08-25 | 180cm',
+          fans:46456,
+          introduce:'王一博（YiBo），1997年8月5日出生于中国河南省洛阳市，亚洲偶像团体 UNIQ成员。 2014年9月15日，出道预告公开成为 UNIQ首位正式成员；同年，组合获 尖叫2015爱奇艺之夜颁奖礼“2015最具期待组合奖”。2015年，主演电影《 梦想合伙人》及电影《 大话西游3》；组合获得酷音乐亚洲盛典“年度内地最佳新人”奖及尖叫2016爱奇艺之夜颁奖礼“2016年度音乐大奖”。2016年，歌曲《 EOEO》获美国International-K Music Awards最佳编舞奖；同年主演时尚爱情喜剧电影《 闭嘴！爱吧》及都市爱情励志喜剧《 人间至味是清欢》；4月29日起，主持《 天天向上》节目，成为天天兄弟新阵容中的一员。 2017年，领衔主演青春校园仙侠剧《 私立蜀山学园》和青春爆笑喜剧《 超凡天赋》；同年获得第十七届音乐风云榜年度盛典”偶像新势力“奖、2017年亚洲影响力盛典“最佳新人演员”奖、2017微博电视影响力盛典“年度新锐艺人”；11月，发行单曲《 Just Dance》。 2018年2月8日，主持2018湖南卫视春节联欢晚会。3月23日起，录制竞演类真人秀节目《 创造101》，担任舞蹈导师。3月31日，作为嘉宾参加《 浙江卫视春季盛典》。4月，领衔主演的青春热血微电影《 热舞吧！青春》上线，同月，领衔主演仙侠古装剧《 陈情令》。6月24日，加盟湖南卫视2018《未来可期，快乐中国毕业歌会》。',
+          introduceTable:[{title:'别名',content:'雷子',title2:'血型',content2:'B型'},{title:'出生日期',content:'1983-08-29',title2:'身高',content2:'184cm'},{title:'出生地',content:'辽宁省鞍山市铁东区',title2:'星座',content2:'处女座'},{title:'身份',content:'演员',title2:'毕业学校',content2:'上海戏剧学院'},{title:'国籍',content:'中国',title2:'经济公司',content2:'霍尔果斯十间影视传媒有限公司'},{title:'民族',content:'汉族'}],
+          accumulate:11.64,
+          portrait:wokersUrl.workers10,
+          detailData:[ {
+          key:1,
+          award:[
+            {id:1,img:wokersUrl.awards5,name:'台湾电影金马奖',nominate:[{title:'第五十四界-最佳男配角(提名)',filmsName:'《绣春刀Ⅱ:修罗战场》2017/饰:裴纶'}]},
+            {id:2,img:wokersUrl.awards2,name:'北京大学生电影节',nominate:[{title:'第二十界-最佳男演员奖(提名)',filmsName:'《黄金大劫案》2012/饰:小东北'}]},
+            {id:3,img:wokersUrl.awards6,name:'长春电影节',nominate:[{title:'第十一界-最佳男主角',filmsName:'《黄金大劫案》2012/饰:小东北'}]},
+            {id:4,img:wokersUrl.awards1,name:'澳门国际电影节',nominate:[{title:'第14界-金莲花奖-最佳男主角(提名)',filmsName:'《古董局中局》2021/饰:许愿'}]},
+            {id:5,img:wokersUrl.awards3,name:'上海电视节白兰玉奖',nominate:[{title:'第26界-电视连续剧-最佳男配角(提名)',filmsName:'《长安十二时辰》2019/饰:张小敬'},{title:'第24界-电视连续剧-最佳男配角(提名)',filmsName:'《我的前半生》2017/饰:陈俊生'}]}
+          ]
+        },
+        {
+          key:2,
+          award:[
+            {id:6,img:wokersUrl.awards4,name:'中国电视金鹰奖',nominate:[{title:'第31界-最佳男主角',filmsName:'《人世间》2022/饰:周秉昆'}]},
+            {id:7,img:wokersUrl.awards7,name:'华鼎奖',nominate:[{title:'第26界-全国观众最喜爱十佳电视明星',filmsName:''},{title:'第24界-中国近代现代题材电视剧最佳男演员',filmsName:'《和平饭店》2018/饰:王大顶'}]}
+          ]
+          }],
+          images:[{img:wokersUrl.worker1},{img:wokersUrl.worker2},{img:wokersUrl.worker3},{img:wokersUrl.worker4},{img:wokersUrl.worker5}],
+          concatctUrl:[{img:wokersUrl.contactworker1,name:'岳云鹏',id:'0'},{img:wokersUrl.contactworker2,name:'郭京飞',id:'3'},{img:wokersUrl.contactworker3,name:'贾乃亮',id:'5'},{img:wokersUrl.contactworker4,name:'黄渤',id:'7'},{img:wokersUrl.contactworker5,name:'翟煦飞',id:'9'}],
+          filmsUrl:[{img:wokersUrl.contactfilms1},{img:wokersUrl.contactflims2},{img:wokersUrl.contactfilms3}],
+        },
       ],
     },
   };

@@ -1279,9 +1279,13 @@ export default {
               p {
                 color: #999;
                 font-size: 17px;
+                cursor: pointer;
                 span {
                   color: #333333;
                   margin-left: 14px;
+                  &:hover{
+                  color: #ef4638;
+                  }
                 }
               }
             }
