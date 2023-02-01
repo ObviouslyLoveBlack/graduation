@@ -109,7 +109,6 @@ export default {
   },
   created() {
     const { target,name } = this.$route.query;
-    console.log(name);
     if(name){
       this.getTarget(name)
     }
@@ -123,8 +122,8 @@ export default {
     },
     async getTarget(name){
       const {data:res} = await this.$req.getAllfilms()
-      this.targetObj = res.find(v=>v.moviename === name)
-      console.log(this.targetObj.introduceInfo);
+      const {data:res2} = await this.$req.getReleaseFilms()
+      this.targetObj = [...res,...res2].find(v=>v.moviename === name)
     }
   }
 };

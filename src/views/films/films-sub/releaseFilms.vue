@@ -15,6 +15,7 @@
           :key="item.key"
           @mouseover="getHover(item)"
           @mouseleave="getleave()"
+          @click="filmsDetail(item)"
         >
           <img :src="item.img" alt="" />
           <p>{{ item.moviename }}</p>
@@ -171,6 +172,15 @@ export default {
     getleave() {
       this.hoverObj = null;
     },
+    filmsDetail(action){
+      let url = this.$router.resolve({
+        path:'/movie/flims/detail',
+        query:{
+          name:action.moviename
+        }
+      })
+      window.open(url.href,'_blank')
+    }
   },
 };
 </script>
