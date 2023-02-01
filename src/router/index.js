@@ -82,6 +82,11 @@ const router = new VueRouter({
           name: "movie-maker",
           component: () => import("@/views/moviemaker"),
         },
+        {
+          path: "/movie/flims/detail",
+          name: "movie-detail",
+          component: () => import("@/views/films/filmsdetail.vue"),
+        },
       ],
     },
     {

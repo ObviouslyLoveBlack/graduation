@@ -9,7 +9,7 @@
           <span @click="all('hot')">全部 ></span>
         </div>
         <div class="left-main">
-          <div class="item" v-for="action in hotInfo.data" :key="action.id">
+          <div class="item" v-for="action in hotInfo.data" :key="action.id" @click="filmsDetail(action)">
             <div class="image">
               <img :src="`${action.img}`" alt="" />
               <div class="shadow"></div>
@@ -27,7 +27,7 @@
           <span @click="all('release')">全部 ></span>
         </div>
         <div class="icon2-main">
-          <div class="item" v-for="action in releaseInfo.data" :key="action.id">
+          <div class="item" v-for="action in releaseInfo.data" :key="action.id" @click="filmsDetail(action)">
             <img :src="action.img" alt="" />
             <div class="shadow"></div>
             <span>{{ action.moviename }}</span>
@@ -53,7 +53,7 @@
           <span @click="all('classic')">全部 > </span>
         </div>
         <div class="icon3-main">
-          <div class="item" v-for="action in hotPlayInfo.data" :key="action.id">
+          <div class="item" v-for="action in hotPlayInfo.data" :key="action.id" @click="filmsDetail(action)">
             <img :src="action.img" alt="" />
             <div class="shadow"></div>
             <span>{{ action.moviename }}</span>
@@ -107,6 +107,7 @@
                   class="item"
                   v-for="item in action.moviceList"
                   :key="item.id"
+                  @click="filmsDetail(item)"
                 >
                   <img :src="item.img" alt="" />
                   <div class="shadow"></div>
@@ -152,9 +153,9 @@
           <span>{{ boxOfficeInfo.title }}</span>
         </div>
         <div class="right-main">
-          <div class="icon">
+          <div class="icon" @click="filmsDetail(boxOfficeInfo.data[0])">
             <img :src="`${boxOfficeInfo.data[0].img}`" alt="" />
-            <span>{{ boxOfficeInfo.data[0].title }}</span>
+            <span>{{ boxOfficeInfo.data[0].moviename }}</span>
             <i>{{ boxOfficeInfo.data[0].num }}万</i>
           </div>
           <div class="right-main-rank">
@@ -163,10 +164,11 @@
                 class="item"
                 v-for="action in boxOfficeList"
                 :key="action.key"
+                @click="filmsDetail(action)"
               >
                 <div>
                   <p>
-                    {{ action.key }} <span>{{ action.title }}</span>
+                    {{ action.key }} <span>{{ action.moviename }}</span>
                   </p>
                   <i>{{ action.num }}万</i>
                 </div>
@@ -191,34 +193,34 @@
           <span>{{ mostexpectInfo.title }}</span>
           <span @click="getcomplete('expect')">查看完整榜单></span>
         </div>
-        <div class="icon3-main">
+        <div class="icon3-main" @click="filmsDetail(mostexpectInfo.data[0])">
           <img :src="`${mostexpectInfo.data[0].img}`" alt="" />
-          <p>{{ mostexpectInfo.data[0].title }}</p>
+          <p>{{ mostexpectInfo.data[0].moviename }}</p>
           <p>上映时间:{{ mostexpectInfo.data[0].updateTime }}</p>
           <p>{{ mostexpectInfo.data[0].num }}想看</p>
         </div>
         <div class="icon3-intrdus">
-          <div class="icon3-intrdus-item">
+          <div class="icon3-intrdus-item" @click="filmsDetail(mostexpectInfo.data[1])">
             <img :src="`${mostexpectInfo.data[1].img}`" alt="" />
             <div class="intrdus-detail">
-              <p>{{ mostexpectInfo.data[1].title }}</p>
+              <p>{{ mostexpectInfo.data[1].moviename }}</p>
               <p>{{ mostexpectInfo.data[1].num }}想看</p>
             </div>
           </div>
-          <div class="icon3-intrdus-item">
+          <div class="icon3-intrdus-item" @click="filmsDetail(mostexpectInfo.data[2])">
             <img :src="`${mostexpectInfo.data[2].img}`" alt="" />
             <div class="intrdus-detail">
-              <p>{{ mostexpectInfo.data[2].title }}</p>
+              <p>{{ mostexpectInfo.data[2].moviename }}</p>
               <p>{{ mostexpectInfo.data[2].num }}想看</p>
             </div>
           </div>
         </div>
         <div class="icon3-main-rank">
           <ul>
-            <li class="item" v-for="action in mostexpectList" :key="action.key">
+            <li class="item" v-for="action in mostexpectList" :key="action.key" @click="filmsDetail(action)">
               <div>
                 <p>
-                  {{ action.key }}<span>{{ action.title }}</span>
+                  {{ action.key }}<span>{{ action.moviename }}</span>
                 </p>
                 <i>{{ action.num }}人想看</i>
               </div>
@@ -231,17 +233,17 @@
           <span>{{ TophundredInfo.title }}</span>
           <span @click="getcomplete('tophundred')">查看完整榜单 ></span>
         </div>
-        <div class="icon4-image">
+        <div class="icon4-image" @click="filmsDetail(TophundredInfo.data[0])">
           <img :src="`${TophundredInfo.data[0].img}`" alt="" />
-          <span>{{ TophundredInfo.data[0].title }}</span>
+          <span>{{ TophundredInfo.data[0].moviename }}</span>
           <i>{{ TophundredInfo.data[0].score }}分</i>
         </div>
         <div class="icon4-main-rank">
           <ul>
-            <li class="item" v-for="action in TophundredList" :key="action.key">
+            <li class="item" v-for="action in TophundredList" :key="action.key" @click="filmsDetail(action)">
               <div>
                 <p>
-                  {{ action.key }}<span>{{ action.title }}</span>
+                  {{ action.key }}<span>{{ action.moviename }}</span>
                 </p>
                 <i>{{ action.score }}分</i>
               </div>
@@ -466,6 +468,15 @@ export default {
           target:encodeURIComponent(JSON.stringify(action))
         }
       })
+    },
+    filmsDetail(action){
+      let url = this.$router.resolve({
+        path:'/movie/flims/detail',
+        query:{
+          name:action.moviename
+        }
+      })
+      window.open(url.href,'_blank')
     }
   },
 };

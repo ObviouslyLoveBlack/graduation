@@ -480,7 +480,7 @@ h2 {
   &::before {
     float: left;
     content: "";
-    display: inline-block;
+    // display: inline-block;
     width: 3px;
     height: 18px;
     background: #ef4238;
