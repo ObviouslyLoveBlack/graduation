@@ -6,7 +6,7 @@
     <div class="home-main">
       <router-view></router-view>
     </div>
-    <div class="home-footer">
+    <div class="home-footer" v-if="!$route.meta.isFooter">
       <Footer/>
     </div>
   </div>
@@ -21,6 +21,13 @@ export default {
  components:{
   Header,
   Footer
+ },
+ data(){
+  return{
+    isFooter:''
+  }
+ },
+ created(){
  }
 }
 </script>

@@ -135,11 +135,11 @@
             <li v-for="action in hotFilmsReview.data" :key="action.id">
               <img :src="action.img" alt="" />
               <div class="icon5-title">
-                <span> {{ action.title }}</span>
+                <span @click="hotspotDetail(action)"> {{ action.title }}</span>
                 <p>{{ action.name }} 评论{{ action.works }}</p>
                 <p>
-                  {{ action.content }}
-                  <span>(全文)</span>
+                  {{ action.content1 }}
+                  <span @click="hotspotDetail(action)">(全文)</span>
                 </p>
               </div>
             </li>
@@ -362,6 +362,14 @@ export default {
     },
   },
   methods: {
+    hotspotDetail(action){
+      this.$router.push({
+        path:'/films-detail',
+        query:{
+          target:encodeURIComponent(JSON.stringify(action))
+        }
+      })
+    },
     changeType(type) {
       this.getHotTvPlay(type);
       this.type = {

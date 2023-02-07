@@ -70,7 +70,37 @@ const router = new VueRouter({
         {
           path: "/cinema",
           name: "g-cniema",
+          redirect:'/cinema/aggregate',
           component: () => import("@/views/cinema"),
+          meta:{  
+           isFooter:true
+          },
+          children:[
+            {
+              path:'/cinema/aggregate',
+              name:"aggregate",
+              meta:{  
+                isFooter:true
+               },
+              component:()=>import("@/views/cinema/cinema-sub/aggregate.vue")
+            },
+            {
+              path:'/cinema/office',
+              name:"office",
+              meta:{  
+                isFooter:true
+              },
+              component:()=>import("@/views/cinema/cinema-sub/office.vue")
+            },
+            {
+              path:'/cinema/arrangement',
+              name:"arrangeme",
+              meta:{  
+                isFooter:true
+              },
+              component:()=>import("@/views/cinema/cinema-sub/arrangement.vue")
+            },
+          ]
         },
         {
           path: "/hotspot",

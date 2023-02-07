@@ -131,7 +131,6 @@ export default {
   created() {
     const { target } = this.$route.query;
     this.targetObj = JSON.parse(decodeURIComponent(target));
-    console.log(this.targetObj);
   },
   methods: {
     onSearch(value) {
@@ -208,9 +207,8 @@ export default {
         margin-bottom: 20px;
       }
       .author-info {
-        width: 420px;
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         align-items: center;
         text-align: center;
         font-size: 13px;
@@ -219,10 +217,12 @@ export default {
         img {
           height: 24px;
           width: 24px;
+          margin-right: 10px;
         }
         p {
           margin-top: 13px;
           color: #37a;
+          margin-right: 10px;
           &:hover {
             background: #37a;
             color: #fff;
@@ -230,6 +230,8 @@ export default {
         }
         .movicname {
           color: #37a;
+          margin-right: 10px;
+          margin-left: 10px;
           &:hover {
             background: #37a;
             color: #fff;
@@ -237,6 +239,7 @@ export default {
         }
         .rate {
           font-size: 14px;
+          margin-right: 10px;
         }
       }
       .spoiler {
