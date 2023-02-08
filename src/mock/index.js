@@ -528,8 +528,32 @@ Mock.setup({
   timeout: "100",
 });
 
-//首页
+//登录
+Mock.mock(getRegExpUrl('/getLogin'),'post',()=>{
+  return{
+    status:0,
+    msg:'操作成功',
+    data:{
+      token:'fndjfdinanfhdnsionfjdsknfkds3u82rnjkdsfh2839',
+      role:2,
+      username:'三千里',
+      avatar:hotspotUrl.hotspot7,
+      password:998645
+    }
+  }
+})
+//获取验证码
+Mock.mock(getRegExpUrl('/login/verification'),'get',()=>{
+  return{
+    status:0,
+    msg:'操作成功',
+    data:{
+      code:4397
+    }
+  }
+})
 
+//首页
 //正在热映
 Mock.mock(getRegExpUrl("/getMenuList"), "post", () => {
   return {

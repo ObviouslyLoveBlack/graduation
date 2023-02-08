@@ -79,10 +79,26 @@
               />
               <p slot="content">{{ item.content }}</p>
             </a-comment>
+            <div class="resopne">回应</div>
           </a-comment>
           <div class="respone">
             <a-icon type="right" style="margin-right: 5px" />
             我来评论
+          </div>
+          <div slot="content">
+            <a-form-item>
+              <a-textarea :rows="4" v-model.trim="textareaValue" @change="handleChange"  class="textarea"/>
+            </a-form-item>
+            <a-form-item>
+              <a-button
+                html-type="submit"
+                :loading="submitting"
+                type="primary"
+                @click="handleSubmit"
+              >
+                回应
+              </a-button>
+            </a-form-item>
           </div>
           <p class="footer">
             © 2005－2023 guzhi.com, all rights reserved 故之之科技有限公司
@@ -104,11 +120,21 @@
         </p>
         <img :src="targetObj.img" alt="" />
         <div class="films-info">
-          <p>导演：<span>{{targetObj.director}}</span></p>
-          <p>主演：<span>{{targetObj.tostar}}</span></p>
-          <p>类型：<span>{{targetObj.type}}</span></p>
-          <p>地区：<span>{{targetObj.location}}</span></p>
-          <p>上映：<span>{{targetObj.Shown}}</span></p>
+          <p>
+            导演：<span>{{ targetObj.director }}</span>
+          </p>
+          <p>
+            主演：<span>{{ targetObj.tostar }}</span>
+          </p>
+          <p>
+            类型：<span>{{ targetObj.type }}</span>
+          </p>
+          <p>
+            地区：<span>{{ targetObj.location }}</span>
+          </p>
+          <p>
+            上映：<span>{{ targetObj.Shown }}</span>
+          </p>
         </div>
       </div>
     </div>
@@ -126,6 +152,8 @@ export default {
       dislikes: 0,
       action: null,
       moment,
+      submitting:false,
+      textareaValue:'',
     };
   },
   created() {
@@ -146,6 +174,13 @@ export default {
       this.dislikes = 1;
       this.action = "disliked";
     },
+    handleChange(){
+      // console.log(this.textareaValue);
+    },
+    handleSubmit(){
+      if (!this.textareaValue) return
+      console.log('回应',this.textareaValue);
+    }
   },
 };
 </script>
@@ -287,6 +322,7 @@ export default {
         width: 100%;
         // height: 600px;
         margin: 40px 0px;
+        position: relative;
         overflow: hidden;
         .review-author {
           width: 690px;
@@ -324,6 +360,11 @@ export default {
           margin: 0px;
           font-size: 13px;
           color: #999;
+        }
+        .resopne{
+          position: absolute;
+          bottom: 0px;
+          right: 0px;
         }
       }
     }
@@ -411,12 +452,19 @@ export default {
 }
 ::v-deep .ant-avatar {
   border-radius: 1px;
-   width: 32px;
-    height: 32px;
+  width: 32px;
+  height: 32px;
   img {
     width: 32px;
     height: 32px;
     border-radius: 1px;
   }
+}
+textarea.ant-input{
+  border: 1px solid #eaeaea;
+}
+.ant-btn-primary{
+  background: #37a;
+  border: none;
 }
 </style>

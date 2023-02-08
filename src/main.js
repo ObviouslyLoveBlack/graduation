@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import Antd, { Modal } from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css';
+import '@/style/ant.less'
 import 'swiper/css/swiper.css'
 
 import router from "./router/index";

@@ -30,7 +30,7 @@
           <div class="logo">
             <div class="userInfo">
               <ul>
-                <li><a><router-link :to="{path:'/login'}">登录</router-link></a></li>
+                <li @click="gologin"><a href="javascript:;">登录</a></li>
               </ul>
             </div>
           </div>
@@ -72,9 +72,12 @@ export default {
       this.codeVisible = !this.codeVisible;
     },
     gologin() {
-      // this.$router.push({
-      //   path: "/evaluation",
-      // });
+      this.$router.push({
+        path: "/login",
+        query:{
+          url:this.$route.path
+        }
+      });
     },
     go(path) {
       this.$router.push({

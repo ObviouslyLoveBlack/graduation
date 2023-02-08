@@ -11,5 +11,8 @@ export default {
         redirectInfoToStorage(state){
             localStorage.setItem('info',state.redirectInfo)
         }
+    },
+    getters:{
+        
     }
 }
