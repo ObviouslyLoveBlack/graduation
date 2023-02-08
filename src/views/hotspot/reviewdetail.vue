@@ -40,22 +40,33 @@
           © 本文版权归作者 {{ targetObj.author }} 所有，任何形式转载请联系作者。
         </p>
         <div class="review-info">
-          <button>
+          <button
+            :class="current === index ? 'active' : ''"
+            v-for="(item, index) in arr"
+            :key="index"
+            @click="changeStatus(item, index)"
+          >
+            <a-icon :type="item.type" style="margin-right: 3px" />{{ item.name
+            }}<span>{{ item.num }}</span>
+          </button>
+          <!-- <button @click="like">
             <a-icon type="like" style="margin-right: 3px" />有用<span>{{
               targetObj.like
             }}</span>
           </button>
-          <button>
+          <button @click="dislike">
             <a-icon type="dislike" style="margin-right: 3px" />没用<span>{{
               targetObj.dislike
             }}</span>
-          </button>
+          </button> -->
         </div>
         <div class="old-review">
           <a-comment
             class="comment"
             v-for="action in targetObj.reviewInfo"
             :key="action.key"
+            @mouseenter="touchComment(action.key)"
+            @mouseleave="touchLeave()"
           >
             <a slot="author" class="review-author">
               <span>{{ action.author }}</span>
@@ -66,8 +77,30 @@
               :src="`${action.avatar}`"
               :alt="action.author"
             />
-            <p slot="content">{{ action.content }}</p>
-            <a-comment v-for="item in action.children" :key="item.id">
+            <p slot="content">
+              {{ action.content }}
+              <span
+                v-show="touch === action.key"
+                class="one-res"
+                @click="oneRespone(action)"
+                >回应</span
+              >
+            </p>
+            <div class="reply" v-if="reply === action.key">
+              <input
+                type="text"
+                v-model="finallyWord"
+                :placeholder="'回复  ' + `${action.author}`"
+              />
+              <button @click="onReply(action)">回复</button>
+              <button @click="handleClose">取消</button>
+            </div>
+            <a-comment
+              v-for="item in action.children"
+              :key="item.key"
+              @mouseenter="touchComment(item.key)"
+              @mouseleave="touchLeave()"
+            >
               <a slot="author" class="review-author">
                 <span>{{ item.author }}</span>
                 <span>{{ item.datetime }}</span>
@@ -77,17 +110,38 @@
                 :src="`${item.avatar}`"
                 :alt="item.author"
               />
-              <p slot="content">{{ item.content }}</p>
+              <p slot="content">
+                {{ item.content }}
+                <span
+                  v-show="touch === item.key"
+                  class="one-res"
+                  @click="oneRespone(item)"
+                  >回应</span
+                >
+              </p>
+              <div class="reply" v-if="reply === item.key">
+                <input
+                  type="text"
+                  v-model="finallyWord"
+                  :placeholder="'回复  ' + `${item.author}`"
+                />
+                <button @click="onReply(item)">回复</button>
+                <button @click="handleClose">取消</button>
+              </div>
             </a-comment>
-            <div class="resopne">回应</div>
           </a-comment>
-          <div class="respone">
+          <div class="respone" v-if="!token" @click="gotoComment">
             <a-icon type="right" style="margin-right: 5px" />
             我来评论
           </div>
-          <div slot="content">
+          <div slot="content" v-else>
             <a-form-item>
-              <a-textarea :rows="4" v-model.trim="textareaValue" @change="handleChange"  class="textarea"/>
+              <a-textarea
+                :rows="4"
+                v-model.trim="textareaValue"
+                @change="handleChange"
+                class="textarea"
+              />
             </a-form-item>
             <a-form-item>
               <a-button
@@ -152,35 +206,90 @@ export default {
       dislikes: 0,
       action: null,
       moment,
-      submitting:false,
-      textareaValue:'',
+      touch: "", //回应字的显示隐藏
+      reply: "", //回应输入框的显示隐藏
+      submitting: false, //判断回应发表
+      textareaValue: "",
+      finallyWord: "",
+      token: "",
+      arr: [],
+      current: "",
     };
+  },
+  computed: {
+    count: {
+      get() {
+        return this.arr[0].num + this.arr[1].num;
+      },
+    },
   },
   created() {
     const { target } = this.$route.query;
     this.targetObj = JSON.parse(decodeURIComponent(target));
+    this.arr = [
+      { type: "like", name: "有用", num: this.targetObj.like },
+      { type: "dislike", name: "没用", num: this.targetObj.dislike },
+    ];
   },
   methods: {
     onSearch(value) {
       console.log(value);
     },
-    like() {
-      this.likes = 1;
-      this.dislikes = 0;
-      this.action = "liked";
+    changeStatus(item, index) {
+      if (this.current === index) return;
+      let rate = this.current !== '' ? 1 : 0;
+      this.current = index;
+      let another = index === 0 ? 1 : 0;
+      this.arr[index].num += 1;
+      this.arr[another].num = this.count - this.arr[index].num - rate;
     },
-    dislike() {
-      this.likes = 0;
-      this.dislikes = 1;
-      this.action = "disliked";
-    },
-    handleChange(){
+    handleChange() {
       // console.log(this.textareaValue);
     },
-    handleSubmit(){
-      if (!this.textareaValue) return
-      console.log('回应',this.textareaValue);
-    }
+    handleSubmit() {
+      if (!this.textareaValue) return;
+      console.log("回应", this.textareaValue);
+    },
+    oneRespone(comment) {
+      this.reply = comment.key;
+      this.touch = null;
+    },
+    //鼠标移入影评
+    touchComment(key) {
+      // console.log(key);
+      this.touch = key;
+    },
+    touchLeave() {
+      this.touch = "";
+    },
+    //最终提交回复
+    onReply(comment) {
+      if (!this.finallyWord) return;
+      if (comment.children) {
+        comment.children.push({
+          content: this.finallyWord,
+          author: "拥抱",
+          avatar:
+            "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+          datetime: this.moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+          id: Number(comment.id) + 1,
+        });
+      } else {
+        console.log("no children");
+      }
+      this.finallyWord = "";
+    },
+    handleClose() {
+      this.reply = null;
+    },
+    gotoComment() {
+      if (!this.token) {
+        this.$router.push({
+          path: "/login",
+        });
+      }
+      this.token = "fndgfdj9fndjgf9d9gfmd";
+    },
   },
 };
 </script>
@@ -309,10 +418,11 @@ export default {
           background: #fff;
           border: 1px solid #999;
           color: #999;
+          cursor: pointer;
           span {
             margin-left: 3px;
           }
-          &:hover {
+          &.active {
             background: #37a;
             color: #fff;
           }
@@ -322,7 +432,6 @@ export default {
         width: 100%;
         // height: 600px;
         margin: 40px 0px;
-        position: relative;
         overflow: hidden;
         .review-author {
           width: 690px;
@@ -353,18 +462,26 @@ export default {
           }
         }
         p {
-          padding-top: 10px;
+          padding: 10px 0px;
+          // border-bottom: 1px solid #37a;
+          position: relative;
+          .one-res {
+            position: absolute;
+            bottom: -10px;
+            right: 5px;
+            color: #999;
+            cursor: pointer;
+            &:hover {
+              background: #37a;
+              color: white;
+            }
+          }
         }
         .footer {
           padding-top: 3px;
           margin: 0px;
           font-size: 13px;
           color: #999;
-        }
-        .resopne{
-          position: absolute;
-          bottom: 0px;
-          right: 0px;
         }
       }
     }
@@ -446,6 +563,32 @@ export default {
 }
 .comment {
   margin-bottom: 20px;
+  // border: 1px solid #37a;
+  .reply {
+    display: flex;
+    justify-content: space-between;
+    input {
+      border: 1px solid #eaeaea;
+      width: 80%;
+      padding: 4px 10px;
+      margin-bottom: 5px;
+      &:focus {
+        outline: none;
+        border: 1px solid #eaeaea;
+      }
+    }
+    button {
+      height: 31px;
+      padding: 0px 10px;
+      color: #999;
+      border: 1px solid #eaeaea;
+      // background: #eaeaea;
+      &:hover {
+        color: white;
+        background: #37a;
+      }
+    }
+  }
 }
 ::v-deep .ant-comment-inner {
   padding: 0px;
@@ -460,10 +603,10 @@ export default {
     border-radius: 1px;
   }
 }
-textarea.ant-input{
+textarea.ant-input {
   border: 1px solid #eaeaea;
 }
-.ant-btn-primary{
+.ant-btn-primary {
   background: #37a;
   border: none;
 }
