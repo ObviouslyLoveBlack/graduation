@@ -1,18 +1,24 @@
 export default {
     namespaced:true,
-    state:()=>({
+    state:{
         redirectInfo:null, //记录从何页面跳转到登录页面，登录成功后返回原页面
-    }),
-    mutations:{
-        updateRedirecInfo(state,info){
-            state.redirectInfo = info
-            this.redirectInfoToStorage()
-        },
-        redirectInfoToStorage(state){
-            localStorage.setItem('info',state.redirectInfo)
-        }
+        userInfo:{},
+        token:''
     },
-    getters:{
+    mutations:{
+        // updateRedirecInfo(state,info){
+        //     state.redirectInfo = info
+        //     this.commit('user/redirectInfoToStorage')
+        // },
+        // redirectInfoToStorage(state){
+        //     localStorage.setItem('redirectInfo',state.redirectInfo)
+        // },
+        setUserInfo(state,info){
+            state.userInfo = info
+            localStorage.setItem('userInfo',JSON.stringify(state.userInfo))
+        },
+    },
+    // getters:{
         
-    }
+    // }
 }

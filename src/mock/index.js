@@ -538,7 +538,7 @@ Mock.mock(getRegExpUrl('/getLogin'),'post',()=>{
       role:2,
       username:'三千里',
       avatar:hotspotUrl.hotspot7,
-      password:998645
+      password:439778
     }
   }
 })
@@ -548,7 +548,7 @@ Mock.mock(getRegExpUrl('/login/verification'),'get',()=>{
     status:0,
     msg:'操作成功',
     data:{
-      code:4397
+      code:439778
     }
   }
 })

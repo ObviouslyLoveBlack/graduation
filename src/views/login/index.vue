@@ -16,7 +16,13 @@
                 :maxLength="11"
                 class="a-input"
               />
-              <span @click="getVerfication" :class="tel ? 'spanActive' : ''">发送验证码</span>
+              <span
+                v-if="repeat"
+                @click="getVerfication"
+                :class="tel ? 'spanActive' : ''"
+                >发送验证码</span
+              >
+              <span v-else>{{ timer }}秒后重新发送</span>
             </div>
             <div class="login-box">
               <!-- <input type="text" v-model="form.verification" placeholder="请输入验证码" /> -->
@@ -28,7 +34,9 @@
                 class="a-input"
               />
             </div>
-            <button @click="onSubmit" :class="code ? 'buttonActive' : ''">登录</button>
+            <button @click="onSubmit" :class="code ? 'buttonActive' : ''">
+              登录
+            </button>
             <div class="agree-info">
               <input
                 type="radio"
@@ -65,6 +73,7 @@
 <script>
 import series from "./login-sub/service.vue";
 import privacy from "./login-sub/privacy.vue";
+import { mapMutations } from "vuex";
 export default {
   name: "login-1",
   components: {
@@ -78,8 +87,11 @@ export default {
       agree: false,
       visible: false,
       current: "series",
-      tel:false, //判断手机号校验是否合格
-      code:false, //判断验证码?手机号检验是否合格
+      repeat: true,
+      timer: 10,
+      tel: false, //判断手机号校验是否合格
+      code: false, //判断验证码?手机号检验是否合格
+      loading: false, //回流
       form: {
         phone: "",
         verification: null,
@@ -88,6 +100,7 @@ export default {
   },
   created() {},
   methods: {
+    ...mapMutations("user", ["setUserInfo"]),
     InputChange() {
       if (typeof this.form.verification == "string") {
         this.form.verification = null;
@@ -95,21 +108,52 @@ export default {
       if (typeof this.form.phone == "string") {
         this.form.phone = null;
       }
-      const validPhone =  this.validPhone(this.form.phone)
-      this.tel = validPhone
-      const validCode = String(this.form.verification).length == 6 && validPhone
-      this.code = validCode
+      const validPhone = this.validPhone(this.form.phone);
+      this.tel = validPhone;
+      const validCode =
+        String(this.form.verification).length == 6 && validPhone;
+      this.code = validCode;
     },
     async getVerfication() {
-      if(!this.tel) return
+      if (!this.tel) return;
+      if (this.timer == 0) {
+        this.timer = 10;
+      }
       const { data: res } = await this.$req.Verification();
-      this.form.verification = res.code;
+      this.repeat = false;
+      var auth_timer = setInterval(() => {
+        this.timer--;
+        if (this.timer <= 0) {
+          clearInterval(auth_timer);
+          this.repeat = true;
+        }
+      }, 1000);
+      this.$message.info(res.code);
     },
-    async onSubmit(){
-      if(!this.code) return
-      if(!this.agree) return this.$message.info('请仔细阅读并同意勾选用户服务协议等')
-      const { data: res } = await this.$req.Login();
-      console.log(res);
+    onSubmit() {
+      if (!this.code) return;
+      if (!this.agree)
+        return this.$message.info("请仔细阅读并同意勾选用户服务协议等");
+      this.$req.Login().then((res) => {
+        if (res.data.password !== this.form.verification)
+          return this.$message.error("验证码错误");
+        //将用户信息存储Vuex
+        const { avatar, username, token, role } = res.data;
+        const obj = {
+          avatar,
+          username,
+          token,
+          role,
+        };
+        this.setUserInfo(obj);
+        this.handleCancel()
+      });
+    },
+    handleCancel(){
+      this.form.phone = ''
+      this.form.verification = ''
+      this.tel = false
+      this.code = false
     },
     goback() {
       this.$router.back();
@@ -129,9 +173,9 @@ export default {
       this.visible = false;
     },
     //验证输入的手机号
-    validPhone (str) {
-     return /^[1]([3-9])[0-9]{9}$/.test(str)
-    }
+    validPhone(str) {
+      return /^[1]([3-9])[0-9]{9}$/.test(str);
+    },
   },
 };
 </script>
@@ -178,6 +222,7 @@ export default {
             right: 14px;
             cursor: pointer;
             color: #adadad;
+            user-select: none;
           }
           .a-input {
             padding: 20px 0px;
@@ -244,18 +289,18 @@ export default {
   background-size: contain;
   border: none;
 }
-.spanActive{
+.spanActive {
   color: #ef3834 !important;
 }
-.buttonActive{
+.buttonActive {
   background: #ef3834;
   color: white !important;
 }
 
-input[type="checkbox"]{
+input[type="checkbox"] {
   -webkit-appearance: none;
 }
-input[type="radio"]{
+input[type="radio"] {
   -webkit-appearance: none;
 }
 </style>

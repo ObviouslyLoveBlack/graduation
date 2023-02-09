@@ -12,6 +12,7 @@ import { VueAxios } from './utils/request';
 import * as service from '@/utils/axios.base'
 import req from './api/index'
 import moment from 'moment';
+import store from './store';
 
 
 
@@ -31,5 +32,6 @@ Vue.use(VueAxios,axios)
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')
