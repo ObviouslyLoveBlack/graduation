@@ -1,50 +1,64 @@
 <template>
-  <div class="container">
-    <div class="arrangment-header">
-      <div class="whole" @click="more">
-        全国
-        <a-icon type="down" />
+  <div>
+    <div class="container">
+      <div class="arrangment-header">
+        <div class="whole" @click="more">
+          全国
+          <a-icon type="down" />
+        </div>
+        <div class="header-period">
+          <input
+            type="radio"
+            :checked="period"
+            @click="periodChange"
+            class="radioStyle"
+            :class="period ? 'active' : ''"
+          />
+          <span>黄金时间段(18:00-21:00)</span>
+        </div>
+        <div class="header-period">
+          <input
+            type="radio"
+            :checked="seat"
+            @click="seatChange"
+            class="radioStyle"
+            :class="seat ? 'active' : ''"
+          />
+          <span>按座位</span>
+        </div>
       </div>
-      <div class="header-period">
-        <input
-          type="radio"
-          :checked="period"
-          @click="periodChange"
-          class="radioStyle"
-          :class="period ? 'active' : ''"
-        />
-        <span>黄金时间段(18:00-21:00)</span>
+      <div class="arrangment-echarts">
+        <div class="echarts" id="echarts"></div>
       </div>
-      <div class="header-period">
-        <input
-          type="radio"
-          :checked="seat"
-          @click="seatChange"
-          class="radioStyle"
-          :class="seat ? 'active' : ''"
-        />
-        <span>按座位</span>
+      <div class="arrangment-table" v-if="!seat">
+        <a-table
+          :columns="columns"
+          :data-source="tabledData"
+          :pagination="false"
+          :customRow="onClickRow"
+        >
+        </a-table>
       </div>
-    </div>
-    <div class="arrangment-echarts">
-      <div class="echarts" id="echarts"></div>
-    </div>
-    <div class="arrangment-table" v-if="!seat">
-      <a-table :columns="columns" :data-source="tabledData" :pagination="false" :customRow="onClickRow">
-      </a-table>
-    </div>
-    <div class="arrangment-table" v-else>
-      <a-table
-        :columns="columns2"
-        :data-source="tabledData"
-        :pagination="false"
+      <div class="arrangment-table" v-else>
+        <a-table
+          :columns="columns2"
+          :data-source="tabledData"
+          :pagination="false"
+        >
+        </a-table>
+      </div>
+      <a-modal
+        v-model="visible"
+        class="more"
+        title="更多数据"
+        :width="350"
+        :footer="false"
+        :closable="false"
       >
-      </a-table>
+        <img src="@/assets/image/code.jpg" alt="" class="image" />
+        <div class="scan">打开微信扫一扫浏览更多</div>
+      </a-modal>
     </div>
-     <a-modal v-model="visible" class="more" title="更多数据" :width="350" :footer="false" :closable="false">
-     <img src="@/assets/image/code.jpg" alt="" class="image">
-     <div class="scan">打开微信扫一扫浏览更多</div>
-    </a-modal>
   </div>
 </template>
 
@@ -59,8 +73,9 @@ export default {
       period: false,
       myChart: null,
       basicOption: null,
-      visible:false,
-      rowRecord:{}, // 点击行数据
+      visible: false,
+      rowRecord: {}, // 点击行数据
+      show:false,
       columns: [
         {
           title: "片名",
@@ -108,10 +123,16 @@ export default {
         },
       ],
       tabledData: [], //表格--图表数据
-      commontTable: [], //普通时间段
-      periodTable: [], //黄金时间段
-      commontSeatTable: [], //普通-座位
-      periodSeatTable: [], //黄金-座位
+      // form:{
+      //   commontTable1: [], //普通时间段
+      //   commontTable2: [], //黄金时间段
+      //   commontTable3: [], //普通-座位
+      //   commontTable4: [], //黄金-座位
+      // },
+      commontTable: [],
+      commontSeatTable: [],
+      periodTable: [],
+      periodSeatTable: [],
     };
   },
   watch: {
@@ -150,39 +171,33 @@ export default {
   methods: {
     async getCommonTable() {
       const { data: res } = await this.$req.arrangementcommon();
-      this.commontTable = res;
+      this.commontTable = res.map((v) => ({
+        ...v,
+        value: v.value1,
+        arrangementGDP: v.arrangementGDP1,
+        name: v.movieName,
+      }));
       this.tabledData = this.commontTable;
-      const { data: res2 } = await this.$req.arrangementperiod();
-      this.periodTable = res2;
-      const { data: res3 } = await this.$req.arrangementcommonSeat();
-      this.commontSeatTable = res3;
-      const { data: res4 } = await this.$req.arrangementperiodSeat();
-      this.periodSeatTable = res4;
+      this.periodTable = res.map((v) => ({
+        ...v,
+        value: v.value2,
+        arrangementGDP: v.arrangementGDP2,
+        name: v.movieName,
+      }));
+      this.commontSeatTable = res.map((v) => ({
+        ...v,
+        value: v.value3,
+        arrangementGDP: v.arrangementGDP4,
+        name: v.movieName,
+      }));
+      this.periodSeatTable = res.map((v) => ({
+        ...v,
+        value: v.value4,
+        arrangementGDP: v.arrangementGDP4,
+        name: v.movieName,
+      }));
       this.getData();
     },
-    // OnTableChange(){
-    //   if(this.period && this.seat){
-    //      this.$req.arrangementperiodSeat().then(res=>{
-    //       this.tabledData = res.data
-    //       return
-    //     })
-    //   } else if(this.period){
-    //     this.$req.arrangementperiod().then(res=>{
-    //       this.tabledData = res.data
-    //       return
-    //     })
-    //   } else if(this.seat){
-    //     this.$req.arrangementcommonSeat().then(res=>{
-    //       this.tabledData = res.data
-    //       return
-    //     })
-    //   } else {
-    //     this.$req.arrangementcommon().then(res=>{
-    //       this.tabledData = res.data
-    //       return
-    //     })
-    //   }
-    // },
     periodChange() {
       this.period = !this.period;
     },
@@ -211,7 +226,7 @@ export default {
               show: true,
               position: "outside",
               fontSize: 12,
-              color:  'inherit',
+              color: "inherit",
             },
             labelLine: {
               show: true,
@@ -234,19 +249,19 @@ export default {
       if (!this.myChart) return;
       this.myChart.resize();
     },
-    more(){
-      this.visible = true
+    more() {
+      this.visible = true;
     },
-    onClickRow(record){
-      return{
-        on:{
-          click:()=>{
-            this.visible = true
+    onClickRow(record) {
+      return {
+        on: {
+          click: () => {
+            this.visible = true;
             // console.log(record);
-            this.rowRecord = record
-          }
-        }
-      }
+            this.rowRecord = record;
+          },
+        },
+      };
     },
   },
 };
@@ -306,15 +321,15 @@ export default {
   background-position: 100% 100%;
   background-size: contain;
 }
-.more{
+.more {
   position: relative;
-  .image{
-  // border: 1px solid red;
-  width: 300px;
-  height: 300px;
+  .image {
+    // border: 1px solid red;
+    width: 300px;
+    height: 300px;
+  }
 }
-}
-.scan{
+.scan {
   color: #ef3834;
   margin-left: 70px;
 }

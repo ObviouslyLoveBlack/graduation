@@ -1,22 +1,27 @@
 <template>
   <div class="container-style">
-    <div class="films-header">
+    <div v-if="FilmsTypeList.length>0">
+      <div class="films-header">
       <ul>
         <li
           @click="onChange(action)"
           v-for="action in FilmsTypeList"
-          :key="action.code"
+          :key="action.codes"
           :class="`${action.type}` == type ? 'active' : ''"
         >
-          {{ action.name }}
+          {{ action.pathName }}
           <div :class="`${action.type}` == type ? 'triangle' : ''"></div>
         </li>
         <div class="triangle"></div>
       </ul>
-    </div>
-    <div class="films-main">
+      </div>
+     <div class="films-main">
       <router-view></router-view>
+     </div>
     </div>
+    <p class="maker-empot" v-else>
+      <a-spin size="large" tip="数据加载中..."/>
+    </p>
   </div>
 </template>
 
@@ -46,7 +51,7 @@ export default {
     onChange(action) {
       this.type = action.type;
       this.$router.push({
-        path: `${action.path}`,
+        path: `${action.pathUrl}`,
       });
     },
   },
@@ -78,6 +83,8 @@ export default {
         font-size: 16px;
         font-weight: 500;
         position: relative;
+        cursor: pointer;
+        user-select: none;
         &:hover {
           color: #fff;
         }
@@ -92,6 +99,11 @@ export default {
         }
       }
     }
+  }
+  .maker-empot{
+    height: 150px;
+    width: 70%;
+    margin: 60px auto;
   }
 }
 .active {

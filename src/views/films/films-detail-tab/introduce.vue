@@ -7,7 +7,7 @@
     <div class="cast-member">
       <h2>演职人员</h2>
       <div class="cast-member-box">
-        <div class="cast-member-item" v-for="(action,index) in introduceInfo.castmember" :key="index">
+        <div @click="makerDetail(action)" class="cast-member-item" v-for="(action,index) in introduceInfo.castmember" :key="index">
           <img :src="action.img" alt="" />
           <p>{{action.name}}</p>
           <p>{{action.act ? '饰'+`${action.act}` : '导演'}}</p>
@@ -16,7 +16,7 @@
     </div>
     <div class="short-comments">
       <h2>热门短评</h2>
-      <div class="write-comments">写短评</div>
+      <div class="write-comments" @click="goToShortC">写短评</div>
       <div class="short-comments-box">
         <div class="short-comments-item" v-for="(action,index) in introduceInfo.shortcomments" :key="index">
           <img :src="action.img" alt="">
@@ -28,7 +28,7 @@
               </a-tooltip>
               <p>{{action.content}}</p>
           </div>
-          <div class="changlike">
+          <div class="changlike" :class="action.author === name ? 'active':''" @click="getToLike(action)">
             <a-icon type="like" style="font-size:16px"/>
             <span>{{action.like}}</span>
           </div>
@@ -76,17 +76,46 @@
 
 <script>
 import moment from "moment";
+import {mapState} from 'vuex'
 export default {
   name: "introduce-1",
   data() {
     return {
       moment,
-      time:'2022-01-11 09:39:36'
+      time:'2022-01-11 09:39:36',
+      addLoading:false,
+      name:null
     };
   },
-  props:['introduceInfo'],
+  props:['introduceInfo','id'],
+  computed:{
+   ...mapState('user',['token'])
+  },
   methods: {
-   
+   makerDetail(action){
+     this.$router.push({
+        path:'/movie/maker',
+        query:{
+          name:encodeURIComponent(JSON.stringify(action.name))
+        }
+      })
+   },
+   goToShortC(){
+    this.$router.push({
+      path: this.token ? '/films-detail' : '/login',
+      query:{
+        id:this.id
+      }
+    })
+   },
+   getToLike(action){
+    if(!this.token) return this.$message.info('请先登录...')
+    const obj = this.introduceInfo.shortcomments.find(item=>item.author == action.author)
+    const num =  !this.addLoading ? 1 : -1
+    this.name = !this.addLoading ? action.author : ''
+    obj.like += num
+    this.addLoading = !this.addLoading
+   }
   },
 };
 </script>
@@ -161,6 +190,8 @@ p {
         position: absolute;
         top: 20px;
         right: 0px;
+        cursor: pointer;
+        user-select: none;
         span{
           margin-left: 10px;
         }
@@ -260,5 +291,8 @@ h2 {
     background: #ef4238;
     margin-right: 6px;
   }
+}
+.active{
+  color: #ef4238;
 }
 </style>

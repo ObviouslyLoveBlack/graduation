@@ -8,7 +8,7 @@
           :key="action.code"
           :class="`${action.type}` == type ? 'active' : ''"
         >
-          {{ action.name }}
+          {{ action.pathName }}
           <div :class="`${action.type}` == type ? 'triangle' : ''"></div>
         </li>
         <div class="triangle"></div>
@@ -43,7 +43,7 @@ export default {
     onChange(action) {
       this.type = action.type;
       this.$router.push({
-        path:`${action.path}`
+        path:`${action.pathUrl}`
       })
     },
   }
@@ -74,6 +74,8 @@ export default {
         font-size: 16px;
         font-weight: 500;
         position: relative;
+        cursor: pointer;
+        user-select: none;
         // border: 1px solid #ef4638;
         &:hover {
           color: #fff;

@@ -7,10 +7,10 @@
     <div class="home-header-nav">
       <ul v-for="action in menuList" :key="action.id">
         <li
-          @click="go(`${action.path}`)"
-          :class="`${action.path}` === isActive ? 'active' : ''"
+          @click="go(`${action.pathUrl}`)"
+          :class="`${action.pathUrl}` === isActive ? 'active' : ''"
         >
-          {{ action.title }}
+          {{ action.pathName }}
         </li>
       </ul>
       <div class="load" @click="more">
@@ -23,18 +23,27 @@
     <div class="home-header-login">
       <div class="login-layout">
         <div class="login-input">
-          <input type="text" placeholder="找影视剧、影院、影人" />
-          <div class="search"><a-icon type="search" class="icon" /></div>
+          <input v-model="value" type="text" placeholder="找影视剧、影院、影人" />
+          <div @click="onSearch" class="search"><a-icon type="search" class="icon" /></div>
         </div>
-        <div class="login-logo">
+        <div class="login-logo" @mouseover="type = true" @mouseleave="type = false">
           <div class="logo">
-            <div class="userInfo">
+            <img :src="userInfo.avatar" alt="">
+            <div class="userInfo" v-if="!userInfo.token">
               <ul>
                 <li @click="gologin"><a href="javascript:;">登录</a></li>
               </ul>
             </div>
+            <div class="userInfo" v-else>
+              <ul>
+                <li @click="PerCenter"><a href="javascript:;">个人中心</a></li>
+                <li @click="accountMan"><a href="javascript:;">账号管理</a></li>
+                <li @click="logout"><a href="javascript:;">退出</a></li>
+              </ul>
+            </div>
           </div>
-          <a-icon type="caret-up" class="icon" />
+          <a-icon v-if="!type" type="caret-up" class="icon" />
+          <a-icon v-else type="caret-down" class="icon" />
         </div>
       </div>
     </div>
@@ -42,12 +51,18 @@
 </template>
 
 <script>
+import {mapMutations,mapState} from 'vuex'
+const userUrl= {
+    userAvart:require('../assets/image/猫眼/user.png')
+}
 export default {
   name: "my-header",
   data() {
     return {
       codeVisible: false,
       userVisible: false,
+      userInfo:{},
+      value:'',
       form: {
         home: true,
         films: false,
@@ -57,7 +72,8 @@ export default {
       },
       menuList: [],
       isActive: "",
-      active:''
+      active:'',
+      type:false
     };
   },
   created() {
@@ -67,7 +83,30 @@ export default {
       this.newBackground();
     }, 10);
   },
+  computed:{
+   ...mapState('user',['token']),
+  },
+  watch:{
+    token:{
+      immediate:true,
+      handler(){
+       this.userInfo = JSON.parse(localStorage.getItem('userInfo')) || {avatar:userUrl.userAvart,token:''}
+      }
+    }
+  },
   methods: {
+    ...mapMutations('user',['userInfologout']),
+    onSearch(){
+     if(!this.value) return
+     let url = this.$router.resolve({
+        path:'/movie/flims/detail',
+        query:{
+          name:encodeURIComponent(JSON.stringify(this.value)),
+        }
+      })
+      window.open(url.href,'_blank')
+      this.value = ''
+    },
     more() {
       this.codeVisible = !this.codeVisible;
     },
@@ -78,6 +117,15 @@ export default {
           url:this.$route.path
         }
       });
+    },
+    accountMan(){
+       this.$router.push({
+        path: "/account",
+      });
+    },
+    logout(){
+      this.userInfologout()
+      this.$router.push('/login')
     },
     go(path) {
       this.$router.push({
@@ -92,6 +140,9 @@ export default {
     },
     newBackground() {
       this.isActive = this.$route.path.split('/')[1];
+    },
+    PerCenter(){
+    this.$message.info('暂未开发，敬请期待...')
     },
   },
 };
@@ -144,6 +195,7 @@ export default {
         width: 100%;
         font-size: 1.15rem;
         text-align: center;
+        user-select: none;
         &:hover {
           color: red;
         }
@@ -184,9 +236,8 @@ export default {
       height: 70px;
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
+      justify-content: space-between;
       .login-input {
-        width: 14rem;
         height: 2.375rem;
         border: 1px solid #e1e1e1;
         border-radius: 1.25rem;
@@ -196,7 +247,7 @@ export default {
         input {
           margin-left: 0.9375rem;
           height: 20px;
-          width: 11.25rem;
+          width: 16.25rem;
           border: none;
           background: #faf8fa;
           &:focus {
@@ -224,29 +275,46 @@ export default {
       .login-logo {
         display: flex;
         height: 70px;
+        margin-left: 100px;
         align-items: center;
-        // border: 1px solid red;
         .logo {
           width: 2.5rem;
           height: 2.5rem;
           border-radius: 1.25rem;
-          background: #ef4638;
-          background: url(../assets/image/猫眼/user.png);
+          // background: #ef4638;
+          // background: url(../assets/image/猫眼/user.png);
           background-size: 100% 100%;
           position: relative;
+          display: flex;
+          img{
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 1.25rem;
+          }
           .userInfo {
-            width: 90px;
-            height: 40px;
             background: #fff;
-            border: 1px solid #efefef;
             position: absolute;
             display: none;
             top: 54px;
             left: -18px;
             ul {
+              width: 100px;
+              border: 1px solid #efefef;
               list-style: none;
+              text-align: center;
+              margin-bottom: 0px;
               li {
-                padding: 10px 26px;
+                padding: 6px 0px;
+                border-bottom: 1px solid #eaeaea;
+                a{
+                  color:#999;
+                  &:hover{
+                    color: #ef4638;
+                  }
+                }
+                &:last-child{
+                  border: 0px;
+                }
               }
             }
           }

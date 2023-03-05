@@ -1,13 +1,13 @@
 import request from "@/utils/request";
 
 const headerApi ={
-    getMenuList:'/getMenuList',
+    getMenuList:'/boardType/getboardType/menu',
 }
 
 export function getMenuList(params){
    return request({
         url:headerApi.getMenuList,
-        method:'post',
+        method:'get',
         params,
         headers:{
             'Content-Type':'application/x-www-form-urlencoded'

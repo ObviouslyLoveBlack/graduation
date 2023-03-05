@@ -1,6 +1,6 @@
 <template>
   <div class="aggregate-container">
-    <div class="aggregate-content">
+    <div class="aggregate-content" v-show="show">
       <div class="aggregate-table">
         <p>电影综合票房</p>
           <thead>
@@ -14,7 +14,7 @@
               <td>
                 <span>{{index+1 &lt; 10 ? '0'+(Number(index+1)) : index+1}}</span>
                 <div class="td-box">
-                  <p>{{action.moviename}}</p>
+                  <p>{{action.movieName}}</p>
                   <!-- <p>上映{{action.money}}天,{{action.Shown}}亿</p> -->
                   <p>上映{{action.money}}天,{{typeof(action.Shown) == 'number' ?  action.Shown+'亿' : action.Shown}}</p>
                 </div>
@@ -37,7 +37,7 @@
               <td>
                 <span>{{index+1 &lt; 10 ? '0'+(Number(index+1)) : index+1}}</span>
                 <div class="td-box">
-                  <p>{{action.moviename}}</p>
+                  <p>{{action.movieName}}</p>
                   <p>{{action.movieUrl}},上映时间{{action.Shown}}天</p>
                 </div>
               </td>
@@ -60,7 +60,7 @@
               <td>
                 <span>{{index+1 &lt; 10 ? '0'+(Number(index+1)) : index+1}}</span>
                 <div class="td-box">
-                  <p>{{action.moviename}}</p>
+                  <p>{{action.movieName}}</p>
                   <p>{{action.movieUrl}}</p>
                 </div>
               </td>
@@ -71,6 +71,9 @@
         </div>
       </div>
     </div>
+    <p class="maker-empot" v-if="!show">
+      <a-spin size="large" tip="数据加载中..."/>
+    </p>
   </div>
 </template>
 
@@ -81,7 +84,8 @@ export default {
     return {
       tableData: [],
       hotData: [],
-      marketData:[]
+      marketData:[],
+      show:false
     };
   },
   created() {
@@ -92,8 +96,9 @@ export default {
   mounted() {},
   methods: {
     async getAggregateData(){
-      const {data:res} = await this.$req.getAggregateData()
+      const {data:res} = await this.$req.getOfficeData()
       this.tableData = res
+      this.show = true
     },
     async getWeblogData(){
       const {data:res} = await this.$req.getWeblogData()

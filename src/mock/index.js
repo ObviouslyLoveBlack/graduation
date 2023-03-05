@@ -538,12 +538,12 @@ Mock.mock(getRegExpUrl('/getLogin'),'post',()=>{
       role:2,
       username:'三千里',
       avatar:hotspotUrl.hotspot7,
-      password:439778
+      password:439778,
     }
   }
 })
 //获取验证码
-Mock.mock(getRegExpUrl('/login/verification'),'get',()=>{
+Mock.mock(getRegExpUrl('/user/getRandomNum'),'get',()=>{
   return{
     status:0,
     msg:'操作成功',
@@ -554,21 +554,21 @@ Mock.mock(getRegExpUrl('/login/verification'),'get',()=>{
 })
 
 //首页
-//正在热映
-Mock.mock(getRegExpUrl("/getMenuList"), "post", () => {
+
+Mock.mock(getRegExpUrl("/boardType/getboardType"), "get", () => {
   return {
     status: 0,
     msg: "操作成功",
     data: [
-      { path: "home", title: "首页", id: "1" },
-      { path: "films", title: "电影", id: "2" },
-      { path: "cinema", title: "数据分析", id: "3" },
-      { path: "billboard", title: "榜单", id: "4" },
-      { path: "hotspot", title: "热点", id: "5" },
+      { pathUrl: "home", pathName: "首页", id: "1" },
+      { pathUrl: "films", pathName: "电影", id: "2" },
+      { pathUrl: "cinema", pathName: "数据分析", id: "3" },
+      { pathUrl: "billboard", pathName: "榜单", id: "4" },
+      { pathUrl: "hotspot", pathName: "热点", id: "5" },
     ],
   };
 });
-//即将上映
+//正在热映
 Mock.mock(getRegExpUrl("/getHotMovies"), "post", () => {
   return {
     status: 0,
@@ -577,18 +577,19 @@ Mock.mock(getRegExpUrl("/getHotMovies"), "post", () => {
       title: "正在热映",
       total: 34,
       data: [
-        { moviename: "忍者神龟:崛起", img: image.img1, id: 1, type: "hot" },
-        { moviename: "扫黑行动", img: image.img2, id: 2, type: "hot" },
-        { moviename: "名侦探柯南", img: image.img3, id: 3, type: "hot" },
-        { moviename: "万里归途", img: image.img4, id: 4, type: "hot" },
-        { moviename: "哥，你好", img: image.img5, id: 5, type: "hot" },
-        { moviename: "坠落", img: image.img6, id: 6, type: "hot" },
-        { moviename: "沼泽深处的女孩", img: image.img7, id: 7, type: "hot" },
-        { moviename: "放牛班的春天", img: image.img8, id: 8, type: "hot" },
+        { movieName: "忍者神龟:崛起", img: image.img1, id: 1, type: "hot" },
+        { movieName: "扫黑行动", img: image.img2, id: 2, type: "hot" },
+        { movieName: "名侦探柯南", img: image.img3, id: 3, type: "hot" },
+        { movieName: "万里归途", img: image.img4, id: 4, type: "hot" },
+        { movieName: "哥，你好", img: image.img5, id: 5, type: "hot" },
+        { movieName: "坠落", img: image.img6, id: 6, type: "hot" },
+        { movieName: "沼泽深处的女孩", img: image.img7, id: 7, type: "hot" },
+        { movieName: "放牛班的春天", img: image.img8, id: 8, type: "hot" },
       ],
     },
   };
 });
+//即将上映
 Mock.mock(getRegExpUrl("/getsoonRelease"), "get", () => {
   return {
     status: 0,
@@ -598,7 +599,7 @@ Mock.mock(getRegExpUrl("/getsoonRelease"), "get", () => {
       total: 96,
       data: [
         {
-          moviename: "2067",
+          movieName: "2067",
           img: image.img9,
           id: 1,
           type: "soon",
@@ -606,7 +607,7 @@ Mock.mock(getRegExpUrl("/getsoonRelease"), "get", () => {
           releaseTime: "12月2日",
         },
         {
-          moviename: "小小乔",
+          movieName: "小小乔",
           img: image.img10,
           id: 2,
           type: "soon",
@@ -614,7 +615,7 @@ Mock.mock(getRegExpUrl("/getsoonRelease"), "get", () => {
           releaseTime: "12月2日",
         },
         {
-          moviename: "航海王：红发歌姬",
+          movieName: "航海王：红发歌姬",
           img: image.img11,
           id: 3,
           type: "soon",
@@ -622,7 +623,7 @@ Mock.mock(getRegExpUrl("/getsoonRelease"), "get", () => {
           releaseTime: "12月2日",
         },
         {
-          moviename: "老人与经书",
+          movieName: "老人与经书",
           img: image.img12,
           id: 4,
           type: "soon",
@@ -630,7 +631,7 @@ Mock.mock(getRegExpUrl("/getsoonRelease"), "get", () => {
           releaseTime: "12月2日",
         },
         {
-          moviename: "奇迹小子",
+          movieName: "奇迹小子",
           img: image.img13,
           id: 5,
           type: "soon",
@@ -638,7 +639,7 @@ Mock.mock(getRegExpUrl("/getsoonRelease"), "get", () => {
           releaseTime: "12月2日",
         },
         {
-          moviename: "阿凡达:水之道",
+          movieName: "阿凡达:水之道",
           img: image.img14,
           id: 6,
           type: "soon",
@@ -646,7 +647,7 @@ Mock.mock(getRegExpUrl("/getsoonRelease"), "get", () => {
           releaseTime: "12月6日",
         },
         {
-          moviename: "谁偷了我的粉兔子",
+          movieName: "谁偷了我的粉兔子",
           img: image.img15,
           id: 7,
           type: "soon",
@@ -654,7 +655,7 @@ Mock.mock(getRegExpUrl("/getsoonRelease"), "get", () => {
           releaseTime: "12月16日",
         },
         {
-          moviename: "绑架游戏",
+          movieName: "绑架游戏",
           img: image.img16,
           id: 8,
           type: "soon",
@@ -674,49 +675,49 @@ Mock.mock(getRegExpUrl("/getHotPlay"), "get", () => {
       title: "热播电影",
       data: [
         {
-          moviename: "厉鬼将映",
+          movieName: "厉鬼将映",
           img: image.img17,
           id: 1,
           type: "hotPlay",
           score: 7.2,
         },
         {
-          moviename: "唐人街探案",
+          movieName: "唐人街探案",
           img: image.img18,
           id: 2,
           type: "hotPlay",
           score: 9.1,
         },
         {
-          moviename: "魁拔Ⅲ战神崛起",
+          movieName: "魁拔Ⅲ战神崛起",
           img: image.img19,
           id: 3,
           type: "hotPlay",
           score: 9.4,
         },
         {
-          moviename: "战狼",
+          movieName: "战狼",
           img: image.img20,
           id: 4,
           type: "hotPlay",
           score: 9.3,
         },
         {
-          moviename: "夏洛特烦恼",
+          movieName: "夏洛特烦恼",
           img: image.img21,
           id: 5,
           type: "hotPlay",
           score: 9.2,
         },
         {
-          moviename: "异形大战阿凡达",
+          movieName: "异形大战阿凡达",
           img: image.img22,
           id: 6,
           type: "hotPlay",
           score: 2.6,
         },
         {
-          moviename: "无间道",
+          movieName: "无间道",
           img: image.img23,
           id: 7,
           type: "hotPlay",
@@ -740,7 +741,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
           key: "1",
           moviceList: [
             {
-              moviename: "风吹半夏",
+              movieName: "风吹半夏",
               img: image.img24,
               id: 1,
               type: "hotTV",
@@ -748,7 +749,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "",
             },
             {
-              moviename: "点燃我，温暖你",
+              movieName: "点燃我，温暖你",
               img: image.img25,
               id: 2,
               type: "hotTV",
@@ -756,7 +757,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "7.3",
             },
             {
-              moviename: "卿卿日常",
+              movieName: "卿卿日常",
               img: image.img26,
               id: 3,
               type: "hotTV",
@@ -764,7 +765,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "7.3",
             },
             {
-              moviename: "爱的二八定律",
+              movieName: "爱的二八定律",
               img: image.img27,
               id: 4,
               type: "hotTV",
@@ -772,7 +773,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "",
             },
             {
-              moviename: "天下长河",
+              movieName: "天下长河",
               img: image.img28,
               id: 5,
               type: "hotTV",
@@ -780,7 +781,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "8.1",
             },
             {
-              moviename: "唐朝诡事录",
+              movieName: "唐朝诡事录",
               img: image.img29,
               id: 6,
               type: "hotTV",
@@ -788,7 +789,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "7.9",
             },
             {
-              moviename: "谢谢你医生",
+              movieName: "谢谢你医生",
               img: image.img30,
               id: 7,
               type: "hotTV",
@@ -796,7 +797,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "6.1",
             },
             {
-              moviename: "幸福到万家",
+              movieName: "幸福到万家",
               img: image.img31,
               id: 8,
               type: "hotTV",
@@ -809,7 +810,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
           key: "2",
           moviceList: [
             {
-              moviename: "大理寺日志",
+              movieName: "大理寺日志",
               img: image.home48,
               id: 1,
               type: "hotTV",
@@ -817,7 +818,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "8.4",
             },
             {
-              moviename: "谁是凶手",
+              movieName: "谁是凶手",
               img: image.home33,
               id: 2,
               type: "hotTV",
@@ -825,7 +826,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "6.2",
             },
             {
-              moviename: "知否知否应是绿肥红瘦",
+              movieName: "知否知否应是绿肥红瘦",
               img: image.home34,
               id: 3,
               type: "hotTV",
@@ -833,7 +834,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "7.8",
             },
             {
-              moviename: "苍兰决",
+              movieName: "苍兰决",
               img: image.home35,
               id: 4,
               type: "hotTV",
@@ -841,7 +842,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "7.9",
             },
             {
-              moviename: "楚乔传",
+              movieName: "楚乔传",
               img: image.home36,
               id: 5,
               type: "hotTV",
@@ -849,7 +850,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "7.9",
             },
             {
-              moviename: "梦华录",
+              movieName: "梦华录",
               img: image.home37,
               id: 6,
               type: "hotTV",
@@ -857,7 +858,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "8.0",
             },
             {
-              moviename: "我们的当打之年",
+              movieName: "我们的当打之年",
               img: image.home38,
               id: 7,
               type: "hotTV",
@@ -865,7 +866,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "3.6",
             },
             {
-              moviename: "人世间",
+              movieName: "人世间",
               img: image.home39,
               id: 8,
               type: "hotTV",
@@ -878,7 +879,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
           key: "3",
           moviceList: [
             {
-              moviename: "三悦有了新工作",
+              movieName: "三悦有了新工作",
               img: image.home40,
               id: 1,
               type: "hotTV",
@@ -886,7 +887,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "8.5",
             },
             {
-              moviename: "星汉灿烂·月升沧海",
+              movieName: "星汉灿烂·月升沧海",
               img: image.home41,
               id: 2,
               type: "hotTV",
@@ -894,7 +895,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "7.7",
             },
             {
-              moviename: "琅琊榜",
+              movieName: "琅琊榜",
               img: image.home42,
               id: 3,
               type: "hotTV",
@@ -902,7 +903,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "9.4",
             },
             {
-              moviename: "大明王朝1566",
+              movieName: "大明王朝1566",
               img: image.home43,
               id: 4,
               type: "hotTV",
@@ -910,7 +911,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "9.7",
             },
             {
-              moviename: "开端",
+              movieName: "开端",
               img: image.home44,
               id: 5,
               type: "hotTV",
@@ -918,7 +919,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "7.8",
             },
             {
-              moviename: "觉醒年代",
+              movieName: "觉醒年代",
               img: image.home45,
               id: 6,
               type: "hotTV",
@@ -926,7 +927,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "9.3",
             },
             {
-              moviename: "底线",
+              movieName: "底线",
               img: image.home46,
               id: 7,
               type: "hotTV",
@@ -934,7 +935,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "7.3",
             },
             {
-              moviename: "沉默的真相",
+              movieName: "沉默的真相",
               img: image.home47,
               id: 8,
               type: "hotTV",
@@ -947,7 +948,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
           key: "4",
           moviceList: [
             {
-              moviename: "不期而至",
+              movieName: "不期而至",
               img: image.home49,
               id: 1,
               type: "hotTV",
@@ -955,7 +956,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "6.6",
             },
             {
-              moviename: "父母爱情",
+              movieName: "父母爱情",
               img: image.home50,
               id: 2,
               type: "hotTV",
@@ -963,7 +964,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "9.5",
             },
             {
-              moviename: "武林外传",
+              movieName: "武林外传",
               img: image.home51,
               id: 3,
               type: "hotTV",
@@ -971,7 +972,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "9.6",
             },
             {
-              moviename: "山海情",
+              movieName: "山海情",
               img: image.home52,
               id: 4,
               type: "hotTV",
@@ -979,7 +980,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "9.2",
             },
             {
-              moviename: "三国演义",
+              movieName: "三国演义",
               img: image.home53,
               id: 5,
               type: "hotTV",
@@ -987,7 +988,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "9.6",
             },
             {
-              moviename: "庆余年 第一季",
+              movieName: "庆余年 第一季",
               img: image.home54,
               id: 6,
               type: "hotTV",
@@ -995,7 +996,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "7.9",
             },
             {
-              moviename: "星河长明",
+              movieName: "星河长明",
               img: image.home56,
               id: 7,
               type: "hotTV",
@@ -1003,7 +1004,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "",
             },
             {
-              moviename: "警察荣耀",
+              movieName: "警察荣耀",
               img: image.home55,
               id: 8,
               type: "hotTV",
@@ -1016,7 +1017,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
           key: "5",
           moviceList: [
             {
-              moviename: "有翡",
+              movieName: "有翡",
               img: image.home57,
               id: 1,
               type: "hotTV",
@@ -1024,7 +1025,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "5.6",
             },
             {
-              moviename: "三生三世十里桃花",
+              movieName: "三生三世十里桃花",
               img: image.home58,
               id: 2,
               type: "hotTV",
@@ -1032,7 +1033,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "6.5",
             },
             {
-              moviename: "如此可爱的我们",
+              movieName: "如此可爱的我们",
               img: image.home59,
               id: 3,
               type: "hotTV",
@@ -1040,7 +1041,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "8.1",
             },
             {
-              moviename: "风犬少年的天空",
+              movieName: "风犬少年的天空",
               img: image.home60,
               id: 4,
               type: "hotTV",
@@ -1048,7 +1049,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "8.0",
             },
             {
-              moviename: "仙剑奇侠传三",
+              movieName: "仙剑奇侠传三",
               img: image.home61,
               id: 5,
               type: "hotTV",
@@ -1056,7 +1057,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "8.9",
             },
             {
-              moviename: "隐秘的角落",
+              movieName: "隐秘的角落",
               img: image.home62,
               id: 6,
               type: "hotTV",
@@ -1064,7 +1065,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "8.8",
             },
             {
-              moviename: "信仰",
+              movieName: "信仰",
               img: image.home63,
               id: 7,
               type: "hotTV",
@@ -1072,7 +1073,7 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
               score: "",
             },
             {
-              moviename: "周生如故",
+              movieName: "周生如故",
               img: image.home64,
               id: 8,
               type: "hotTV",
@@ -1087,56 +1088,56 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
         {
           key: "1",
           moviceList: [
-            { moviename: "一年一度喜剧大赛", score: "8.5", img: image.home1 },
+            { movieName: "一年一度喜剧大赛", score: "8.5", img: image.home1 },
             {
-              moviename: "克拉克森的农场 第一季",
+              movieName: "克拉克森的农场 第一季",
               score: "9.6",
               img: image.home2,
             },
-            { moviename: "伊甸园 第二季", score: "6.3", img: image.home3 },
-            { moviename: "仔仔一堂", score: "8.7", img: image.home4 },
-            { moviename: "韩国NO.1", score: "6.7", img: image.home5 },
+            { movieName: "伊甸园 第二季", score: "6.3", img: image.home3 },
+            { movieName: "仔仔一堂", score: "8.7", img: image.home4 },
+            { movieName: "韩国NO.1", score: "6.7", img: image.home5 },
             {
-              moviename: "一年一度喜剧大赛 第二季",
+              movieName: "一年一度喜剧大赛 第二季",
               score: "8.1",
               img: image.home6,
             },
-            { moviename: "脱口秀大会 第五季", score: "5.8", img: image.home7 },
-            { moviename: "再见爱人", score: "8.9", img: image.home8 },
+            { movieName: "脱口秀大会 第五季", score: "5.8", img: image.home7 },
+            { movieName: "再见爱人", score: "8.9", img: image.home8 },
           ],
         },
         {
           key: "2",
           moviceList: [
             {
-              moviename: "令人心动的offer 第四季",
+              movieName: "令人心动的offer 第四季",
               score: "7.3",
               img: image.variety1,
             },
             {
-              moviename: "乐队的夏天 第一季",
+              movieName: "乐队的夏天 第一季",
               score: "8.7",
               img: image.variety2,
             },
-            { moviename: "快乐再出发", score: "9.6", img: image.variety3 },
+            { movieName: "快乐再出发", score: "9.6", img: image.variety3 },
             {
-              moviename: "明星大侦探 第一季",
+              movieName: "明星大侦探 第一季",
               score: "9.4",
               img: image.variety4,
             },
-            { moviename: "典籍里的中国", score: "8.7", img: image.variety5 },
+            { movieName: "典籍里的中国", score: "8.7", img: image.variety5 },
             {
-              moviename: "脱口秀大会 第四季",
+              movieName: "脱口秀大会 第四季",
               score: "7.6",
               img: image.variety6,
             },
             {
-              moviename: "富豪谷底求翻身 第二季",
+              movieName: "富豪谷底求翻身 第二季",
               score: "8.1",
               img: image.variety7,
             },
             {
-              moviename: "脱口秀大会 第三季",
+              movieName: "脱口秀大会 第三季",
               score: "7.9",
               img: image.variety8,
             },
@@ -1146,38 +1147,38 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
           key: "3",
           moviceList: [
             {
-              moviename: "明星大侦探 第五季",
+              movieName: "明星大侦探 第五季",
               score: "8.3",
               img: image.variety9,
             },
             {
-              moviename: "明星大侦探 第六季",
+              movieName: "明星大侦探 第六季",
               score: "8.7",
               img: image.variety10,
             },
-            { moviename: "乐队的海边", score: "9.1", img: image.variety11 },
+            { movieName: "乐队的海边", score: "9.1", img: image.variety11 },
             {
-              moviename: "再见爱人 第二季",
+              movieName: "再见爱人 第二季",
               score: "8.2",
               img: image.variety12,
             },
             {
-              moviename: "令人心动的offer 第二季",
+              movieName: "令人心动的offer 第二季",
               score: "7.3",
               img: image.variety13,
             },
             {
-              moviename: "明星大侦探 第二季",
+              movieName: "明星大侦探 第二季",
               score: "9.0",
               img: image.variety14,
             },
             {
-              moviename: "令人心动的offer 第一季",
+              movieName: "令人心动的offer 第一季",
               score: "8.2",
               img: image.variety15,
             },
             {
-              moviename: "锵锵行天下 第一季",
+              movieName: "锵锵行天下 第一季",
               score: "9.1",
               img: image.variety16,
             },
@@ -1186,56 +1187,56 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
         {
           key: "4",
           moviceList: [
-            { moviename: "说唱新时代", score: "9.1", img: image.variety17 },
-            { moviename: "圆桌派 第一季", score: "8.9", img: image.variety18 },
+            { movieName: "说唱新时代", score: "9.1", img: image.variety17 },
+            { movieName: "圆桌派 第一季", score: "8.9", img: image.variety18 },
             {
-              moviename: "非正式会谈 第一季",
+              movieName: "非正式会谈 第一季",
               score: "9.3",
               img: image.variety19,
             },
             {
-              moviename: "密室大逃脱 第二季",
+              movieName: "密室大逃脱 第二季",
               score: "7.0",
               img: image.variety20,
             },
             {
-              moviename: "极限挑战 第二季",
+              movieName: "极限挑战 第二季",
               score: "9.4",
               img: image.variety21,
             },
             {
-              moviename: "花样青春(非洲篇)",
+              movieName: "花样青春(非洲篇)",
               score: "9.5",
               img: image.variety22,
             },
             {
-              moviename: "国家宝藏 第一季",
+              movieName: "国家宝藏 第一季",
               score: "9.0",
               img: image.variety23,
             },
-            { moviename: "嗨放派 第一季", score: "7.1", img: image.variety24 },
+            { movieName: "嗨放派 第一季", score: "7.1", img: image.variety24 },
           ],
         },
         {
           key: "5",
           moviceList: [
-            { moviename: "戏剧新生活", score: "9.2", img: image.variety25 },
+            { movieName: "戏剧新生活", score: "9.2", img: image.variety25 },
             {
-              moviename: "非正式会谈 第二季",
+              movieName: "非正式会谈 第二季",
               score: "9.6",
               img: image.variety26,
             },
-            { moviename: "毛雪汪 第一季", score: "7.3", img: image.variety27 },
-            { moviename: "脱口秀 第一季", score: "6.8", img: image.variety28 },
+            { movieName: "毛雪汪 第一季", score: "7.3", img: image.variety27 },
+            { movieName: "脱口秀 第一季", score: "6.8", img: image.variety28 },
             {
-              moviename: "向往的生活 第一季",
+              movieName: "向往的生活 第一季",
               score: "7.5",
               img: image.variety29,
             },
-            { moviename: "换乘恋爱", score: "8.5", img: image.variety30 },
-            { moviename: "解放守护西", score: "8.6", img: image.variety31 },
+            { movieName: "换乘恋爱", score: "8.5", img: image.variety30 },
+            { movieName: "解放守护西", score: "8.6", img: image.variety31 },
             {
-              moviename: "令人心动的offer 第三季",
+              movieName: "令人心动的offer 第三季",
               score: "7.7",
               img: image.variety32,
             },
@@ -1247,57 +1248,57 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
         {
           key: "1",
           moviceList: [
-            { moviename: "星期三", score: "8.0", img: image.home9 },
-            { moviename: "塔尔萨之王 第一季", score: "9.1", img: image.home10 },
-            { moviename: "逐星女 第三季", score: "7.7", img: image.home11 },
-            { moviename: "拉米 第三季", score: "8.3", img: image.home12 },
+            { movieName: "星期三", score: "8.0", img: image.home9 },
+            { movieName: "塔尔萨之王 第一季", score: "9.1", img: image.home10 },
+            { movieName: "逐星女 第三季", score: "7.7", img: image.home11 },
+            { movieName: "拉米 第三季", score: "8.3", img: image.home12 },
             {
-              moviename: "百事，我的战斗机呢？",
+              movieName: "百事，我的战斗机呢？",
               score: "8.7",
               img: image.home13,
             },
             {
-              moviename: "白莲花度假村 第二季",
+              movieName: "白莲花度假村 第二季",
               score: "8.9",
               img: image.home14,
             },
-            { moviename: "边缘世界 第一季", score: "8.0", img: image.home15 },
-            { moviename: "怪奇物语", score: "9.2", img: image.home16 },
+            { movieName: "边缘世界 第一季", score: "8.0", img: image.home15 },
+            { movieName: "怪奇物语", score: "9.2", img: image.home16 },
           ],
         },
         {
           key: "2",
           moviceList: [
             {
-              moviename: "怪物:杰夫瑞·达莫的故事 第一季",
+              movieName: "怪物:杰夫瑞·达莫的故事 第一季",
               score: "8.1",
               img: image.UsTv1,
             },
             {
-              moviename: "大学女生的性生活 第二季",
+              movieName: "大学女生的性生活 第二季",
               score: "8.6",
               img: image.UsTv2,
             },
-            { moviename: "摩登家族 第十一季", score: "9.7", img: image.UsTv3 },
-            { moviename: "风骚律师 第六季", score: "9.8", img: image.UsTv4 },
-            { moviename: "破产姐妹 第六季", score: "8.6", img: image.UsTv5 },
-            { moviename: "后翼弃兵", score: "9.0", img: image.UsTv6 },
-            { moviename: "成瘾剂量 第二季", score: "9.4", img: image.UsTv7 },
-            { moviename: "黑暗物质三部曲 第三季", score: "", img: image.UsTv8 },
+            { movieName: "摩登家族 第十一季", score: "9.7", img: image.UsTv3 },
+            { movieName: "风骚律师 第六季", score: "9.8", img: image.UsTv4 },
+            { movieName: "破产姐妹 第六季", score: "8.6", img: image.UsTv5 },
+            { movieName: "后翼弃兵", score: "9.0", img: image.UsTv6 },
+            { movieName: "成瘾剂量 第二季", score: "9.4", img: image.UsTv7 },
+            { movieName: "黑暗物质三部曲 第三季", score: "", img: image.UsTv8 },
           ],
         },
         {
           key: "3",
           moviceList: [
-            { moviename: "王冠 第五季", score: "8.0", img: image.UsTv9 },
-            { moviename: "老友记 第十季", score: "9.8", img: image.UsTv10 },
-            { moviename: "亢奋 第二季", score: "8.0", img: image.UsTv11 },
-            { moviename: "致命女人 第二季", score: "7.3", img: image.UsTv12 },
-            { moviename: "绝命毒师 第五季", score: "9.3", img: image.UsTv13 },
-            { moviename: "安多 第一季", score: "9.0", img: image.UsTv14 },
-            { moviename: "疯狂动物城+", score: "8.0", img: image.UsTv15 },
+            { movieName: "王冠 第五季", score: "8.0", img: image.UsTv9 },
+            { movieName: "老友记 第十季", score: "9.8", img: image.UsTv10 },
+            { movieName: "亢奋 第二季", score: "8.0", img: image.UsTv11 },
+            { movieName: "致命女人 第二季", score: "7.3", img: image.UsTv12 },
+            { movieName: "绝命毒师 第五季", score: "9.3", img: image.UsTv13 },
+            { movieName: "安多 第一季", score: "9.0", img: image.UsTv14 },
+            { movieName: "疯狂动物城+", score: "8.0", img: image.UsTv15 },
             {
-              moviename: "美国恐怖故事 第十一季",
+              movieName: "美国恐怖故事 第十一季",
               score: "6.2",
               img: image.UsTv16,
             },
@@ -1306,39 +1307,39 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
         {
           key: "4",
           moviceList: [
-            { moviename: "犯罪心理 第十六季", score: "9.2", img: image.UsTv17 },
-            { moviename: "夜访吸血鬼 第一季", score: "8.5", img: image.UsTv18 },
-            { moviename: "人生切割术 第一季", score: "9.1", img: image.UsTv19 },
+            { movieName: "犯罪心理 第十六季", score: "9.2", img: image.UsTv17 },
+            { movieName: "夜访吸血鬼 第一季", score: "8.5", img: image.UsTv18 },
+            { movieName: "人生切割术 第一季", score: "9.1", img: image.UsTv19 },
             {
-              moviename: "吉尔莫·德尔·托罗的奇思妙想",
+              movieName: "吉尔莫·德尔·托罗的奇思妙想",
               score: "7.3",
               img: image.UsTv20,
             },
-            { moviename: "龙之家族 第一季", score: "8.8", img: image.UsTv21 },
+            { movieName: "龙之家族 第一季", score: "8.8", img: image.UsTv21 },
             {
-              moviename: "爱，死亡和机器人 第三季",
+              movieName: "爱，死亡和机器人 第三季",
               score: "8.5",
               img: image.UsTv22,
             },
-            { moviename: "项塔兰", score: "8.1", img: image.UsTv23 },
-            { moviename: "越狱 第五季", score: "8.2", img: image.UsTv24 },
+            { movieName: "项塔兰", score: "8.1", img: image.UsTv23 },
+            { movieName: "越狱 第五季", score: "8.2", img: image.UsTv24 },
           ],
         },
         {
           key: "5",
           moviceList: [
-            { moviename: "再造淑女", score: "8.4", img: image.UsTv25 },
-            { moviename: "闪亮女孩", score: "8.6", img: image.UsTv26 },
-            { moviename: "侦探 第三季", score: "8.1", img: image.UsTv27 },
-            { moviename: "瑞克与莫蒂 第六季", score: "9.6", img: image.UsTv28 },
-            { moviename: "坏姐妹 第一季", score: "8.5", img: image.UsTv29 },
+            { movieName: "再造淑女", score: "8.4", img: image.UsTv25 },
+            { movieName: "闪亮女孩", score: "8.6", img: image.UsTv26 },
+            { movieName: "侦探 第三季", score: "8.1", img: image.UsTv27 },
+            { movieName: "瑞克与莫蒂 第六季", score: "9.6", img: image.UsTv28 },
+            { movieName: "坏姐妹 第一季", score: "8.5", img: image.UsTv29 },
             {
-              moviename: "生活大爆炸 第十二季",
+              movieName: "生活大爆炸 第十二季",
               score: "9.7",
               img: image.UsTv30,
             },
-            { moviename: "小谢尔顿", score: "9.0", img: image.UsTv31 },
-            { moviename: "权力的游戏 第八季", score: "6.1", img: image.UsTv32 },
+            { movieName: "小谢尔顿", score: "9.0", img: image.UsTv31 },
+            { movieName: "权力的游戏 第八季", score: "6.1", img: image.UsTv32 },
           ],
         },
       ],
@@ -1347,98 +1348,98 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
         {
           key: "1",
           moviceList: [
-            { moviename: "财阀家的小儿子", score: "8.3", img: image.home17 },
-            { moviename: "弱小英雄", score: "8.7", img: image.home18 },
-            { moviename: "请给我寄粉丝信", score: "7.4", img: image.home19 },
-            { moviename: "令我心动的女孩", score: "8.2", img: image.home20 },
-            { moviename: "命定之人", score: "7.0", img: image.home21 },
-            { moviename: "请回答1988", score: "9.7", img: image.home22 },
-            { moviename: "第三人称复仇", score: "8.0", img: image.home23 },
-            { moviename: "王后伞下", score: "8.2", img: image.home24 },
+            { movieName: "财阀家的小儿子", score: "8.3", img: image.home17 },
+            { movieName: "弱小英雄", score: "8.7", img: image.home18 },
+            { movieName: "请给我寄粉丝信", score: "7.4", img: image.home19 },
+            { movieName: "令我心动的女孩", score: "8.2", img: image.home20 },
+            { movieName: "命定之人", score: "7.0", img: image.home21 },
+            { movieName: "请回答1988", score: "9.7", img: image.home22 },
+            { movieName: "第三人称复仇", score: "8.0", img: image.home23 },
+            { movieName: "王后伞下", score: "8.2", img: image.home24 },
           ],
         },
         {
           key: "2",
           moviceList: [
-            { moviename: "少年法庭", score: "8.7", img: image.KoreanTv1 },
-            { moviename: "安娜", score: "7.6", img: image.KoreanTv2 },
-            { moviename: "金秘书为何那样", score: "8.0", img: image.KoreanTv3 },
-            { moviename: "文森佐", score: "8.0", img: image.KoreanTv4 },
-            { moviename: "举重妖精金福珠", score: "8.7", img: image.KoreanTv5 },
-            { moviename: "德鲁纳酒店", score: "7.9", img: image.KoreanTv6 },
-            { moviename: "机智医生生活", score: "9.5", img: image.KoreanTv7 },
-            { moviename: "小小姐们", score: "7.2", img: image.KoreanTv8 },
+            { movieName: "少年法庭", score: "8.7", img: image.KoreanTv1 },
+            { movieName: "安娜", score: "7.6", img: image.KoreanTv2 },
+            { movieName: "金秘书为何那样", score: "8.0", img: image.KoreanTv3 },
+            { movieName: "文森佐", score: "8.0", img: image.KoreanTv4 },
+            { movieName: "举重妖精金福珠", score: "8.7", img: image.KoreanTv5 },
+            { movieName: "德鲁纳酒店", score: "7.9", img: image.KoreanTv6 },
+            { movieName: "机智医生生活", score: "9.5", img: image.KoreanTv7 },
+            { movieName: "小小姐们", score: "7.2", img: image.KoreanTv8 },
           ],
         },
         {
           key: "3",
           moviceList: [
-            { moviename: "非常律师禹英隅", score: "8.9", img: image.KoreanTv9 },
+            { movieName: "非常律师禹英隅", score: "8.9", img: image.KoreanTv9 },
             {
-              moviename: "消防厅旁警察厅",
+              movieName: "消防厅旁警察厅",
               score: "7.7",
               img: image.KoreanTv10,
             },
-            { moviename: "爱的迫降", score: "8.3", img: image.KoreanTv11 },
-            { moviename: "浪漫的体质", score: "9.2", img: image.KoreanTv12 },
-            { moviename: "身价 第二季", score: "7.1", img: image.KoreanTv13 },
+            { movieName: "爱的迫降", score: "8.3", img: image.KoreanTv11 },
+            { movieName: "浪漫的体质", score: "9.2", img: image.KoreanTv12 },
+            { movieName: "身价 第二季", score: "7.1", img: image.KoreanTv13 },
             {
-              moviename: "鱿鱼游戏 第一季",
+              movieName: "鱿鱼游戏 第一季",
               score: "7.7",
               img: image.KoreanTv14,
             },
-            { moviename: "金汤匙", score: "6.9", img: image.KoreanTv15 },
-            { moviename: "猪猡之王", score: "8.7", img: image.KoreanTv16 },
+            { movieName: "金汤匙", score: "6.9", img: image.KoreanTv15 },
+            { movieName: "猪猡之王", score: "8.7", img: image.KoreanTv16 },
           ],
         },
         {
           key: "4",
           moviceList: [
-            { moviename: "高斯电子公司", score: "7.5", img: image.KoreanTv17 },
+            { movieName: "高斯电子公司", score: "7.5", img: image.KoreanTv17 },
             {
-              moviename: "柔美的细胞小将",
+              movieName: "柔美的细胞小将",
               score: "8.4",
               img: image.KoreanTv18,
             },
-            { moviename: "模范出租车", score: "8.2", img: image.KoreanTv19 },
-            { moviename: "黑话律师", score: "7.3", img: image.KoreanTv20 },
+            { movieName: "模范出租车", score: "8.2", img: image.KoreanTv19 },
+            { movieName: "黑话律师", score: "7.3", img: image.KoreanTv20 },
             {
-              moviename: "机智医生生活 第二季",
+              movieName: "机智医生生活 第二季",
               score: "9.5",
               img: image.KoreanTv21,
             },
             {
-              moviename: "Move to Heaven:我是遗物整理师",
+              movieName: "Move to Heaven:我是遗物整理师",
               score: "9.1",
               img: image.KoreanTv22,
             },
-            { moviename: "社内相亲", score: "7.9", img: image.KoreanTv23 },
-            { moviename: "来自星星的你", score: "8.5", img: image.KoreanTv24 },
+            { movieName: "社内相亲", score: "7.9", img: image.KoreanTv23 },
+            { movieName: "来自星星的你", score: "8.5", img: image.KoreanTv24 },
           ],
         },
         {
           key: "5",
           moviceList: [
             {
-              moviename: "孤单又灿烂的神:鬼怪",
+              movieName: "孤单又灿烂的神:鬼怪",
               score: "8.9",
               img: image.KoreanTv25,
             },
-            { moviename: "窥探", score: "8.6", img: image.KoreanTv26 },
-            { moviename: "W_两个世界", score: "8.0", img: image.KoreanTv27 },
+            { movieName: "窥探", score: "8.6", img: image.KoreanTv26 },
+            { movieName: "W_两个世界", score: "8.0", img: image.KoreanTv27 },
             {
-              moviename: "那年，我们的夏天",
+              movieName: "那年，我们的夏天",
               score: "8.7",
               img: image.KoreanTv28,
             },
             {
-              moviename: "酒鬼都市女人们",
+              movieName: "酒鬼都市女人们",
               score: "9.0",
               img: image.KoreanTv29,
             },
-            { moviename: "信号", score: "9.2", img: image.KoreanTv30 },
-            { moviename: "我的解放日志", score: "9.1", img: image.KoreanTv31 },
-            { moviename: "当你沉睡时", score: "8.3", img: image.KoreanTv32 },
+            { movieName: "信号", score: "9.2", img: image.KoreanTv30 },
+            { movieName: "我的解放日志", score: "9.1", img: image.KoreanTv31 },
+            { movieName: "当你沉睡时", score: "8.3", img: image.KoreanTv32 },
           ],
         },
       ],
@@ -1447,69 +1448,69 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
         {
           key: "1",
           moviceList: [
-            { moviename: "河西走廊", score: "9.7", img: image.home25 },
-            { moviename: "但是还有书籍", score: "9.0", img: image.home26 },
-            { moviename: "江南菜馆 第三季", score: "8.0", img: image.home27 },
+            { movieName: "河西走廊", score: "9.7", img: image.home25 },
+            { movieName: "但是还有书籍", score: "9.0", img: image.home26 },
+            { movieName: "江南菜馆 第三季", score: "8.0", img: image.home27 },
             {
-              moviename: "血与性：400年王室风云",
+              movieName: "血与性：400年王室风云",
               score: "6.4",
               img: image.home28,
             },
             {
-              moviename: "贝克汉姆：拯救我们的球队",
+              movieName: "贝克汉姆：拯救我们的球队",
               score: "8.2",
               img: image.home29,
             },
-            { moviename: "人生第一次", score: "9.0", img: image.home30 },
-            { moviename: "地球脉动 第二季", score: "9.8", img: image.home31 },
-            { moviename: "中国通史", score: "9.2", img: image.home32 },
+            { movieName: "人生第一次", score: "9.0", img: image.home30 },
+            { movieName: "地球脉动 第二季", score: "9.8", img: image.home31 },
+            { movieName: "中国通史", score: "9.2", img: image.home32 },
           ],
         },
         {
           key: "2",
           moviceList: [
-            { moviename: "守护解放西", score: "8.6", img: image.documentary1 },
+            { movieName: "守护解放西", score: "8.6", img: image.documentary1 },
             {
-              moviename: "无节制消费的元凶",
+              movieName: "无节制消费的元凶",
               score: "8.8",
               img: image.documentary2,
             },
             {
-              moviename: "舌尖上的中国 第一季",
+              movieName: "舌尖上的中国 第一季",
               score: "9.4",
               img: image.documentary3,
             },
-            { moviename: "人间世", score: "9.7", img: image.documentary4 },
+            { movieName: "人间世", score: "9.7", img: image.documentary4 },
             {
-              moviename: "风味人间 第三季",
+              movieName: "风味人间 第三季",
               score: "8.7",
               img: image.documentary5,
             },
-            { moviename: "大明宫", score: "9.1", img: image.documentary6 },
-            { moviename: "第三极", score: "9.4", img: image.documentary7 },
-            { moviename: "中国", score: "8.3", img: image.documentary8 },
+            { movieName: "大明宫", score: "9.1", img: image.documentary6 },
+            { movieName: "第三极", score: "9.4", img: image.documentary7 },
+            { movieName: "中国", score: "8.3", img: image.documentary8 },
           ],
         },
         {
           key: "3",
           moviceList: [
-            { moviename: "蓝色星球", score: "9.7", img: image.documentary9 },
-            { moviename: "书简阅中国", score: "9.2", img: image.documentary10 },
-            { moviename: "积极心理学", score: "9.6", img: image.documentary11 },
+            { movieName: "蓝色星球", score: "9.7", img: image.documentary9 },
+            { movieName: "书简阅中国", score: "9.2", img: image.documentary10 },
+            { movieName: "积极心理学", score: "9.6", img: image.documentary11 },
             {
-              moviename: "宇宙时空之旅",
+              movieName: "宇宙时空之旅",
               score: "9.7",
               img: image.documentary12,
             },
-            { moviename: "苏东坡", score: "8.7", img: image.documentary13 },
-            { moviename: "大猫", score: "9.5", img: image.documentary14 },
+            { movieName: "苏东坡", score: "8.7", img: image.documentary13 },
+            { movieName: "大猫", score: "9.5", img: image.documentary14 },
             {
-              moviename: "弗兰·勒博维茨:假装我们在城市",
+              movieName: "弗兰·勒博维茨:假装我们在城市",
               score: "9.0",
               img: image.documentary15,
             },
             {
-              moviename: "从秦始皇到汉武帝",
+              movieName: "从秦始皇到汉武帝",
               score: "9.0",
               img: image.documentary16,
             },
@@ -1519,35 +1520,35 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
           key: "4",
           moviceList: [
             {
-              moviename: "但是还有书籍 第二季",
+              movieName: "但是还有书籍 第二季",
               score: "9.4",
               img: image.documentary17,
             },
-            { moviename: "生门", score: "9.4", img: image.documentary18 },
+            { movieName: "生门", score: "9.4", img: image.documentary18 },
             {
-              moviename: "航拍中国 第一季",
+              movieName: "航拍中国 第一季",
               score: "9.2",
               img: image.documentary19,
               update: "更新至10集",
             },
             {
-              moviename: "守护解放西2",
+              movieName: "守护解放西2",
               score: "9.0",
               img: image.documentary20,
             },
             {
-              moviename: "如果国宝会说话 第一季",
+              movieName: "如果国宝会说话 第一季",
               score: "9.4",
               img: image.documentary21,
             },
             {
-              moviename: "为什么贫穷?",
+              movieName: "为什么贫穷?",
               score: "9.1",
               img: image.documentary22,
             },
-            { moviename: "行星", score: "9.6", img: image.documentary23 },
+            { movieName: "行星", score: "9.6", img: image.documentary23 },
             {
-              moviename: "约翰·威尔逊的十万个怎么做 第二季",
+              movieName: "约翰·威尔逊的十万个怎么做 第二季",
               score: "",
               img: image.documentary24,
             },
@@ -1557,35 +1558,35 @@ Mock.mock(getRegExpUrl("/getHotTvPlay"), "get", () => {
           key: "5",
           moviceList: [
             {
-              moviename: "无穷之路",
+              movieName: "无穷之路",
               score: "9.5",
               img: image.documentary25,
               update: "更新至9集",
             },
             {
-              moviename: "电影史话 第二季",
+              movieName: "电影史话 第二季",
               score: "9.3",
               img: image.documentary26,
             },
-            { moviename: "众神之地", score: "9.2", img: image.documentary27 },
+            { movieName: "众神之地", score: "9.2", img: image.documentary27 },
             {
-              moviename: "我们的星球 第一季",
+              movieName: "我们的星球 第一季",
               score: "9.8",
               img: image.documentary28,
             },
             {
-              moviename: "风味人间 第一季",
+              movieName: "风味人间 第一季",
               score: "9.0",
               img: image.documentary29,
             },
             {
-              moviename: "王朝 第二季",
+              movieName: "王朝 第二季",
               score: "9.3",
               img: image.documentary30,
             },
-            { moviename: "他乡的童年", score: "8.9", img: image.documentary31 },
+            { movieName: "他乡的童年", score: "8.9", img: image.documentary31 },
             {
-              moviename: "不止考古·我与三星堆",
+              movieName: "不止考古·我与三星堆",
               score: "9.0",
               img: image.documentary32,
             },
@@ -1616,7 +1617,7 @@ Mock.mock(getRegExpUrl("/getFilmReview"), "get", () => {
           dislike: 3,
           // type: "filmReview",
           works: "《好莱坞俗套大吐槽》",
-          moviename:'好莱坞俗套大吐槽',
+          movieName:'好莱坞俗套大吐槽',
           director:'Sean Doherty / Ricky Kelehar / Alice Mathias',
           tostar:'罗伯·劳 / 桑吉夫·巴哈斯卡 / 罗伯特·英格兰德',
           type:'喜剧 / 纪录片',
@@ -1727,7 +1728,7 @@ Mock.mock(getRegExpUrl("/getFilmReview"), "get", () => {
           img: image.img33,
           like: 200,
           dislike: 3,
-          moviename:'沙丘',
+          movieName:'沙丘',
           director:'丹尼斯·维伦纽瓦',
           tostar:'提莫西·查拉梅 / 丽贝卡·弗格森 / 奥斯卡·伊萨克',
           type:'剧情 / 科幻 / 冒险',
@@ -1853,7 +1854,7 @@ Mock.mock(getRegExpUrl("/getFilmReview"), "get", () => {
           score: 4.5,
           like: 200,
           dislike: 3,
-          moviename:'入殓师',
+          movieName:'入殓师',
           director:'泷田洋二郎',
           tostar:'本木雅弘 / 广末凉子 / 山崎努',
           type:'剧情',
@@ -1958,7 +1959,7 @@ Mock.mock(getRegExpUrl("/getFilmReview"), "get", () => {
           score: 4,
           like: 115,
           dislike: 3,
-          moviename:'我是监护人',
+          movieName:'我是监护人',
           director:'敬然',
           tostar:'尚语贤 / 王砚辉 / 林靖喆',
           type:'剧情 / 家庭',
@@ -2083,11 +2084,11 @@ Mock.mock(getRegExpUrl("/getboxoffice"), "get", () => {
     data: {
       title: "今日票房",
       data: [
-        { key: "1", moviename: "航海王:红发歌姬", num: 73.87, img: image.img36 },
-        { key: "2", moviename: "扫黑行动", num: 65.94 },
-        { key: "3", moviename: "你好，北京", num: 41.56 },
-        { key: "4", moviename: "万里归途", num: 36.6 },
-        { key: "5", moviename: "钢铁意志", num: 28.87 },
+        { key: "1", movieName: "航海王:红发歌姬", num: 73.87, img: image.img36 },
+        { key: "2", movieName: "扫黑行动", num: 65.94 },
+        { key: "3", movieName: "你好，北京", num: 41.56 },
+        { key: "4", movieName: "万里归途", num: 36.6 },
+        { key: "5", movieName: "钢铁意志", num: 28.87 },
       ],
     },
   };
@@ -2117,20 +2118,20 @@ Mock.mock(getRegExpUrl("/getmostexpect"), "get", () => {
       data: [
         {
           key: "1",
-          moviename: "阿凡达:水之道",
+          movieName: "阿凡达:水之道",
           num: 967989,
           updateTime: "2022-12-16",
           img: image.img37,
         },
-        { key: "2", moviename: "流浪地球2", num: 436119, img: image.img38 },
-        { key: "3", moviename: "倒数说爱你", num: 43387, img: image.img39 },
-        { key: "4", moviename: "检察风云", num: 254507 },
-        { key: "5", moviename: "美人鱼2", num: 74024 },
-        { key: "6", moviename: "绝望主夫", num: 101978 },
-        { key: "7", moviename: "深海", num: 122294 },
-        { key: "8", moviename: "保你平安", num: 133411 },
-        { key: "9", moviename: "人生路不熟", num: 20167 },
-        { key: "10", moviename: "消失的她", num: 30525 },
+        { key: "2", movieName: "流浪地球2", num: 436119, img: image.img38 },
+        { key: "3", movieName: "倒数说爱你", num: 43387, img: image.img39 },
+        { key: "4", movieName: "检察风云", num: 254507 },
+        { key: "5", movieName: "美人鱼2", num: 74024 },
+        { key: "6", movieName: "绝望主夫", num: 101978 },
+        { key: "7", movieName: "深海", num: 122294 },
+        { key: "8", movieName: "保你平安", num: 133411 },
+        { key: "9", movieName: "人生路不熟", num: 20167 },
+        { key: "10", movieName: "消失的她", num: 30525 },
       ],
     },
   };
@@ -2143,16 +2144,16 @@ Mock.mock(getRegExpUrl("/getTophundred"), "get", () => {
     data: {
       title: "TOP 100",
       data: [
-        { key: "1", moviename: "我不是药神", score: 9.6, img: image.img40 },
-        { key: "2", moviename: "肖申克的救赎", score: 9.5 },
-        { key: "3", moviename: "海上钢琴师", score: 9.3 },
-        { key: "4", moviename: "绿皮书", score: 9.5 },
-        { key: "5", moviename: "霸王别姬", score: 9.4 },
-        { key: "6", moviename: "美丽人生", score: 9.3 },
-        { key: "7", moviename: "小偷家族", score: 8.1 },
-        { key: "8", moviename: "哪吒之魔童降世", score: 9.6 },
-        { key: "9", moviename: "这个杀手不太冷", score: 9.4 },
-        { key: "10", moviename: "怦然心动", score: 8.9 },
+        { key: "1", movieName: "我不是药神", score: 9.6, img: image.img40 },
+        { key: "2", movieName: "肖申克的救赎", score: 9.5 },
+        { key: "3", movieName: "海上钢琴师", score: 9.3 },
+        { key: "4", movieName: "绿皮书", score: 9.5 },
+        { key: "5", movieName: "霸王别姬", score: 9.4 },
+        { key: "6", movieName: "美丽人生", score: 9.3 },
+        { key: "7", movieName: "小偷家族", score: 8.1 },
+        { key: "8", movieName: "哪吒之魔童降世", score: 9.6 },
+        { key: "9", movieName: "这个杀手不太冷", score: 9.4 },
+        { key: "10", movieName: "怦然心动", score: 8.9 },
       ],
     },
   };
@@ -2185,13 +2186,13 @@ Mock.mock(getRegExpUrl("/getmoviemaker"), "get", () => {
             {id:4,img:wokersUrl.awards1,name:'澳门国际电影节',nominate:[{title:'第14界-金莲花奖-最佳男主角(提名)',filmsName:'《古董局中局》2021/饰:许愿'}]},
             {id:5,img:wokersUrl.awards3,name:'上海电视节白兰玉奖',nominate:[{title:'第26界-电视连续剧-最佳男配角(提名)',filmsName:'《长安十二时辰》2019/饰:张小敬'},{title:'第24界-电视连续剧-最佳男配角(提名)',filmsName:'《我的前半生》2017/饰:陈俊生'}]}
           ]
-        },
-        {
+          },
+          {
           key:2,
           award:[
             {id:6,img:wokersUrl.awards4,name:'中国电视金鹰奖',nominate:[{title:'第31界-最佳男主角',filmsName:'《人世间》2022/饰:周秉昆'}]},
             {id:7,img:wokersUrl.awards7,name:'华鼎奖',nominate:[{title:'第26界-全国观众最喜爱十佳电视明星',filmsName:''},{title:'第24界-中国近代现代题材电视剧最佳男演员',filmsName:'《和平饭店》2018/饰:王大顶'}]}
-          ]
+           ]
           }],
           images:[{img:wokersUrl.worker1},{img:wokersUrl.worker2},{img:wokersUrl.worker3},{img:wokersUrl.worker4},{img:wokersUrl.worker5}],
           concatctUrl:[{img:wokersUrl.contactworker1,name:'岳云鹏',id:1},{img:wokersUrl.contactworker2,name:'郭京飞',id:2},{img:wokersUrl.contactworker3,name:'贾乃亮',id:3},{img:wokersUrl.contactworker4,name:'黄渤',id:4},{img:wokersUrl.contactworker5,name:'翟煦飞',id:5}],
@@ -2472,7 +2473,7 @@ Mock.mock(getRegExpUrl("/getmoviemaker"), "get", () => {
 });
 
 //电影
-Mock.mock(getRegExpUrl("/getfilmsType"), "get", () => {
+Mock.mock(getRegExpUrl("/boardType/getboardType/films"), "get", () => {
   return {
     status: 0,
     msg: "操作成功",
@@ -2485,7 +2486,7 @@ Mock.mock(getRegExpUrl("/getfilmsType"), "get", () => {
 });
 //电影导航栏
 //获取电影类型
-Mock.mock(getRegExpUrl("/getFilmsnav/filmsType"), "get", () => {
+Mock.mock(getRegExpUrl("/getFilmsNav/filmsType/type"), "get", () => {
   return {
     status: 0,
     msg: "操作成功",
@@ -2494,13 +2495,7 @@ Mock.mock(getRegExpUrl("/getFilmsnav/filmsType"), "get", () => {
         title: "类型:",
         label: "type",
         navtype: [
-          {
-            name: "全部",
-            moviceList: [],
-            typeId: "0",
-            label: "type",
-            type: "all",
-          },
+          {name: "全部",moviceList: [], typeId: "0",label: "type",type: "all"},
           { name: "爱情", moviceList: [], typeId: "1", type: "love" },
           { name: "喜剧", moviceList: [], typeId: "2", type: "comedy" },
           { name: "动画", moviceList: [], typeId: "3", type: "animation" },
@@ -2521,7 +2516,7 @@ Mock.mock(getRegExpUrl("/getFilmsnav/filmsType"), "get", () => {
   };
 });
 //获取电影区域类型
-Mock.mock(getRegExpUrl("/getFilmsnav/filmsRegion"), "get", () => {
+Mock.mock(getRegExpUrl("/getFilmsNav/filmsType/location"), "get", () => {
   return {
     status: 0,
     msg: "操作成功",
@@ -2558,7 +2553,7 @@ Mock.mock(getRegExpUrl("/getFilmsnav/filmsRegion"), "get", () => {
   };
 });
 //获取电影年代类型
-Mock.mock(getRegExpUrl("/getFilmsnav/filmsEra"), "get", () => {
+Mock.mock(getRegExpUrl("/getFilmsNav/filmsType/year"), "get", () => {
   return {
     status: 0,
     msg: "操作成功",
@@ -2590,14 +2585,14 @@ Mock.mock(getRegExpUrl("/getFilmsnav/filmsEra"), "get", () => {
   };
 });
 //获取电影-正在热映-全部电影
-Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
+Mock.mock(getRegExpUrl("/releaseFilms/ByPage"), "get", () => {
   return {
     status: 0,
     msg: "操作成功",
     data: [
       {
         key: 1,
-        moviename: "阿凡达",
+        movieName: "阿凡达",
         score: 9.4,
         all: "1",
         img: filmsUrl.films1,
@@ -2655,7 +2650,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 2,
-        moviename: "阿凡达:水之道",
+        movieName: "阿凡达:水之道",
         score: 9.2,
         all: "1",
         img: filmsUrl.films2,
@@ -2742,7 +2737,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 3,
-        moviename: "航海王:红发歌姬",
+        movieName: "航海王:红发歌姬",
         score: 9.2,
         all: "1",
         img: filmsUrl.films3,
@@ -2811,7 +2806,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 4,
-        moviename: "名侦探柯南:万圣节的新娘",
+        movieName: "名侦探柯南:万圣节的新娘",
         score: 9.1,
         all: "1",
         img: filmsUrl.films4,
@@ -2878,7 +2873,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 5,
-        moviename: "万里归途",
+        movieName: "万里归途",
         score: 9.5,
         all: "1",
         img: filmsUrl.films5,
@@ -2936,7 +2931,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 6,
-        moviename: "我的遗憾和你有关",
+        movieName: "我的遗憾和你有关",
         score: 6.5,
         all: "1",
         img: filmsUrl.films6,
@@ -2994,7 +2989,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 7,
-        moviename: "扫黑行动",
+        movieName: "扫黑行动",
         score: 8.1,
         all: "1",
         img: filmsUrl.films7,
@@ -3053,7 +3048,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 8,
-        moviename: "坠落",
+        movieName: "坠落",
         score: 8.1,
         all: "1",
         img: filmsUrl.films8,
@@ -3112,7 +3107,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 9,
-        moviename: "放牛班的青春",
+        movieName: "放牛班的青春",
         score: 9.5,
         all: "1",
         img: filmsUrl.films9,
@@ -3166,7 +3161,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 10,
-        moviename: "绝望主夫",
+        movieName: "绝望主夫",
         score: "",
         all: "1",
         img: filmsUrl.films10,
@@ -3217,7 +3212,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 11,
-        moviename: "穿靴子的猫",
+        movieName: "穿靴子的猫",
         score: "",
         all: "1",
         img: filmsUrl.films11,
@@ -3272,7 +3267,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 12,
-        moviename: "个十百千万",
+        movieName: "个十百千万",
         score: "",
         all: "1",
         img: filmsUrl.films12,
@@ -3356,7 +3351,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 13,
-        moviename: "沼泽深处的女孩",
+        movieName: "沼泽深处的女孩",
         score: 9.3,
         all: "1",
         img: filmsUrl.films13,
@@ -3425,7 +3420,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 14,
-        moviename: "唬胆特工",
+        movieName: "唬胆特工",
         score: "",
         all: "1",
         img: filmsUrl.films15,
@@ -3493,7 +3488,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 15,
-        moviename: "龙马!新生网球王子",
+        movieName: "龙马!新生网球王子",
         score: "",
         all: "1",
         img: filmsUrl.films14,
@@ -3552,7 +3547,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 16,
-        moviename: "不要再见啊，鱼花塘",
+        movieName: "不要再见啊，鱼花塘",
         score: "",
         all: "1",
         img: filmsUrl.films16,
@@ -3608,7 +3603,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 17,
-        moviename: "谁偷了我的粉兔子",
+        movieName: "谁偷了我的粉兔子",
         score: "",
         all: "1",
         img: filmsUrl.films17,
@@ -3665,7 +3660,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 18,
-        moviename: "杀掉那个魔术师",
+        movieName: "杀掉那个魔术师",
         score: 8.6,
         all: "1",
         img: filmsUrl.films18,
@@ -3724,7 +3719,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 19,
-        moviename: "中国机长",
+        movieName: "中国机长",
         score: 9.4,
         all: "1",
         img: filmsUrl.films19,
@@ -3778,7 +3773,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 20,
-        moviename: "狙击手",
+        movieName: "狙击手",
         score: 9.5,
         all: "1",
         img: filmsUrl.films20,
@@ -3829,7 +3824,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 21,
-        moviename: "西游记之七十二变",
+        movieName: "西游记之七十二变",
         score: "",
         all: "1",
         img: filmsUrl.films21,
@@ -3886,7 +3881,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 22,
-        moviename: "我是霸王龙",
+        movieName: "我是霸王龙",
         score: 7.5,
         all: "1",
         img: filmsUrl.films22,
@@ -3971,7 +3966,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 23,
-        moviename: "您好，北京",
+        movieName: "您好，北京",
         score: "",
         all: "1",
         img: filmsUrl.films23,
@@ -4040,7 +4035,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 24,
-        moviename: "悬崖之上",
+        movieName: "悬崖之上",
         score: 9.1,
         all: "1",
         img: filmsUrl.films25,
@@ -4107,7 +4102,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 25,
-        moviename: "猫狗武林",
+        movieName: "猫狗武林",
         score: 8.5,
         all: "1",
         img: filmsUrl.films24,
@@ -4165,7 +4160,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 26,
-        moviename: "金刚川",
+        movieName: "金刚川",
         score: 9.4,
         all: "1",
         img: filmsUrl.films26,
@@ -4222,7 +4217,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 27,
-        moviename: "变身攻略",
+        movieName: "变身攻略",
         score: "",
         all: "1",
         img: filmsUrl.films27,
@@ -4279,7 +4274,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 28,
-        moviename: "橡树餐厅",
+        movieName: "橡树餐厅",
         score: "",
         all: "1",
         img: filmsUrl.films28,
@@ -4340,7 +4335,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 29,
-        moviename: "陪你在全世界长大",
+        movieName: "陪你在全世界长大",
         score: "",
         all: "1",
         img: filmsUrl.films29,
@@ -4393,7 +4388,7 @@ Mock.mock(getRegExpUrl("/getFilms/getAllfilms"), "get", () => {
       },
       {
         key: 30,
-        moviename: "想见你",
+        movieName: "想见你",
         score: "",
         all: "1",
         img: filmsUrl.films30,
@@ -4456,7 +4451,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 1,
-        moviename: "熊出没·伴我“熊芯”",
+        movieName: "熊出没·伴我“熊芯”",
         sum: "134917",
         type: "comedy",
         img: filmsUrl.release1,
@@ -4509,7 +4504,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 2,
-        moviename: "平原上的火焰",
+        movieName: "平原上的火焰",
         sum: "355184",
         type: "love",
         img: filmsUrl.release2,
@@ -4564,7 +4559,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 3,
-        moviename: "阿凡达",
+        movieName: "阿凡达",
         type: "science",
         img: filmsUrl.release3,
         score: 9.4,
@@ -4625,7 +4620,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 4,
-        moviename: "流浪地球2",
+        movieName: "流浪地球2",
         sum: "641570",
         type: "science",
         img: filmsUrl.release4,
@@ -4683,7 +4678,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 5,
-        moviename: "消失的她",
+        movieName: "消失的她",
         sum: "46113",
         type: "crime",
         img: filmsUrl.release5,
@@ -4740,7 +4735,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 6,
-        moviename: "绝望主夫",
+        movieName: "绝望主夫",
         type: "comedy",
         img: filmsUrl.release6,
         score: 9.0,
@@ -4799,7 +4794,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 7,
-        moviename: "龙马精神",
+        movieName: "龙马精神",
         sum: "85498",
         type: "comedy",
         img: filmsUrl.release7,
@@ -4868,7 +4863,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 8,
-        moviename: "龙珠超：超级人造人",
+        movieName: "龙珠超：超级人造人",
         sum: "39551",
         type: "animation",
         img: filmsUrl.release8,
@@ -4938,7 +4933,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 9,
-        moviename: "前任4：英年早婚",
+        movieName: "前任4：英年早婚",
         sum: "120955",
         type: "love",
         img: filmsUrl.release9,
@@ -5024,7 +5019,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 10,
-        moviename: "交换人生",
+        movieName: "交换人生",
         sum: "30564",
         type: "comedy",
         img: filmsUrl.release10,
@@ -5080,7 +5075,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 11,
-        moviename: "绑架游戏",
+        movieName: "绑架游戏",
         sum: "82477",
         type: "plot",
         img: filmsUrl.release11,
@@ -5132,7 +5127,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 12,
-        moviename: "人生路不熟",
+        movieName: "人生路不熟",
         sum: "37439",
         type: "comedy",
         img: filmsUrl.release12,
@@ -5187,7 +5182,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 13,
-        moviename: "深海",
+        movieName: "深海",
         sum: "148511",
         type: "animation",
         img: filmsUrl.release13,
@@ -5247,7 +5242,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 14,
-        moviename: "龙马！新生网球王子",
+        movieName: "龙马！新生网球王子",
         sum: "9115",
         type: "animation",
         img: filmsUrl.release14,
@@ -5305,7 +5300,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 15,
-        moviename: "西游记之七十二变",
+        movieName: "西游记之七十二变",
         sum: "5737",
         type: "animation",
         img: filmsUrl.release15,
@@ -5363,7 +5358,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 16,
-        moviename: "念念相忘",
+        movieName: "念念相忘",
         sum: "100417",
         type: "love",
         img: filmsUrl.release16,
@@ -5423,7 +5418,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 17,
-        moviename: "中国乒乓",
+        movieName: "中国乒乓",
         sum: "63316",
         type: "plot",
         img: filmsUrl.release17,
@@ -5491,7 +5486,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 18,
-        moviename: "八角笼中",
+        movieName: "八角笼中",
         sum: "7973",
         type: "plot",
         img: filmsUrl.release18,
@@ -5560,7 +5555,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 19,
-        moviename: "热烈",
+        movieName: "热烈",
         sum: "162872",
         type: "plot",
         img: filmsUrl.release19,
@@ -5645,7 +5640,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 20,
-        moviename: "请别相信她",
+        movieName: "请别相信她",
         sum: "118480",
         type: "love",
         img: filmsUrl.release20,
@@ -5702,7 +5697,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 21,
-        moviename: "宇宙探索编辑部",
+        movieName: "宇宙探索编辑部",
         sum: "23523",
         type: "comedy",
         img: filmsUrl.release21,
@@ -5754,7 +5749,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 22,
-        moviename: "巨齿鲨2：深渊",
+        movieName: "巨齿鲨2：深渊",
         sum: "107492",
         type: "science",
         img: filmsUrl.release22,
@@ -5809,7 +5804,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 23,
-        moviename: "女生规则",
+        movieName: "女生规则",
         sum: "2966",
         type: "plot",
         img: filmsUrl.release23,
@@ -5869,7 +5864,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 24,
-        moviename: "维和防暴队",
+        movieName: "维和防暴队",
         sum: "272504",
         type: "plot",
         img: filmsUrl.release24,
@@ -5927,7 +5922,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 25,
-        moviename: "谁偷了我的粉兔子",
+        movieName: "谁偷了我的粉兔子",
         sum: "2438",
         type: "plot",
         img: filmsUrl.release25,
@@ -5985,7 +5980,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 26,
-        moviename: "极速保镖",
+        movieName: "极速保镖",
         sum: "3134",
         type: "plot",
         img: filmsUrl.release26,
@@ -6045,7 +6040,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 27,
-        moviename: "2067",
+        movieName: "2067",
         sum: "2556",
         type: "science",
         img: filmsUrl.release27,
@@ -6112,7 +6107,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 28,
-        moviename: "倍儿喜欢你",
+        movieName: "倍儿喜欢你",
         sum: "3362",
         type: "love",
         img: filmsUrl.release28,
@@ -6182,7 +6177,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 29,
-        moviename: "满江红",
+        movieName: "满江红",
         sum: "154839",
         type: "comedy",
         img: filmsUrl.release29,
@@ -6268,7 +6263,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 1,
         key: 30,
-        moviename: "超能一家人",
+        movieName: "超能一家人",
         sum: "702010",
         type: "comedy",
         img: filmsUrl.release30,
@@ -6325,7 +6320,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 31,
-        moviename: "检察风云",
+        movieName: "检察风云",
         sum: "273602",
         type: "plot",
         img: filmsUrl.release31,
@@ -6377,7 +6372,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 32,
-        moviename: "奇迹小子",
+        movieName: "奇迹小子",
         sum: "61",
         type: "plot",
         img: filmsUrl.release32,
@@ -6431,7 +6426,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 33,
-        moviename: "暗杀风暴",
+        movieName: "暗杀风暴",
         sum: "239427",
         type: "crime",
         img: filmsUrl.release33,
@@ -6491,7 +6486,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 34,
-        moviename: "刺猬",
+        movieName: "刺猬",
         sum: "32470",
         type: "comedy",
         img: filmsUrl.release34,
@@ -6549,7 +6544,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 35,
-        moviename: "扫黑·拨云见日",
+        movieName: "扫黑·拨云见日",
         sum: "26632",
         type: "plot",
         img: filmsUrl.release35,
@@ -6607,7 +6602,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 36,
-        moviename: "风再起时",
+        movieName: "风再起时",
         sum: "157751",
         type: "plot",
         img: filmsUrl.release36,
@@ -6668,7 +6663,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 37,
-        moviename: "拯救嫌疑人",
+        movieName: "拯救嫌疑人",
         sum: "54157",
         type: "plot",
         img: filmsUrl.release37,
@@ -6736,7 +6731,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 38,
-        moviename: "变身攻略",
+        movieName: "变身攻略",
         sum: "1227",
         type: "love",
         img: filmsUrl.release38,
@@ -6806,7 +6801,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 39,
-        moviename: "断网",
+        movieName: "断网",
         sum: "159638",
         type: "plot",
         img: filmsUrl.release39,
@@ -6893,7 +6888,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 40,
-        moviename: "莫斯科行动",
+        movieName: "莫斯科行动",
         sum: "10476",
         type: "crime",
         img: filmsUrl.release40,
@@ -6950,7 +6945,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 41,
-        moviename: "红毯先生",
+        movieName: "红毯先生",
         sum: "10600",
         type: "comedy",
         img: filmsUrl.release41,
@@ -7002,7 +6997,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 42,
-        moviename: "回廊亭",
+        movieName: "回廊亭",
         sum: "229388",
         type: "love",
         img: filmsUrl.release42,
@@ -7057,7 +7052,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 43,
-        moviename: "橡树餐厅",
+        movieName: "橡树餐厅",
         sum: "1672",
         type: "comedy",
         img: filmsUrl.release43,
@@ -7118,7 +7113,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 44,
-        moviename: "潜行",
+        movieName: "潜行",
         sum: "21002",
         type: "plot",
         img: filmsUrl.release44,
@@ -7177,7 +7172,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 45,
-        moviename: "爱很美味",
+        movieName: "爱很美味",
         sum: "7550",
         type: "love",
         img: filmsUrl.release45,
@@ -7235,7 +7230,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 46,
-        moviename: "惊天救援",
+        movieName: "惊天救援",
         sum: "124645",
         type: "plot",
         img: filmsUrl.release47,
@@ -7295,7 +7290,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 47,
-        moviename: "危机航线",
+        movieName: "危机航线",
         sum: "8437",
         type: "crime",
         img: filmsUrl.release48,
@@ -7364,7 +7359,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 48,
-        moviename: "燃冬",
+        movieName: "燃冬",
         sum: "26355",
         type: "plot",
         img: filmsUrl.release49,
@@ -7433,7 +7428,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 49,
-        moviename: "因爱而伟大",
+        movieName: "因爱而伟大",
         sum: "418",
         type: "love",
         img: filmsUrl.release50,
@@ -7519,7 +7514,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 50,
-        moviename: "三贵情史",
+        movieName: "三贵情史",
         sum: "1910",
         type: "plot",
         img: filmsUrl.release51,
@@ -7575,7 +7570,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 51,
-        moviename: "天之书",
+        movieName: "天之书",
         sum: "5868",
         type: "action",
         img: filmsUrl.release52,
@@ -7626,7 +7621,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 52,
-        moviename: "梦想的面具",
+        movieName: "梦想的面具",
         sum: "105",
         type: "plot",
         img: filmsUrl.release53,
@@ -7680,7 +7675,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 53,
-        moviename: "诗巫风云",
+        movieName: "诗巫风云",
         sum: "1087",
         type: "plot",
         img: filmsUrl.release54,
@@ -7741,7 +7736,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 54,
-        moviename: "热搜",
+        movieName: "热搜",
         sum: "3607",
         type: "plot",
         img: filmsUrl.release55,
@@ -7798,7 +7793,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 55,
-        moviename: "鹦鹉杀",
+        movieName: "鹦鹉杀",
         sum: "4385",
         type: "love",
         img: filmsUrl.release56,
@@ -7855,7 +7850,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 56,
-        moviename: "八戒之天蓬下界",
+        movieName: "八戒之天蓬下界",
         sum: "19675",
         type: "love",
         img: filmsUrl.release57,
@@ -7916,7 +7911,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 57,
-        moviename: "不二兄弟",
+        movieName: "不二兄弟",
         sum: "1655",
         type: "plot",
         img: filmsUrl.release58,
@@ -7983,7 +7978,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 58,
-        moviename: "我心向上",
+        movieName: "我心向上",
         sum: "267",
         type: "love",
         img: filmsUrl.release59,
@@ -8053,7 +8048,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 59,
-        moviename: "望道",
+        movieName: "望道",
         sum: "3497",
         type: "plot",
         img: filmsUrl.release60,
@@ -8138,7 +8133,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 2,
         key: 60,
-        moviename: "海关战线",
+        movieName: "海关战线",
         sum: "14752",
         type: "plot",
         img: filmsUrl.release46,
@@ -8195,7 +8190,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 61,
-        moviename: "从21世纪安全撤离",
+        movieName: "从21世纪安全撤离",
         sum: "8893",
         type: "science",
         img: filmsUrl.release61,
@@ -8248,7 +8243,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 62,
-        moviename: "丹顶鹤",
+        movieName: "丹顶鹤",
         sum: "87",
         type: "plot",
         img: filmsUrl.release62,
@@ -8302,7 +8297,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 63,
-        moviename: "忠爱无言2",
+        movieName: "忠爱无言2",
         sum: "62416",
         type: "plot",
         img: filmsUrl.release63,
@@ -8362,7 +8357,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 64,
-        moviename: "再看我一眼",
+        movieName: "再看我一眼",
         sum: "479",
         type: "love",
         img: filmsUrl.release64,
@@ -8420,7 +8415,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 65,
-        moviename: "秘密花园",
+        movieName: "秘密花园",
         sum: "3209",
         type: "plot",
         img: filmsUrl.release65,
@@ -8477,7 +8472,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 66,
-        moviename: "相见在鸾峰桥",
+        movieName: "相见在鸾峰桥",
         sum: "278",
         type: "love",
         img: filmsUrl.release66,
@@ -8537,7 +8532,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 67,
-        moviename: "我世界里的你",
+        movieName: "我世界里的你",
         sum: "5547",
         type: "love",
         img: filmsUrl.release67,
@@ -8605,7 +8600,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 68,
-        moviename: "热汤",
+        movieName: "热汤",
         sum: "10641",
         type: "love",
         img: filmsUrl.release68,
@@ -8675,7 +8670,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 69,
-        moviename: "绿皮小火车",
+        movieName: "绿皮小火车",
         sum: "256",
         type: "plot",
         img: filmsUrl.release69,
@@ -8760,7 +8755,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 70,
-        moviename: "我们遇见松花湖",
+        movieName: "我们遇见松花湖",
         sum: "1894",
         type: "love",
         img: filmsUrl.release70,
@@ -8817,7 +8812,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 71,
-        moviename: "少年陈真之乱世英雄",
+        movieName: "少年陈真之乱世英雄",
         sum: "543",
         type: "action",
         img: filmsUrl.release71,
@@ -8868,7 +8863,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 72,
-        moviename: "药·不要",
+        movieName: "药·不要",
         sum: "550",
         type: "plot",
         img: filmsUrl.release72,
@@ -8922,7 +8917,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 73,
-        moviename: "最好的道别",
+        movieName: "最好的道别",
         sum: "1139",
         type: "plot",
         img: filmsUrl.release73,
@@ -8982,7 +8977,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 74,
-        moviename: "爆裂蝴蝶",
+        movieName: "爆裂蝴蝶",
         sum: "121",
         type: "youth",
         img: filmsUrl.release74,
@@ -9040,7 +9035,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 75,
-        moviename: "你好，珠峰",
+        movieName: "你好，珠峰",
         sum: "600",
         type: "plot",
         img: filmsUrl.release75,
@@ -9097,7 +9092,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 76,
-        moviename: "包青天之天下第一庄",
+        movieName: "包青天之天下第一庄",
         sum: "2183",
         type: "love",
         img: filmsUrl.release76,
@@ -9158,7 +9153,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 77,
-        moviename: "红星闪亮",
+        movieName: "红星闪亮",
         sum: "442",
         type: "plot",
         img: filmsUrl.release77,
@@ -9225,7 +9220,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
       {
         page: 3,
         key: 78,
-        moviename: "老兵刀锋",
+        movieName: "老兵刀锋",
         sum: "262",
         type: "love",
         img: filmsUrl.release78,
@@ -9296,7 +9291,7 @@ Mock.mock(getRegExpUrl("/getFilms/getreleasefilms"), "get", () => {
   };
 });
 
-//榜单
+//榜单 路由path
 Mock.mock(getRegExpUrl("/getboardType"), "get", () => {
   return {
     status: 0,
@@ -9349,7 +9344,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "弃捐勿复道，努力加餐饭",
         like: 200,
         dislike: 3,
-        moviename:'去有风的地方',
+        movieName:'去有风的地方',
         director:'丁梓光',
         tostar:'刘亦菲 / 李现 / 胡冰卿',
         type:'剧情',
@@ -9463,7 +9458,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "三毛的回声",
         like: 73,
         dislike: 1,
-        moviename:'三毛：沙漠新娘',
+        movieName:'三毛：沙漠新娘',
         director:'Marta Arribas / Ana Pérez',
         tostar:'三毛',
         type:'传记 / 纪录片',
@@ -9568,7 +9563,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "自然的，灵性的",
         like: 1,
         dislike: null,
-        moviename:'阿凡达：水之道',
+        movieName:'阿凡达：水之道',
         director:'詹姆斯·卡梅隆',
         tostar:'萨姆·沃辛顿 / 佐伊·索尔达娜 / 西格妮·韦弗',
         type:'动作 / 科幻 / 冒险',
@@ -9688,7 +9683,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "弃捐勿复道，努力加餐饭",
         like: 200,
         dislike: 3,
-        moviename:'去有风的地方',
+        movieName:'去有风的地方',
         director:'丁梓光',
         tostar:'刘亦菲 / 李现 / 胡冰卿',
         type:'剧情',
@@ -9793,7 +9788,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "三毛的回声",
         like: 73,
         dislike: 1,
-        moviename:'三毛：沙漠新娘',
+        movieName:'三毛：沙漠新娘',
         director:'Marta Arribas / Ana Pérez',
         tostar:'三毛',
         type:'传记 / 纪录片',
@@ -9898,7 +9893,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "自然的，灵性的",
         like: 1,
         dislike: null,
-        moviename:'阿凡达：水之道',
+        movieName:'阿凡达：水之道',
         director:'詹姆斯·卡梅隆',
         tostar:'萨姆·沃辛顿 / 佐伊·索尔达娜 / 西格妮·韦弗',
         type:'动作 / 科幻 / 冒险',
@@ -10018,7 +10013,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "弃捐勿复道，努力加餐饭",
         like: 200,
         dislike: 3,
-        moviename:'去有风的地方',
+        movieName:'去有风的地方',
         director:'丁梓光',
         tostar:'刘亦菲 / 李现 / 胡冰卿',
         type:'剧情',
@@ -10123,7 +10118,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "三毛的回声",
         like: 73,
         dislike: 1,
-        moviename:'三毛：沙漠新娘',
+        movieName:'三毛：沙漠新娘',
         director:'Marta Arribas / Ana Pérez',
         tostar:'三毛',
         type:'传记 / 纪录片',
@@ -10228,7 +10223,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "自然的，灵性的",
         like: 1,
         dislike: null,
-        moviename:'阿凡达：水之道',
+        movieName:'阿凡达：水之道',
         director:'詹姆斯·卡梅隆',
         tostar:'萨姆·沃辛顿 / 佐伊·索尔达娜 / 西格妮·韦弗',
         type:'动作 / 科幻 / 冒险',
@@ -10348,7 +10343,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "弃捐勿复道，努力加餐饭",
         like: 200,
         dislike: 3,
-        moviename:'去有风的地方',
+        movieName:'去有风的地方',
         director:'丁梓光',
         tostar:'刘亦菲 / 李现 / 胡冰卿',
         type:'剧情',
@@ -10453,7 +10448,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "三毛的回声",
         like: 73,
         dislike: 1,
-        moviename:'三毛：沙漠新娘',
+        movieName:'三毛：沙漠新娘',
         director:'Marta Arribas / Ana Pérez',
         tostar:'三毛',
         type:'传记 / 纪录片',
@@ -10558,7 +10553,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "自然的，灵性的",
         like: 1,
         dislike: null,
-        moviename:'阿凡达：水之道',
+        movieName:'阿凡达：水之道',
         director:'詹姆斯·卡梅隆',
         tostar:'萨姆·沃辛顿 / 佐伊·索尔达娜 / 西格妮·韦弗',
         type:'动作 / 科幻 / 冒险',
@@ -10678,7 +10673,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "幻想、反幻想与自然主义",
         like: 32,
         dislike: 1,
-        moviename:'岛屿上的煎熬',
+        movieName:'岛屿上的煎熬',
         director:'阿尔伯特·塞拉',
         tostar:'伯努瓦·马吉梅尔 / 塞尔希·洛佩斯 / 吕伊斯·塞拉',
         type:'剧情 / 惊悚',
@@ -10760,7 +10755,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "《去有风的地方》-真正的治愈，不过是找回最初的自己",
         like: 79,
         dislike: null,
-        moviename:'去有风的地方',
+        movieName:'去有风的地方',
         director:'丁梓光',
         tostar:'刘亦菲 / 李现 / 胡冰卿',
         type:'剧情',
@@ -10882,7 +10877,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "恶心，很恶心",
         like: 241,
         dislike: 12,
-        moviename:'绝望主夫',
+        movieName:'绝望主夫',
         director:'张琦',
         tostar:'常远 / 李嘉琦 / 魏翔',
         type:'喜剧',
@@ -11004,7 +10999,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "水之道全剧透解析",
         like: 2501,
         dislike: 170,
-        moviename:'阿凡达：水之道',
+        movieName:'阿凡达：水之道',
         director:'詹姆斯·卡梅隆',
         tostar:'萨姆·沃辛顿 / 佐伊·索尔达娜 / 西格妮·韦弗',
         type:'动作 / 科幻 / 冒险',
@@ -11126,7 +11121,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "承接不住内容，一切都变得廉价",
         like: 486,
         dislike: 13,
-        moviename:'想见你',
+        movieName:'想见你',
         director:'黄天仁',
         tostar:'柯佳嬿 / 许光汉 / 施柏宇',
         type:'爱情 / 悬疑 / 奇幻',
@@ -11248,7 +11243,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "八卦《穿靴子的猫2》人物和背景故事",
         like: 135,
         dislike: 1,
-        moviename:'穿靴子的猫2',
+        movieName:'穿靴子的猫2',
         director:'乔尔·克劳福德 / 贾努埃尔·梅尔卡多',
         tostar:'安东尼奥·班德拉斯 / 萨尔玛·海耶克 / 哈维·吉兰',
         type:'喜剧 / 爱情 / 动画 / 悬疑 / 奇幻 / 冒险 / 歌舞',
@@ -11370,7 +11365,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "必须要和大猪蹄子一起看",
         like: 311,
         dislike: 18,
-        moviename:'绝望主夫',
+        movieName:'绝望主夫',
         director:'张琦',
         tostar:'常远 / 李嘉琦 / 魏翔',
         type:'喜剧',
@@ -11492,7 +11487,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "三毛的回声",
         like: 73,
         dislike: 1,
-        moviename:'三毛：沙漠新娘',
+        movieName:'三毛：沙漠新娘',
         director:'Marta Arribas / Ana Pérez',
         tostar:'三毛',
         type:'传记 / 纪录片',
@@ -11597,7 +11592,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "《去有风的地方》-真正的治愈，不过是找回最初的自己",
         like: 79,
         dislike: null,
-        moviename:'去有风的地方',
+        movieName:'去有风的地方',
         director:'丁梓光',
         tostar:'刘亦菲 / 李现 / 胡冰卿',
         type:'剧情',
@@ -11719,7 +11714,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "自然的，灵性的",
         like: 1,
         dislike: null,
-        moviename:'阿凡达：水之道',
+        movieName:'阿凡达：水之道',
         director:'詹姆斯·卡梅隆',
         tostar:'萨姆·沃辛顿 / 佐伊·索尔达娜 / 西格妮·韦弗',
         type:'动作 / 科幻 / 冒险',
@@ -11839,7 +11834,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "恶心，很恶心",
         like: 241,
         dislike: 12,
-        moviename:'绝望主夫',
+        movieName:'绝望主夫',
         director:'张琦',
         tostar:'常远 / 李嘉琦 / 魏翔',
         type:'喜剧',
@@ -11961,7 +11956,7 @@ Mock.mock(getRegExpUrl("/getfilms/mostPopular"), "get", () => {
         title: "弃捐勿复道，努力加餐饭",
         like: 200,
         dislike: 3,
-        moviename:'去有风的地方',
+        movieName:'去有风的地方',
         director:'丁梓光',
         tostar:'刘亦菲 / 李现 / 胡冰卿',
         type:'剧情',
@@ -12074,7 +12069,7 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
         title: "幻想、反幻想与自然主义",
         like: 32,
         dislike: 1,
-        moviename:'岛屿上的煎熬',
+        movieName:'岛屿上的煎熬',
         director:'阿尔伯特·塞拉',
         tostar:'伯努瓦·马吉梅尔 / 塞尔希·洛佩斯 / 吕伊斯·塞拉',
         type:'剧情 / 惊悚',
@@ -12155,7 +12150,7 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
         title: "《去有风的地方》-真正的治愈，不过是找回最初的自己",
         like: 79,
         dislike: null,
-        moviename:'去有风的地方',
+        movieName:'去有风的地方',
         director:'丁梓光',
         tostar:'刘亦菲 / 李现 / 胡冰卿',
         type:'剧情',
@@ -12276,7 +12271,7 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
         title: "恶心，很恶心",
         like: 241,
         dislike: 12,
-        moviename:'绝望主夫',
+        movieName:'绝望主夫',
         director:'张琦',
         tostar:'常远 / 李嘉琦 / 魏翔',
         type:'喜剧',
@@ -12397,7 +12392,7 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
         title: "水之道全剧透解析",
         like: 2501,
         dislike: 170,
-        moviename:'阿凡达：水之道',
+        movieName:'阿凡达：水之道',
         director:'詹姆斯·卡梅隆',
         tostar:'萨姆·沃辛顿 / 佐伊·索尔达娜 / 西格妮·韦弗',
         type:'动作 / 科幻 / 冒险',
@@ -12518,7 +12513,7 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
         title: "承接不住内容，一切都变得廉价",
         like: 486,
         dislike: 13,
-        moviename:'想见你',
+        movieName:'想见你',
         director:'黄天仁',
         tostar:'柯佳嬿 / 许光汉 / 施柏宇',
         type:'爱情 / 悬疑 / 奇幻',
@@ -12639,7 +12634,7 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
         title: "八卦《穿靴子的猫2》人物和背景故事",
         like: 135,
         dislike: 1,
-        moviename:'穿靴子的猫2',
+        movieName:'穿靴子的猫2',
         director:'乔尔·克劳福德 / 贾努埃尔·梅尔卡多',
         tostar:'安东尼奥·班德拉斯 / 萨尔玛·海耶克 / 哈维·吉兰',
         type:'喜剧 / 爱情 / 动画 / 悬疑 / 奇幻 / 冒险 / 歌舞',
@@ -12760,7 +12755,7 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
         title: "必须要和大猪蹄子一起看",
         like: 311,
         dislike: 18,
-        moviename:'绝望主夫',
+        movieName:'绝望主夫',
         director:'张琦',
         tostar:'常远 / 李嘉琦 / 魏翔',
         type:'喜剧',
@@ -12881,7 +12876,7 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
         title: "幻想、反幻想与自然主义",
         like: 32,
         dislike: 1,
-        moviename:'岛屿上的煎熬',
+        movieName:'岛屿上的煎熬',
         director:'阿尔伯特·塞拉',
         tostar:'伯努瓦·马吉梅尔 / 塞尔希·洛佩斯 / 吕伊斯·塞拉',
         type:'剧情 / 惊悚',
@@ -12962,7 +12957,7 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
         title: "《去有风的地方》-真正的治愈，不过是找回最初的自己",
         like: 79,
         dislike: null,
-        moviename:'去有风的地方',
+        movieName:'去有风的地方',
         director:'丁梓光',
         tostar:'刘亦菲 / 李现 / 胡冰卿',
         type:'剧情',
@@ -13083,7 +13078,7 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
         title: "恶心，很恶心",
         like: 241,
         dislike: 12,
-        moviename:'绝望主夫',
+        movieName:'绝望主夫',
         director:'张琦',
         tostar:'常远 / 李嘉琦 / 魏翔',
         type:'喜剧',
@@ -13204,7 +13199,7 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
         title: "水之道全剧透解析",
         like: 2501,
         dislike: 170,
-        moviename:'阿凡达：水之道',
+        movieName:'阿凡达：水之道',
         director:'詹姆斯·卡梅隆',
         tostar:'萨姆·沃辛顿 / 佐伊·索尔达娜 / 西格妮·韦弗',
         type:'动作 / 科幻 / 冒险',
@@ -13325,7 +13320,7 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
         title: "承接不住内容，一切都变得廉价",
         like: 486,
         dislike: 13,
-        moviename:'想见你',
+        movieName:'想见你',
         director:'黄天仁',
         tostar:'柯佳嬿 / 许光汉 / 施柏宇',
         type:'爱情 / 悬疑 / 奇幻',
@@ -13446,7 +13441,7 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
         title: "八卦《穿靴子的猫2》人物和背景故事",
         like: 135,
         dislike: 1,
-        moviename:'穿靴子的猫2',
+        movieName:'穿靴子的猫2',
         director:'乔尔·克劳福德 / 贾努埃尔·梅尔卡多',
         tostar:'安东尼奥·班德拉斯 / 萨尔玛·海耶克 / 哈维·吉兰',
         type:'喜剧 / 爱情 / 动画 / 悬疑 / 奇幻 / 冒险 / 歌舞',
@@ -13567,7 +13562,7 @@ Mock.mock(getRegExpUrl("/getfilms/newfilmsreview"), "get", () => {
         title: "必须要和大猪蹄子一起看",
         like: 311,
         dislike: 18,
-        moviename:'绝望主夫',
+        movieName:'绝望主夫',
         director:'张琦',
         tostar:'常远 / 李嘉琦 / 魏翔',
         type:'喜剧',
@@ -13716,14 +13711,14 @@ Mock.mock(getRegExpUrl('getfilms/wokers/detail'),'get',()=>{
 //数据分析页面
 
 //票房
-Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
+Mock.mock(getRegExpUrl('analyseOffice/getAnalyse/office'),'get',()=>{
   return{
     status:0,
     msg:'操作成功',
     data:[
       {
         key: 4,
-        moviename: "流浪地球2",
+        movieName: "流浪地球2",
         img: filmsUrl.release4,
         office:5546.52,
         officeGDP:'31.5%',
@@ -13738,7 +13733,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
       {
         key: 20,
-        moviename: "满江红",
+        movieName: "满江红",
         img: filmsUrl.release29,
         office:5235.54,
         officeGDP:'29.7%',
@@ -13752,7 +13747,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
         visualiza:[87119456,90308456,131779456,113779456,6684534]
       },
       { key: 1,
-        moviename: "熊出没·伴我“熊芯”",
+        movieName: "熊出没·伴我“熊芯”",
         img: filmsUrl.release1,
         office:2732.20,
         officeGDP:'15.3%',
@@ -13767,7 +13762,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
       {
         key: 13,
-        moviename: "深海",
+        movieName: "深海",
         img: filmsUrl.release13,
         office:1821.13,
         officeGDP:'10.7%',
@@ -13782,7 +13777,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
       {
         key: 10,
-        moviename: "交换人生",
+        movieName: "交换人生",
         img: filmsUrl.release10,
         office:1807.24,
         officeGDP:'1.7%',
@@ -13797,7 +13792,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
       {
         key: 3,
-        moviename: "阿凡达",
+        movieName: "阿凡达",
         img: filmsUrl.release3,
         office:212.54,
         officeGDP:'1.1%',
@@ -13812,7 +13807,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
       {
         key: 2,
-        moviename: "平原上的火焰",
+        movieName: "平原上的火焰",
         img: filmsUrl.release2,
         office:9.04,
         officeGDP:'<0.1%',
@@ -13827,7 +13822,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
       {
         key: 14,
-        moviename: "中国乒乓之绝地反击",
+        movieName: "中国乒乓之绝地反击",
         img: filmsUrl.release17,
         office:8.37,
         officeGDP:'<0.1%',
@@ -13842,7 +13837,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
       {
         key: 18,
-        moviename: "女生规则",
+        movieName: "女生规则",
         img: filmsUrl.release23, 
         office:5.92,
         officeGDP:'<0.1%',
@@ -13857,7 +13852,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
       {
         key: 5,
-        moviename: "消失的她",
+        movieName: "消失的她",
         img: filmsUrl.release5, 
         office:2.03,
         officeGDP:'<0.1%',
@@ -13871,7 +13866,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
         visualiza:[69456,65456,132456,121456,16534]
       },
       { key: 6,
-        moviename: "绝望主夫",
+        movieName: "绝望主夫",
         img: filmsUrl.release6,
         office:2.02,
         officeGDP:'<0.1%',
@@ -13886,7 +13881,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
       {
         key: 7,
-        moviename: "龙马精神",
+        movieName: "龙马精神",
         img: filmsUrl.release7,
         office:1.56,
         officeGDP:'<0.1%',
@@ -13901,7 +13896,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
       {
         key: 8,
-        moviename: "龙珠超：超级人造人",
+        movieName: "龙珠超：超级人造人",
         img: filmsUrl.release8,
         office:1.18,
         officeGDP:'<0.1%',
@@ -13916,7 +13911,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
       {
         key: 9,
-        moviename: "前任4：英年早婚",
+        movieName: "前任4：英年早婚",
         img: filmsUrl.release9,
         office:1.01,
         officeGDP:'<0.1%',
@@ -13931,7 +13926,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
     
       { key: 11,
-        moviename: "绑架游戏",
+        movieName: "绑架游戏",
         img: filmsUrl.release11,
         office:0.89,
         officeGDP:'<0.1%',
@@ -13946,7 +13941,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
       {
         key: 12,
-        moviename: "人生路不熟",
+        movieName: "人生路不熟",
         img: filmsUrl.release12,
         office:0.72,
         officeGDP:'<0.1%',
@@ -13961,7 +13956,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
       {
         key: 15,
-        moviename: "热烈",
+        movieName: "热烈",
         img: filmsUrl.release19,
         office:0.60,
         officeGDP:'<0.1%',
@@ -13975,7 +13970,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
         visualiza:[69456,65456,132456,121456,16534]
       },
       { key: 16,
-        moviename: "请别相信她",
+        movieName: "请别相信她",
         img: filmsUrl.release20,
         office:0.60,
         officeGDP:'<0.1%',
@@ -13990,7 +13985,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
       },
       {
         key: 17,
-        moviename: "宇宙探索编辑部",
+        movieName: "宇宙探索编辑部",
         img: filmsUrl.release21,
         office:0.60,
         officeGDP:'<0.1%',
@@ -14006,7 +14001,7 @@ Mock.mock(getRegExpUrl('getDatas/office/detail'),'get',()=>{
      
       {
         key: 19,
-        moviename: "维和防暴队",
+        movieName: "维和防暴队",
         img: filmsUrl.release24,
         office:0.22,
         officeGDP:'<0.1%',
@@ -14038,7 +14033,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
     data:[
       {
         key: 4,
-        moviename: "流浪地球2",
+        movieName: "流浪地球2",
         office:5546.52,
         officeGDP:'31.5%',
         arrangement:92975,
@@ -14047,7 +14042,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
       {
         key: 20,
-        moviename: "满江红",
+        movieName: "满江红",
         office:5235.54,
         officeGDP:'29.7%',
         arrangement:111399,
@@ -14055,7 +14050,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
         Shown:37.05,
       },
       { key: 1,
-        moviename: "熊出没·伴我“熊芯”",
+        movieName: "熊出没·伴我“熊芯”",
         office:2732.20,
         officeGDP:'15.3%',
         arrangement:48464,
@@ -14064,7 +14059,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
       {
         key: 13,
-        moviename: "深海",
+        movieName: "深海",
         office:1821.13,
         officeGDP:'10.7%',
         arrangement:30845,
@@ -14073,7 +14068,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
       {
         key: 10,
-        moviename: "交换人生",
+        movieName: "交换人生",
         office:1807.24,
         officeGDP:'1.7%',
         arrangement:17670,
@@ -14082,7 +14077,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
       {
         key: 3,
-        moviename: "阿凡达",
+        movieName: "阿凡达",
         office:212.54,
         officeGDP:'1.1%',
         arrangement:4929,
@@ -14091,7 +14086,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
       {
         key: 2,
-        moviename: "平原上的火焰",
+        movieName: "平原上的火焰",
         office:9.04,
         officeGDP:'<0.1%',
         arrangement:14,
@@ -14100,7 +14095,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
       {
         key: 14,
-        moviename: "中国乒乓之绝地反击",
+        movieName: "中国乒乓之绝地反击",
         office:8.37,
         officeGDP:'<0.1%',
         arrangement:4,
@@ -14109,7 +14104,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
       {
         key: 18,
-        moviename: "女生规则",
+        movieName: "女生规则",
         office:5.92,
         officeGDP:'<0.1%',
         arrangement:308,
@@ -14118,7 +14113,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
       {
         key: 5,
-        moviename: "消失的她",
+        movieName: "消失的她",
         office:2.03,
         officeGDP:'<0.1%',
         arrangement:123,
@@ -14126,7 +14121,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
         Shown:'4556.6万',
       },
       { key: 6,
-        moviename: "绝望主夫",
+        movieName: "绝望主夫",
         office:2.02,
         officeGDP:'<0.1%',
         arrangement:123,
@@ -14135,7 +14130,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
       {
         key: 7,
-        moviename: "龙马精神",
+        movieName: "龙马精神",
         office:1.56,
         officeGDP:'<0.1%',
         arrangement:66,
@@ -14144,7 +14139,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
       {
         key: 8,
-        moviename: "龙珠超：超级人造人",
+        movieName: "龙珠超：超级人造人",
         office:1.18,
         officeGDP:'<0.1%',
         arrangement:66,
@@ -14153,7 +14148,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
       {
         key: 9,
-        moviename: "前任4：英年早婚",
+        movieName: "前任4：英年早婚",
         office:1.01,
         officeGDP:'<0.1%',
         arrangement:14,
@@ -14162,7 +14157,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
     
       { key: 11,
-        moviename: "绑架游戏",
+        movieName: "绑架游戏",
         office:0.89,
         officeGDP:'<0.1%',
         arrangement:4,
@@ -14171,7 +14166,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
       {
         key: 12,
-        moviename: "人生路不熟",
+        movieName: "人生路不熟",
         office:0.72,
         officeGDP:'<0.1%',
         arrangement:3,
@@ -14180,7 +14175,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
       {
         key: 15,
-        moviename: "热烈",
+        movieName: "热烈",
         office:0.60,
         officeGDP:'<0.1%',
         arrangement:2,
@@ -14188,7 +14183,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
         Shown:'1.6万',
       },
       { key: 16,
-        moviename: "请别相信她",
+        movieName: "请别相信她",
         office:0.60,
         officeGDP:'<0.1%',
         arrangement:2,
@@ -14197,7 +14192,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
       },
       {
         key: 17,
-        moviename: "宇宙探索编辑部",
+        movieName: "宇宙探索编辑部",
         office:0.60,
         officeGDP:'<0.1%',
         arrangement:70,
@@ -14207,7 +14202,7 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
      
       {
         key: 19,
-        moviename: "维和防暴队",
+        movieName: "维和防暴队",
         office:0.22,
         officeGDP:'<0.1%',
         arrangement:2,
@@ -14220,59 +14215,59 @@ Mock.mock(getRegExpUrl('getDatas/aggregate/detail'),'get',()=>{
 })
 
 //网播热剧
-Mock.mock(getRegExpUrl('getDatas/Weblog/detail'),'get',()=>{
+Mock.mock(getRegExpUrl('analyseWeblog/getWeblogAll'),'get',()=>{
   return{
     status:0,
     msg:'操作成功',
     data:[
-      {moviename:'狂飙',movieUrl:'爱奇艺独播',Shown:24,hots:3844.46},
-      {moviename:'少年歌行',movieUrl:'优酷独播',Shown:43,hots:3832.09},
-      {moviename:'君子盟',movieUrl:'腾讯视频独播',Shown:8,hots:3815.54},
-      {moviename:'三体',movieUrl:'腾讯视频独播',Shown:23,hots:3792.11},
-      {moviename:'打开生活的正确方式',movieUrl:'优酷独播',Shown:14,hots:3750.01},
-      {moviename:'择君记',movieUrl:'腾讯视频独播',Shown:27,hots:3704.83},
-      {moviename:'今生也是第一次',movieUrl:'芒果TV独播',Shown:11,hots:3495.44},
-      {moviename:'向风而行',movieUrl:'多平台播放',Shown:43,hots:3408.47},
-      {moviename:'浮图缘',movieUrl:'爱奇艺独播',Shown:42,hots:3386.06},
-      {moviename:'去有风的地方',movieUrl:'芒果TV独播',Shown:35,hots:3334.72},
-      {moviename:'米小圈上学记',movieUrl:'芒果TV独播',Shown:32,hots:3299.46},
-      {moviename:'纵有疾风起',movieUrl:'腾讯视频独播',Shown:23,hots:3253.19},
-      {moviename:'耀眼的你啊',movieUrl:'优酷独播',Shown:14,hots:3197.01},
-      {moviename:'卿卿日常',movieUrl:'腾讯视频独播',Shown:27,hots:3142.83},
-      {moviename:'对我而言危险的他',movieUrl:'芒果TV独播',Shown:11,hots:3099.44},
-      {moviename:'乡村爱情15',movieUrl:'多平台播放',Shown:43,hots:3056.47},
-      {moviename:'县委大院',movieUrl:'爱奇艺独播',Shown:42,hots:3001.23},
-      {moviename:'风吹半夏',movieUrl:'芒果TV独播',Shown:35,hots:2987.72},
-      {moviename:'爱的二八定律',movieUrl:'芒果TV独播',Shown:32,hots:2866.46},
-      {moviename:'你是我的独家意外',movieUrl:'芒果TV独播',Shown:5,hots:2699.47},
+      {movieName:'狂飙',movieUrl:'爱奇艺独播',Shown:24,hots:3844.46},
+      {movieName:'少年歌行',movieUrl:'优酷独播',Shown:43,hots:3832.09},
+      {movieName:'君子盟',movieUrl:'腾讯视频独播',Shown:8,hots:3815.54},
+      {movieName:'三体',movieUrl:'腾讯视频独播',Shown:23,hots:3792.11},
+      {movieName:'打开生活的正确方式',movieUrl:'优酷独播',Shown:14,hots:3750.01},
+      {movieName:'择君记',movieUrl:'腾讯视频独播',Shown:27,hots:3704.83},
+      {movieName:'今生也是第一次',movieUrl:'芒果TV独播',Shown:11,hots:3495.44},
+      {movieName:'向风而行',movieUrl:'多平台播放',Shown:43,hots:3408.47},
+      {movieName:'浮图缘',movieUrl:'爱奇艺独播',Shown:42,hots:3386.06},
+      {movieName:'去有风的地方',movieUrl:'芒果TV独播',Shown:35,hots:3334.72},
+      {movieName:'米小圈上学记',movieUrl:'芒果TV独播',Shown:32,hots:3299.46},
+      {movieName:'纵有疾风起',movieUrl:'腾讯视频独播',Shown:23,hots:3253.19},
+      {movieName:'耀眼的你啊',movieUrl:'优酷独播',Shown:14,hots:3197.01},
+      {movieName:'卿卿日常',movieUrl:'腾讯视频独播',Shown:27,hots:3142.83},
+      {movieName:'对我而言危险的他',movieUrl:'芒果TV独播',Shown:11,hots:3099.44},
+      {movieName:'乡村爱情15',movieUrl:'多平台播放',Shown:43,hots:3056.47},
+      {movieName:'县委大院',movieUrl:'爱奇艺独播',Shown:42,hots:3001.23},
+      {movieName:'风吹半夏',movieUrl:'芒果TV独播',Shown:35,hots:2987.72},
+      {movieName:'爱的二八定律',movieUrl:'芒果TV独播',Shown:32,hots:2866.46},
+      {movieName:'你是我的独家意外',movieUrl:'芒果TV独播',Shown:5,hots:2699.47},
     ]
   }
 })
 
 //电视收视
-Mock.mock(getRegExpUrl('getDatas/TvViewing/detail'),'get',()=>{
+Mock.mock(getRegExpUrl('analyseTvviewing/TvViewing'),'get',()=>{
   return{
     status:0,
     msg:'操作成功',
     data:[
-      {moviename:'新闻30分',movieUrl:'CCTV-1',attention:'1.1225%',market:'14.9476'},
-      {moviename:'中国新闻',movieUrl:'CCTV-4',attention:'0.6352%',market:'8.4872'},
-      {moviename:'老虎队 38',movieUrl:'CCTV-8',attention:'0.5039%',market:'6.7199'},
-      {moviename:'新闻30分',movieUrl:'CCTV-新闻',attention:'0.4308%',market:'5.7296'},
-      {moviename:'南极之恋',movieUrl:'CCTV-6',attention:'0.3872%',market:'5.1341'},
-      {moviename:'2023年元宵晚会',movieUrl:'CCTV-3',attention:'0.3746%',market:'4.9738'},
-      {moviename:'刀客家族的女人 30',movieUrl:'广东卫视',attention:'0.1848%',market:'2.4539'},
-      {moviename:'海绵宝宝',movieUrl:'CCTV-少儿',attention:'0.1828%',market:'2.4331'},
-      {moviename:'湖南卫视午间新闻',movieUrl:'湖南卫视',attention:'0.1668%',market:'2.2152'},
-      {moviename:'男生女生向前冲',movieUrl:'安徽卫视',attention:'0.1576%',market:'2.0757'},
-      {moviename:'体坛快讯',movieUrl:'CCTV-5',attention:'0.1462%',market:'1.9482'},
-      {moviename:'天下财经',movieUrl:'CCTV-2',attention:'0.1423%',market:'1.8678'},
-      {moviename:'正午30分',movieUrl:'深圳卫视',attention:'0.1378%',market:'1.4539'},
-      {moviename:'天气预报',movieUrl:'东方卫视',attention:'0.1307%',market:'1.3771'},
-      {moviename:'特别关注',movieUrl:'北京卫视',attention:'0.1288%',market:'1.3452'},
-      {moviename:'请叫我总监',movieUrl:'东方卫视',attention:'0.1256%',market:'1.2978'},
-      {moviename:'正午播报',movieUrl:'浙江卫视',attention:'0.1209%',market:'1.1982'},
-      {moviename:'天下长河',movieUrl:'山东卫视',attention:'0.1188%',market:'1.1211'},
+      {movieName:'新闻30分',movieUrl:'CCTV-1',attention:'1.1225%',market:'14.9476'},
+      {movieName:'中国新闻',movieUrl:'CCTV-4',attention:'0.6352%',market:'8.4872'},
+      {movieName:'老虎队 38',movieUrl:'CCTV-8',attention:'0.5039%',market:'6.7199'},
+      {movieName:'新闻30分',movieUrl:'CCTV-新闻',attention:'0.4308%',market:'5.7296'},
+      {movieName:'南极之恋',movieUrl:'CCTV-6',attention:'0.3872%',market:'5.1341'},
+      {movieName:'2023年元宵晚会',movieUrl:'CCTV-3',attention:'0.3746%',market:'4.9738'},
+      {movieName:'刀客家族的女人 30',movieUrl:'广东卫视',attention:'0.1848%',market:'2.4539'},
+      {movieName:'海绵宝宝',movieUrl:'CCTV-少儿',attention:'0.1828%',market:'2.4331'},
+      {movieName:'湖南卫视午间新闻',movieUrl:'湖南卫视',attention:'0.1668%',market:'2.2152'},
+      {movieName:'男生女生向前冲',movieUrl:'安徽卫视',attention:'0.1576%',market:'2.0757'},
+      {movieName:'体坛快讯',movieUrl:'CCTV-5',attention:'0.1462%',market:'1.9482'},
+      {movieName:'天下财经',movieUrl:'CCTV-2',attention:'0.1423%',market:'1.8678'},
+      {movieName:'正午30分',movieUrl:'深圳卫视',attention:'0.1378%',market:'1.4539'},
+      {movieName:'天气预报',movieUrl:'东方卫视',attention:'0.1307%',market:'1.3771'},
+      {movieName:'特别关注',movieUrl:'北京卫视',attention:'0.1288%',market:'1.3452'},
+      {movieName:'请叫我总监',movieUrl:'东方卫视',attention:'0.1256%',market:'1.2978'},
+      {movieName:'正午播报',movieUrl:'浙江卫视',attention:'0.1209%',market:'1.1982'},
+      {movieName:'天下长河',movieUrl:'山东卫视',attention:'0.1188%',market:'1.1211'},
 
 
 
@@ -14288,7 +14283,7 @@ Mock.mock(getRegExpUrl('getDatas/TvViewing/detail'),'get',()=>{
 
 //排片
 //普通时间段
-Mock.mock(getRegExpUrl('getDatas/arrangement/common'),'get',()=>{
+Mock.mock(getRegExpUrl('arrangement/getAll'),'get',()=>{
   return{
     status:0,
     msg:'普通时间段',

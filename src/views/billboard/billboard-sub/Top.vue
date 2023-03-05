@@ -1,6 +1,6 @@
 <template>
   <div class="board-main">
-    <div class="main-header">
+    <div class="main-header" v-if="topList.length">
       <div class="middle">
         <p>2022-12-29<span v-if="hour > 10">已更新</span></p>
         <p>
@@ -8,38 +8,26 @@
         </p>
       </div>
       <div class="main-wrapper">
-        <div class="item">
-          <img src="@/assets/image/films/即将上映/10.jpg" alt="" />
+        <div class="item" v-for="action in topList" :key="action.id">
+          <img :src="action.img" alt="" />
           <div class="introduce-wrapper">
             <div class="introduce">
               <div class="title">
-                <p>放牛班的春天</p>
-                <p>主演：热拉尔·朱诺,弗朗西斯·贝尔兰德,凯德·麦拉德</p>
-                <p>上映时间：2004-10-16</p>
+                <p>{{action.movieName}}</p>
+                <p>主演：{{action.act}}</p>
+                <p>上映时间：{{action.updateTime}}</p>
               </div>
               <div class="score">
-                <i>9.6</i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <img src="@/assets/image/films/即将上映/9.jpg" alt="" />
-          <div class="introduce-wrapper">
-            <div class="introduce">
-              <div class="title">
-                <p>放牛班的春天</p>
-                <p>主演：热拉尔·朱诺,弗朗西斯·贝尔兰德,凯德·麦拉德</p>
-                <p>上映时间：2004-10-16</p>
-              </div>
-              <div class="score">
-                <i>9.6</i>
+                <i>{{action.score}}</i>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+     <p class="maker-empot" v-else>
+      <a-spin  size="large" tip="数据加载中..."/>
+    </p>
   </div>
 </template>
 
@@ -50,10 +38,12 @@ export default {
     return {
       nowDate: "",
       hour: "",
+      topList:[]
     };
   },
   created() {
     this.getnowDate();
+    this.getTop()
   },
   methods: {
     getnowDate() {
@@ -61,11 +51,24 @@ export default {
       this.hour = time.getHours();
       this.nowDate = this.$moment(time).format("YYYY-MM-DD");
     },
+    getTop(){
+       const params = {
+        pageNum:1,
+        pageSize:4
+      }
+      this.$req.getTop(params).then(res=>{
+        this.topList = res.data.records
+      })
+    }
   },
 };
 </script>
 
 <style lang="scss" scoped>
+body{
+  overflow: scroll;
+  overflow-y: none;
+}
 .board-main {
   width: 80%;
   min-width: 800px;
@@ -89,7 +92,7 @@ export default {
   }
   .main-wrapper {
     width: 76%;
-    height: 500px;
+    // height: 500px;
     // border: 1px solid red;
     margin: 50px auto;
     .item {
@@ -133,6 +136,11 @@ export default {
         }
       }
     }
+  }
+   .maker-empot{
+    height: 150px;
+    width: 80%;
+    margin: 0 auto;
   }
 }
 </style>

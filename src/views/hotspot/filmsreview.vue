@@ -1,6 +1,7 @@
 <template>
-  <div class="review-container">
-    <div class="item" v-for="action in list" :key="action.key">
+  <div>
+     <div class="review-container" v-if="list.length>0">
+     <div class="item" v-for="action in list" :key="action.key">
       <img :src="action.img" alt="" />
       <a-comment>
         <template slot="actions">
@@ -55,13 +56,17 @@
     </div>
     <div class="pagination">
       <a-pagination
-        v-model="current"
+         v-model="current"
         :total="total"
         :show-total="total => `共 ${total} 条`"
-        :pageSize="10"
+        :pageSize="5"
         @change="change"
       />
     </div>
+     </div>
+     <p style="height:150px" class="maker-empot" v-else>
+      <a-spin  size="large" tip="数据加载中..."/>
+     </p>
   </div>
 </template>
 
@@ -88,10 +93,14 @@ export default {
     this.getmostPopular(1)
   },
   methods: {
-    getmostPopular(current){
-     this.$req.getmostPopular().then(res=>{
-      this.total = res.data.length
-      this.list = res.data.filter(v=>v.page ===current)
+    getmostPopular(page){
+      const params = {
+        pageNum:page,
+        pageSize:5
+      }
+     this.$req.getmostPopular(params).then(res=>{
+      this.total = res.data.total
+      this.list = res.data.records
      })
     },
     like(action) {
@@ -113,7 +122,7 @@ export default {
       this.$router.push({
         path:'/films-detail',
         query:{
-          target:encodeURIComponent(JSON.stringify(action))
+          popularId:action.id
         }
       })
     },

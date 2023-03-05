@@ -17,8 +17,8 @@
             <td>
               <span>{{index+1 &lt; 10 ? '0'+(Number(index+1)) : index+1}}</span>
               <div class="td-box">
-                <p>{{ action.moviename }}</p>
-                <p>上映{{action.money}}天，{{typeof(action.Shown) == 'number' ?  action.Shown+'亿' : action.Shown}}</p>
+                <p>{{ action.movieName }}</p>
+                <p>上映{{action.money}}天，{{action.shown > 100000000 ? (action.shown/100000000).toFixed(2)+ '亿' : action.shown > 10000 ? (action.shown/10000).toFixed(2) +'万' :'' }}</p>
               </div>
             </td>
             <td>{{ action.office }}万</td>
@@ -43,9 +43,9 @@
           <div class="office-image-info">
             <img :src="detailObj.img" alt="" />
             <div class="films-info">
-              <h3>{{detailObj.moviename}}</h3>
+              <h3>{{detailObj.movieName}}</h3>
               <span>{{detailObj.type}}</span>
-              <p>上映{{detailObj.money}}天,{{typeof(detailObj.Shown) == 'number' ?  detailObj.Shown+'亿' : detailObj.Shown}}</p>
+              <p>上映{{detailObj.money}}天,{{detailObj.shown > 100000000 ? (detailObj.shown/100000000).toFixed(2)+ '亿' : detailObj.shown > 10000 ? (detailObj.shown/10000).toFixed(2) +'万' :'' }}</p>
             </div>
           </div>
           <div class="office-data-info">
@@ -95,7 +95,9 @@ export default {
       realmarket:{}, //实时大盘数据
       detailObj:{},
       basicOption:null,
-      myChart:null
+      myChart:null,
+      echarVlaue:[],
+      value:[]
     };
   },
   created() {
@@ -108,20 +110,22 @@ export default {
       handler(){
         this.getData()
       }
-    }
+    },
   },
   mounted() {
     this.echartsInit();
   },
   methods: {
     async getOfficeData(){
-      const {data:res,realmarket} = await this.$req.getOfficeData()
+      const {data:res} = await this.$req.getOfficeData()
       this.tableData = res
-      this.realmarket = realmarket
+      // this.realmarket = realmarket
       this.detailObj = this.tableData[0]
+      this.changeStr(this.detailObj.visualiza.split(','))
     },
     getDetailFilms(action){
       this.detailObj = action
+      this.changeStr(this.detailObj.visualiza.split(','))
     },
     echartsInit() {
       this.myChart = echarts.init(document.getElementById("bar"));
@@ -151,8 +155,7 @@ export default {
         series: [
           {
             type: "bar",
-            data:this.detailObj.visualiza,
-            // data:[78779456,90218456,155779456,131779456,8804534],
+            data:JSON.parse(JSON.stringify(this.echarVlaue)),
             label:{
               show:true,
               position:'top',
@@ -176,7 +179,14 @@ export default {
     },
     getData(){
       if(!this.myChart) return
-      this.myChart.setOption(this.mergeOption(this.detailObj.visualiza))
+      this.myChart.setOption(this.mergeOption([...this.echarVlaue]))
+    },
+    changeStr(arr){
+      this.echarVlaue = []
+      arr.forEach(item => {
+        this.echarVlaue.push(Number(item))
+      });
+      
     }
   },
 };

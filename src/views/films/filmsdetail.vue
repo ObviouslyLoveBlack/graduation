@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="maker-container" v-if="targetObj">
+    <div v-if="loading">
+      <div class="maker-container" v-if="targetObj">
       <div class="maker-header">
         <div class="image">
           <img :src="targetObj.img" alt="" />
@@ -17,7 +18,7 @@
                 <a-icon type="heart" />
                 想看
             </div>
-            <div class="want">
+            <div class="want" @click="getToScore">
                <a-icon type="star" />
                 评分
             </div>
@@ -25,18 +26,18 @@
         </div>
         <div class="films-info">
           <p>想看数</p>
-          <span class="fans">213213</span>
+          <span class="fans">23542</span>
           <p>累计票房</p>
           <span class="box-office">231</span> 亿
         </div>
       </div>
-    </div>
-    <div class="main" v-if="targetObj">
+      </div>
+      <div class="main" v-if="targetObj">
       <div class="main-left">
         <p class="nav-title">故之电影 > 电影 >{{targetObj.moviename}}</p>
           <a-tabs default-active-key="1">
             <a-tab-pane key="1" tab="介绍">
-                <introduce :introduceInfo='targetObj.introduceInfo'/>
+                <introduce :introduceInfo='targetObj.introduceInfo' :id='targetObj.key'/>
             </a-tab-pane>
             <a-tab-pane key="2" tab="奖项" force-render :disabled="targetObj.awards.length<=0">
                 <awards :awards='targetObj.awards'/>
@@ -78,10 +79,14 @@
             </div>
         </div>
       </div>
-    </div>
-    <div class="maker-empot" v-if="!targetObj">
+      </div>
+      <div class="maker-empot" v-else>
       <span>抱歉，没有找到相关结果，请尝试用其他条件筛选。...</span>
+      </div>
     </div>
+    <p class="maker-empot" v-else>
+       <a-spin tip="数据加载中..."/>
+    </p>
   </div>
 </template>
 
@@ -89,6 +94,7 @@
 import introduce from './films-detail-tab/introduce.vue'
 import awards from './films-detail-tab/awards.vue'
 import atlas from './films-detail-tab/atlas.vue'
+import {mapState} from 'vuex'
 export default {
   name: "movie-detail",
   components:{
@@ -102,6 +108,7 @@ export default {
   data() {
     return {
       targetObj: null,
+      loading:false,
       attention:false, //判断是否想看
       atlasUrl:[],
       // awards:{title:'第16届亚洲电影大奖',content:'提名:最佳男主角/最佳男配角'}
@@ -110,20 +117,32 @@ export default {
   created() {
     const { target,name } = this.$route.query;
     if(name){
-      this.getTarget(name)
+      this.getTarget(JSON.parse(decodeURIComponent(name)))
     }
     if(target){
       this.targetObj = JSON.parse(decodeURIComponent(target));
     }
+    document.title = '电影--' + JSON.parse(decodeURIComponent(name))
+  },
+  computed:{
+    ...mapState('user',['token','userInfo']),
   },
   methods:{
     getexpect(){
+      console.log(this.token);
+      console.log(this.userInfo);
+      if(!this.token) return
       this.attention = !this.attention
+      // this.targetObj.want = this.attention ? '23543' : '23541'
     },
     async getTarget(name){
       const {data:res} = await this.$req.getAllfilms()
       const {data:res2} = await this.$req.getReleaseFilms()
       this.targetObj = [...res,...res2].find(v=>v.moviename === name)
+      this.loading = true
+    },
+    getToScore(){
+      console.log(this.targetObj);
     }
   }
 };
@@ -182,6 +201,7 @@ p{
             color: #fff;
             padding: 7px 28px;
             cursor: pointer;
+            user-select: none;
         }
       }
     }
@@ -285,6 +305,9 @@ h2 {
   color: #ef4238;
 }
 ::v-deep .ant-tabs-ink-bar{
+  background: #ef4238;
+}
+::v-deep .ant-spin::selection {
   background: #ef4238;
 }
 </style>

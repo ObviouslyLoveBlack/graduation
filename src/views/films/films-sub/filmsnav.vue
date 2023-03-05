@@ -1,45 +1,45 @@
 <template>
   <div>
     <div class="films-nav">
-      <div class="nav-item" v-for="action in navTypeList" :key="action.label">
+      <div class="nav-item">
         <div class="item-style">
-          <div class="type-title">{{ action.title }}</div>
+          <div class="type-title">类型</div>
           <ul>
             <li
               @click="getNavType(item)"
-              v-for="item in action.navtype"
+              v-for="item in navTypeList"
               :key="item.name"
-              :class="`${item.type}` === navObj.type ? 'active' : ''"
+              :class="`${item.typeId}` == navObj.typeId ? 'active' : ''"
             >
               {{ item.name }}
             </li>
           </ul>
         </div>
       </div>
-      <div class="nav-item" v-for="action in navRegionList" :key="action.label">
+      <div class="nav-item">
         <div class="item-style">
-          <div class="type-title">{{ action.title }}</div>
+          <div class="type-title">地区</div>
           <ul>
             <li
               @click="getNavRegion(item)"
-              v-for="item in action.navtype"
+              v-for="item in navRegionList"
               :key="item.name"
-              :class="`${item.typeId}` === navObj.regionId ? 'active' : ''"
+              :class="`${item.typeId}` == navObj.regionId ? 'active' : ''"
             >
               {{ item.name }}
             </li>
           </ul>
         </div>
       </div>
-      <div class="nav-item" v-for="action in navEraList" :key="action.label">
+      <div class="nav-item">
         <div class="item-style">
-          <div class="type-title">{{ action.title }}</div>
+          <div class="type-title">年代</div>
           <ul>
             <li
               @click="getNavEra(item)"
-              v-for="item in action.navtype"
+              v-for="item in navEraList"
               :key="item.name"
-              :class="`${item.typeId}` === navObj.eraId ? 'active' : ''"
+              :class="`${item.typeId}` == navObj.eraId ? 'active' : ''"
             >
               {{ item.name }}
             </li>
@@ -59,27 +59,27 @@ export default {
       navRegionList: [],
       navEraList: [],
       navObj: {
-        type: "all",
+        typeId: "1",
         typeName: "全部",
-        regionId: "0",
+        regionId: "16",
         regionName: "全部",
-        eraId: "0",
+        eraId: "27",
         eraName: "全部",
       },
-      selectObj:{
-        type:'',
-        locaton:'',
-        year:''
-      }
+      selectObj: {
+        type: "",
+        locaton: "",
+        year: "",
+      },
     };
   },
   created() {
     this.getFilmsnavType();
     this.getFilmsnavRegion();
     this.getFilmsnavEra();
-    const type=this.$route.query.type
-    this.navObj.type = type ? type :'all'
-    this.$emit('getnavtype',this.navObj.type)
+    const type = this.$route.query.type;
+    this.navObj.type = type ? type : "all";
+    this.$emit("getnavtype", this.navObj.type);
   },
   methods: {
     getFilmsnavType() {
@@ -95,23 +95,24 @@ export default {
     getFilmsnavEra() {
       this.$req.getFilmsnavEra().then((res) => {
         this.navEraList = res.data;
+        this.$emit("show", true);
       });
     },
     getNavType(item) {
-      this.navObj.type = item.type;
+      this.navObj.typeId = item.typeId;
       this.navObj.typeName = item.name;
-      this.$emit('getnavtype',item.type)
-      this.selectObj.type = item.type
+      this.$emit("getnavtype", item.type);
+      this.selectObj.type = item.type;
     },
     getNavRegion(item) {
       this.navObj.regionId = item.typeId;
       this.navObj.regionName = item.name;
-      this.$emit('getNavRegion',item.location)
+      this.$emit("getNavRegion", item.location);
     },
     getNavEra(item) {
       this.navObj.eraId = item.typeId;
       this.navObj.eraName = item.name;
-      this.$emit('getNavEra',item.year)
+      this.$emit("getNavEra", item.year);
     },
   },
 };
@@ -163,6 +164,11 @@ export default {
       }
     }
   }
+}
+.maker-empot {
+  height: 500px;
+  width: 80%;
+  margin: 0 auto;
 }
 .active {
   background: #ef4638;

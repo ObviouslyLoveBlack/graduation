@@ -1,138 +1,159 @@
 <template>
   <div>
-    <div class="maker-container">
-      <div class="maker-header">
-        <div class="image">
-          <img :src="targetObj.portrait" alt="" />
-        </div>
-        <div class="maker-info">
-          <p class="info-name">{{targetObj.name}}</p>
-          <p class="info-name">{{targetObj.EndName}}</p>
-          <p>{{targetObj.profession}}</p>
-          <div class="symbol-worker" :class="attention ? 'active' :''" @click="getattention">
-            <a-icon type="plus" />
-            关注
+    <div v-if="loading">
+      <div class="maker-container" v-if="targetObj">
+        <div class="maker-header">
+          <div class="image">
+            <img :src="targetObj.portrait" alt="" />
           </div>
-          <div class="maker-piece">
-            <p>代表作</p>
-            <div class="piece-image">
-              <img :src="targetObj.filmsUrl[0].img" alt="" />
-              <img :src="targetObj.filmsUrl[1].img" alt="" />
-              <img :src="targetObj.filmsUrl[2].img" alt="" />
+          <div class="maker-info">
+            <p class="info-name">{{ targetObj.name }}</p>
+            <p class="info-name">{{ targetObj.endName }}</p>
+            <p>{{ targetObj.profession }}</p>
+            <div
+              class="symbol-worker"
+              :class="attention ? 'active' : ''"
+              @click="getattention"
+            >
+              <a-icon type="plus" />
+              关注
             </div>
-          </div>
-        </div>
-        <div class="films-info">
-          <p>粉丝</p>
-          <span class="fans">{{targetObj.fans}}</span>
-          <p>累计票房</p>
-          <span class="box-office">{{targetObj.accumulate}}</span> 亿
-        </div>
-      </div>
-    </div>
-    <div class="main">
-      <div class="main-left-introduce">
-        <p class="nav-title">故之电影 > 电影 > {{targetObj.name}}</p>
-        <div class="introduce">
-          <h2>介绍</h2>
-          <div class="introduce-text" :class="openAll ? 'over-hidden' : ''">
-            {{targetObj.introduce}}
-            <div class="introduce-table">
-              <div class="table-item" v-for="(action,index) in targetObj.introduceTable" :key="index">
-                <div class="table-item-td">
-                  <p>{{action.title}}</p>
-                  <span>{{action.content}}</span>
-                </div>
-                <div class="table-item-td">
-                  <p>{{action.title2}}</p>
-                  <span>{{action.content2}}</span>
-                </div>
+            <div class="maker-piece">
+              <p>代表作</p>
+              <div class="piece-image">
+                <img
+                  :src="action.img"
+                  alt=""
+                  v-for="action in makerFilms"
+                  :key="action.id"
+                />
               </div>
             </div>
           </div>
-          <p class="open-all-detail" @click="open">
-            <span v-if="openAll">展开详细资料</span>
-            <span v-else>收起</span>
-            <a-icon type="up" v-if="openAll" />
-            <a-icon type="down" v-else />
-          </p>
-        </div>
-        <div class="images">
-          <h2>图片</h2>
-          <div class="images-item-box">
-            <div class="images-item" v-for="(action,index) in targetObj.images" :key="index">
-              <img :src="action.img" alt="" />
-            </div>
+          <div class="films-info">
+            <p>粉丝</p>
+            <span class="fans">{{ targetObj.fans }}</span>
+            <p>累计票房</p>
+            <span class="box-office">{{ targetObj.accumulate }}</span> 亿
           </div>
         </div>
-        <div class="awards">
-          <h2>获奖</h2>
-          <div class="awards-box">
-            <div class="swiper-container" ref="mySwiper">
-              <div
-                class="swiper-wrapper"
-                @mouseenter="mouseenter()"
-                @mouseleave="mouseleave()"
-              >
+      </div>
+      <div class="main" v-if="targetObj">
+        <div class="main-left-introduce">
+          <p class="nav-title">故之电影 > 电影 > {{ targetObj.name }}</p>
+          <div class="introduce">
+            <h2>介绍</h2>
+            <div class="introduce-text" :class="openAll ? 'over-hidden' : ''">
+              {{ targetObj.introduce }}
+              <div class="introduce-table">
                 <div
-                  class="swiper-slide"
-                  v-for="action in bannerList"
-                  :key="action.key"
+                  class="table-item"
+                  v-for="(action, index) in makerTable"
+                  :key="index"
                 >
-                  <div class="worker-item-box">
-                    <div
-                      class="worker-item"
-                      v-for="item in action.award"
-                      :key="item.id"
-                      @mouseenter="getawardsDetail(item)"
-                    >
-                      <img :src="item.img" alt="" />
-                      <p>{{ item.name }}</p>
-                      <p>提名1次</p>
-                      <div v-if="location === item.id" class="triangle"></div>
-                    </div>
+                  <div class="table-item-td">
+                    <p>{{ action.title }}</p>
+                    <span>{{ action.content }}</span>
+                  </div>
+                  <div class="table-item-td">
+                    <p>{{ action.title2 }}</p>
+                    <span>{{ action.content2 }}</span>
                   </div>
                 </div>
               </div>
-              <div class="swiper-pagination"></div>
-              <div
-                v-show="ispagina"
-                @click="change()"
-                class="swiper-button-prev"
-              ></div>
-              <div
-                v-show="ispagina"
-                @click="change()"
-                class="swiper-button-next"
-              ></div>
             </div>
-            <div class="worker-awards-detail">
+            <p class="open-all-detail" @click="open">
+              <span v-if="openAll">展开详细资料</span>
+              <span v-else>收起</span>
+              <a-icon type="up" v-if="openAll" />
+              <a-icon type="down" v-else />
+            </p>
+          </div>
+          <div class="images">
+            <h2>图片</h2>
+            <div class="images-item-box">
               <div
-                class="awards-detail-item"
-                v-for="(action, index) in awardsList"
+                class="images-item"
+                v-for="(action, index) in makerImages"
                 :key="index"
               >
-                <span>{{ action.title }}</span>
-                <span>{{ action.filmsName }}</span>
+                <img :src="action.img" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="awards">
+            <h2>获奖</h2>
+            <div class="awards-box">
+              <div>
+                <div class="swiper-container" ref="mySwiper">
+                  <div class="swiper-wrapper"
+                   @mouseenter="mouseenter()"
+                   @mouseleave="mouseleave()">
+                    <div
+                      class="swiper-slide"
+                      v-for="(action, index) in finAward"
+                      :key="index"
+                    >
+                      <div class="worker-item-box">
+                        <div
+                          class="worker-item"
+                          v-for="item in action.awards"
+                          :key="item.id"
+                          @mouseenter="getawardsDetail(item)"
+                        >
+                          <img :src="item.img" alt="" />
+                          <p>{{ item.name }}</p>
+                          <p>提名1次</p>
+                          <div v-if="location === item.id" class="triangle"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="swiper-pagination"></div>
+                  <div v-show="ispagina" @click="change('prev')" class="swiper-button-prev"></div>
+                  <div v-show="ispagina" @click="change('next')" class="swiper-button-next"></div>
+                </div>
+              </div>
+
+              <div class="worker-awards-detail">
+                <div
+                  class="awards-detail-item"
+                  v-for="(action, index) in awardsList"
+                  :key="index"
+                >
+                  <span>{{ action.title }}</span>
+                  <span>{{ action.filmsName }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="main-right">
+          <div class="relevantWorker">
+            <h2>相关影人</h2>
+            <div class="wokers">
+              <div
+                class="workers-item"
+                v-for="(action, index) in makerConcatct"
+                :key="index"
+                @click="relevantDetail(action)"
+              >
+                <div class="item-image">
+                  <img :src="action.img" alt="" />
+                </div>
+                <span>{{ action.name }}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="main-right">
-        <div class="relevantWorker">
-          <h2>相关影人</h2>
-          <div class="wokers">
-            <div class="workers-item" v-for="(action,index) in targetObj.concatctUrl" :key="index" @click="relevantDetail(action)">
-              <div class="item-image">
-                <img :src="action.img" alt="">
-              </div>
-              <span>{{action.name}}</span>
-            </div>
-          </div>
-        </div>
+      <div class="maker-empot" v-else>
+        <span>抱歉，没有找到相关结果，请尝试用其他条件筛选。...</span>
       </div>
     </div>
+    <p class="maker-empot" v-else>
+      <a-spin tip="数据加载中..." />
+    </p>
   </div>
 </template>
 
@@ -144,8 +165,18 @@ export default {
     return {
       ispagina: false,
       targetObj: {},
-      id:'',
-      attention:false, //判断是否点击关注
+      makerFilms: [],
+      makerImages: [],
+      makerAward: [],
+      finAward: [
+        { key: 1, awards: [] },
+        { key: 2, awards: [] },
+      ],
+      makerConcatct: [],
+      makerTable: [],
+      loading: false,
+      id: "",
+      attention: false, //判断是否点击关注
       openAll: true,
       bannerList: [], // 获奖类型
       awardsList: [], //详细获奖情况
@@ -153,20 +184,11 @@ export default {
     };
   },
   created() {
-    const { target,id } = this.$route.query;
-    if(id){
-     this.getDetail(id)
-     return
-    }
-    if(target){
-      this.targetObj = JSON.parse(decodeURIComponent(target));
-      this.bannerList = this.targetObj.detailData;
-      this.awardsList = this.bannerList[0].award[0].nominate;
-    }
-    this.getFilmworksdetail();
+    const { id } = this.$route.query;
+    this.getDetailById(id);
   },
   watch: {
-    bannerList: {
+    makerAward: {
       immediate: true,
       handler() {
         this.$nextTick(() => {
@@ -175,7 +197,7 @@ export default {
             loop: true,
             pagination: {
               // el: ".swiper-pagination",
-              clickable: false,
+              clickable: true,
             },
             navigation: {
               nextEl: ".swiper-button-next",
@@ -188,18 +210,36 @@ export default {
     },
   },
   methods: {
-    async getDetail(id){
-      const {data:res} = await this.$req.getmoviemaker()
-      this.targetObj = res.data[id]
+    async getDetailById(id) {
+      const res = await this.$req.getmakerById(id);
+      this.targetObj = res.data.maker;
+      document.title = "热门影人--" + this.targetObj.name;
+      this.makerFilms = res.data.makerFilmsurl;
+      this.makerImages = res.data.makerImages;
+      this.makerAward = res.data.makerAward;
+      this.makerConcatct = res.data.makerConcatcturl;
+      this.makerTable = res.data.makerTable;
+      this.loading = true;
+      this.AwardData(this.makerAward);
+      // this.bannerDetail()
+    },
+    AwardData(data) {
+      const tar1 = data.slice(0, 5);
+      const tar2 = data.slice(-5);
+      tar1.forEach((e) => {
+        this.finAward[0].awards.push(e);
+      });
+      tar2.forEach((e) => {
+        this.finAward[1].awards.push(e);
+      });
+      this.getawardsDetail(this.finAward[0].awards[0]);
+    },
+    bannerDetail() {
       this.bannerList = this.targetObj.detailData;
       this.awardsList = this.bannerList[0].award[0].nominate;
     },
     open() {
       this.openAll = !this.openAll;
-    },
-    async getFilmworksdetail() {
-      // const { data: res } = await this.$req.getFilmworksdetail();
-      // this.bannerList = res;
     },
     mouseenter() {
       this.ispagina = true;
@@ -207,27 +247,27 @@ export default {
     mouseleave() {
       this.ispagina = false;
     },
-    getawardsDetail(action) {
+    async getawardsDetail(action) {
       this.location = action.id;
-      this.awardsList = action.nominate;
+      const res = await this.$req.makerAwardById(action.id);
+      this.awardsList = res.data;
     },
-    change() {
-      this.location = 6;
-      this.awardsList = this.bannerList[1].award[0].nominate;
+    change(type) {
+      this.location = type ==='prev' ? 1 :6
     },
-    relevantDetail(action){
+    relevantDetail(action) {
       let routerUrl = this.$router.resolve({
-        path:'/movie/maker',
-        query:{
-          id:action.id
-        }
-      })
-      window.open(routerUrl.href,'_blank')
+        path: "/movie/maker",
+        query: {
+          id: action.id,
+        },
+      });
+      window.open(routerUrl.href, "_blank");
     },
-    getattention(){
-      this.attention = !this.attention
-      this.attention ? this.targetObj.fans += 1 : this.targetObj.fans -= 1
-    }
+    getattention() {
+      this.attention = !this.attention;
+      this.attention ? (this.targetObj.fans += 1) : (this.targetObj.fans -= 1);
+    },
   },
 };
 </script>
@@ -443,28 +483,34 @@ p {
         margin-top: 20px;
         flex-wrap: wrap;
         align-items: center;
-        .workers-item{
+        .workers-item {
           text-align: center;
           margin: 0px 30px 20px 0px;
-          .item-image{
+          .item-image {
             width: 106px;
             height: 106px;
             border: 1px solid #000;
             border-radius: 50%;
             margin-bottom: 10px;
-            img{
+            img {
               width: 100%;
               height: 100%;
               border-radius: 50%;
             }
           }
-          span{
+          span {
             cursor: default;
           }
         }
       }
     }
   }
+}
+.maker-empot {
+  width: 50%;
+  min-width: 1000px;
+  height: 90px;
+  margin: 50px auto;
 }
 .over-hidden {
   display: -webkit-box;
@@ -508,7 +554,7 @@ h2 {
   top: -20px;
   left: -10px;
 }
-.active{
+.active {
   background: #ef4238 !important;
 }
 </style>

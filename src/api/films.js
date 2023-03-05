@@ -1,11 +1,11 @@
 import request from "@/utils/request";
 
 const filmsApi ={
-    getFilmsType:'/getfilmsType', //获取电影路由分类
-    getFilmsnavType:'/getFilmsnav/filmsType', //获取电影导航栏 类型分类
-    getFilmsnavRegion:'/getFilmsnav/filmsRegion', //获取电影导航栏 类型分类
-    getFilmsnavEra:'/getFilmsnav/filmsEra', //获取电影导航栏 年代分类
-    getAllfilms:'/getFilms/getAllfilms', //获取电影 正在热映全部电影
+    getFilmsType:'/boardType/getboardType/films', //获取电影路由分类
+    getFilmsnavType:'/getFilmsNav/filmsType/type', //获取电影导航栏 类型分类
+    getFilmsnavRegion:'/getFilmsNav/filmsType/location', //获取电影导航栏 地区分类
+    getFilmsnavEra:'/getFilmsNav/filmsType/year', //获取电影导航栏 年代分类
+    getAllfilms:'/releaseFilms/ByPage', //获取电影 正在热映全部电影
     getReleaseFilms:'/getFilms/getreleasefilms', //获取电影 即将上映 全部电影
 }
 

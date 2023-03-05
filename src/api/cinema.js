@@ -1,12 +1,12 @@
 import request from "@/utils/request";
 
 const cinemaApi = {
-    getOfficeData:'/getDatas/office/detail', //获取数据分析 票房数据
+    getOfficeData:'/analyseOffice/getAnalyse/office', //获取数据分析 票房数据
     getAggregateData:'/getDatas/aggregate/detail', //获取数据分析 综合票房数据
-    getWeblogData:'/getDatas/Weblog/detail', //获取数据分析 网播热剧数据
-    getTvVewingData:'/getDatas/TvViewing/detail', //获取数据分析 电视数据
+    getWeblogData:'/analyseWeblog/getWeblogAll', //获取数据分析 网播热剧数据
+    getTvVewingData:'/analyseTvviewing/TvViewing', //获取数据分析 电视数据
 
-    arrangementcommon:'/getDatas/arrangement/common', //获取数据分析 排片 普通时间段
+    arrangementcommon:'/arrangement/getAll', //获取数据分析 排片 普通时间段
     arrangementperiod:'/getDatas/arrangement/period', //获取数据分析 排片 黄金时间段
     arrangementcommonSeat:'/arrangement/common/seat', //获取数据分析 排片 普通时间段按座位
     arrangementperiodSeat:'/arrangement/period/seat', //获取数据分析 排片 黄金时间段按座位
@@ -67,9 +67,9 @@ export function getOfficeData(params){
         url:cinemaApi.getOfficeData,
         method:'get',
         params,
-        headers:{
-            'Content-Type':'application/x-www-form-urlencoded'
-        }
+        // headers:{
+        //     'Content-Type':'application/x-www-form-urlencoded'
+        // }
     })
 }
 export function getAggregateData(params){

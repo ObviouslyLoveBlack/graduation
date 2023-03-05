@@ -1,8 +1,29 @@
 import request from "@/utils/request";
 
 const hotspotApi ={
-    getmostPopular:'/getfilms/mostPopular', //获取最受欢迎影评
-    getnewfilmsreview:'/getfilms/newfilmsreview', //获取新片影评
+    getmostPopular:'/mostPopular/getPage', //获取最受欢迎影评
+    getnewfilmsreview:'/newReview/getPage', //获取新片影评
+    getReviewById:'/mostPopular/getById', //最受按ID
+    getNewReviewById:'/newReview/getNewReview', //最受按ID
+}
+
+export function getNewReviewById(id){
+    return request({
+        url:`${hotspotApi.getNewReviewById}/${id}`,
+        method:'get',
+        headers:{
+            'Content-Type':'application/x-www-form-urlencoded'
+        }
+    })
+}
+export function getReviewById(id){
+    return request({
+        url:`${hotspotApi.getReviewById}/${id}`,
+        method:'get',
+        headers:{
+            'Content-Type':'application/x-www-form-urlencoded'
+        }
+    })
 }
 
 export function getmostPopular(params){

@@ -2,23 +2,26 @@ import request from "@/utils/request";
 
 
 const homeApi={
-    getHotMovies:'/getHotMovies',
-    getsoonRelease:'/getsoonRelease',
+    getHotMovies:'/releaseFilms/ByPage',
+    getsoonRelease:'/releaseFilms/ByPage',
     getHotPlay:'/getHotPlay',
-    getHotTvPlay:'/getHotTvPlay',
-    getFilmReview:'/getFilmReview',
-    getboxoffice:'/getboxoffice',
+    getHotTvPlay:'/hottvplay/all',
+    getFilmReview:'/homePopular/getHomePopular',
+    getboxoffice:'/homeOffice/getHomeOffice',
     getprofit:'/getprofit',
-    getmostexpect:'/getmostexpect',
-    getTophundred:'/getTophundred',
-    getmoviemaker:'/getmoviemaker'
+    getmostexpect:'/mostExpect/getmostexpect',
+    getTophundred:'/tophundred/getTophundred',
+    getmoviemaker:'/homeMaker/getHomeMaker'
 }
 
 export function getHotMovies(params){
   return request({
      url:homeApi.getHotMovies,
-     method:'post',
+     method:'get',
      params,
+     headers:{
+      'Content-Type':'application/x-www-form-urlencoded'
+     }
    })
 }
 export function getsoonRelease(params){

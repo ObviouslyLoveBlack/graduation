@@ -1,6 +1,8 @@
 <template>
-  <div class="detail-container">
-    <div class="style-content">
+  <div>
+    <div v-if="loading">
+       <div class="detail-container" v-if="targetObj">
+         <div class="style-content">
       <div class="content-header">
         <div class="detail-header">
           <span>故之电影</span>
@@ -17,8 +19,8 @@
           <img src="@/assets/image/annual_2022.png" alt="" />
         </div>
       </div>
-    </div>
-    <div class="detail-main">
+         </div>
+         <div class="detail-main">
       <div class="main-left">
         <p class="title">{{ targetObj.title }}</p>
         <div class="author-info">
@@ -64,8 +66,8 @@
           <a-comment
             class="comment"
             v-for="action in targetObj.reviewInfo"
-            :key="action.key"
-            @mouseenter="touchComment(action.key)"
+            :key="action.id"
+            @mouseenter="touchComment(action.id)"
             @mouseleave="touchLeave()"
           >
             <a slot="author" class="review-author">
@@ -80,13 +82,13 @@
             <p slot="content">
               {{ action.content }}
               <span
-                v-show="touch === action.key"
+                v-show="touch === action.id && token"
                 class="one-res"
                 @click="oneRespone(action)"
                 >回应</span
               >
             </p>
-            <div class="reply" v-if="reply === action.key">
+            <div class="reply" v-if="reply === action.id ">
               <input
                 type="text"
                 v-model="finallyWord"
@@ -97,8 +99,8 @@
             </div>
             <a-comment
               v-for="item in action.children"
-              :key="item.key"
-              @mouseenter="touchComment(item.key)"
+              :key="item.id"
+              @mouseenter="touchComment(item.id)"
               @mouseleave="touchLeave()"
             >
               <a slot="author" class="review-author">
@@ -113,13 +115,13 @@
               <p slot="content">
                 {{ item.content }}
                 <span
-                  v-show="touch === item.key"
+                  v-show="touch === item.id && token"
                   class="one-res"
                   @click="oneRespone(item)"
                   >回应</span
                 >
               </p>
-              <div class="reply" v-if="reply === item.key">
+              <div class="reply" v-if="reply === item.id">
                 <input
                   type="text"
                   v-model="finallyWord"
@@ -191,7 +193,15 @@
           </p>
         </div>
       </div>
+         </div>
+       </div>
+       <div class="maker-empot" v-else>
+         <p>暂无此数据，请稍后再试</p>
+       </div>
     </div>
+     <p style="height:150px" class="maker-empot" v-else>
+      <a-spin  size="large" tip="数据加载中..."/>
+     </p>
   </div>
 </template>
 
@@ -202,6 +212,7 @@ export default {
   data() {
     return {
       targetObj: {},
+      loading:false,
       likes: 0,
       dislikes: 0,
       action: null,
@@ -211,10 +222,14 @@ export default {
       submitting: false, //判断回应发表
       textareaValue: "",
       finallyWord: "",
-      token: "",
+      token: null,
       arr: [],
       current: "",
     };
+  },
+  mounted(){
+   const userInfo = JSON.parse(localStorage.getItem('userInfo')) || ''
+   this.token = userInfo.token
   },
   computed: {
     count: {
@@ -224,18 +239,44 @@ export default {
     },
   },
   created() {
-    const { target } = this.$route.query;
-    this.targetObj = JSON.parse(decodeURIComponent(target));
-    this.arr = [
-      { type: "like", name: "有用", num: this.targetObj.like },
-      { type: "dislike", name: "没用", num: this.targetObj.dislike },
-    ];
+    const { popularId,newId } = this.$route.query;
+    if(popularId){
+      this.getRevieDetail(popularId)
+    }
+    if(newId){
+      this.getNewRevieDetail(newId)
+    }
   },
   methods: {
+    async getRevieDetail(id){
+     const res = await this.$req.getReviewById(id)
+     this.targetObj = res.data.data
+     this.already(this.targetObj)
+    },
+    async getNewRevieDetail(id){
+      const res = await this.$req.getNewReviewById(id)
+       this.targetObj = res.data.data
+       this.already(this.targetObj)
+    },
+    already(targetObj){
+     document.title = '热门影评--' + targetObj.title
+     this.arr = [
+      { type: "like", name: "有用", num: targetObj.likes },
+      { type: "dislike", name: "没用", num: targetObj.dislike },
+    ];
+     this.loading = true
+    },
     onSearch(value) {
-      console.log(value);
+      let url = this.$router.resolve({
+        path:'/movie/flims/detail',
+        query:{
+          name:encodeURIComponent(JSON.stringify(value)),
+        }
+      })
+      window.open(url.href,'_blank')
     },
     changeStatus(item, index) {
+      if(!this.token) return
       if (this.current === index) return;
       let rate = this.current !== '' ? 1 : 0;
       this.current = index;
@@ -248,10 +289,18 @@ export default {
     },
     handleSubmit() {
       if (!this.textareaValue) return;
-      console.log("回应", this.textareaValue);
+      const {username,avatar} = JSON.parse(localStorage.getItem('userInfo'))
+      this.targetObj.reviewInfo.push({
+          content: this.textareaValue,
+          author: username,
+          avatar,
+          datetime: this.moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+          id: this.targetObj.reviewInfo.length + 1,
+      })
+      this.textareaValue = ''
     },
     oneRespone(comment) {
-      this.reply = comment.key;
+      this.reply = comment.id;
       this.touch = null;
     },
     //鼠标移入影评
@@ -265,19 +314,21 @@ export default {
     //最终提交回复
     onReply(comment) {
       if (!this.finallyWord) return;
+      const {username,avatar} = JSON.parse(localStorage.getItem('userInfo'))
+      if(comment.author == username) return this.$message.error('不可回复自己')
       if (comment.children) {
         comment.children.push({
           content: this.finallyWord,
-          author: "拥抱",
-          avatar:
-            "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+          author: username,
+          avatar,
           datetime: this.moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
           id: Number(comment.id) + 1,
         });
       } else {
-        console.log("no children");
+        this.$message.info('回复失败')
       }
       this.finallyWord = "";
+      this.reply = false
     },
     handleClose() {
       this.reply = null;
@@ -549,6 +600,12 @@ export default {
       }
     }
   }
+}
+.maker-empot{
+  width: 50%;
+  min-width: 1000px;
+  height: 90px;
+  margin: 50px auto;
 }
 ::v-deep .ant-btn-primary {
   background: #ef4238;

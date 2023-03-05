@@ -1,277 +1,334 @@
 <template>
-  <div class="home-main">
-    <div class="home-main-left">
-      <div class="main-left-icon1">
-        <div class="left-header">
-          <span>{{
-            hotInfo.title + "(" + `${hotInfo.total}` + "部" + ")"
-          }}</span>
-          <span @click="all('hot')">全部 ></span>
-        </div>
-        <div class="left-main">
-          <div class="item" v-for="action in hotInfo.data" :key="action.id" @click="filmsDetail(action)">
-            <div class="image">
-              <img :src="`${action.img}`" alt="" />
-              <div class="shadow"></div>
-              <span>{{ action.moviename }}</span>
-            </div>
-            <p>购票</p>
+  <div>
+    <div class="home-main" v-if="show">
+      <div class="home-main-left">
+        <div class="main-left-icon1">
+          <div class="left-header">
+            <span>
+              正在热映{{ "(" + `${hotInfo.films.total}` + "部" + ")" }}</span
+            >
+            <span @click="all('hot')">全部 ></span>
           </div>
-        </div>
-      </div>
-      <div class="main-left-icon2">
-        <div class="icon2-header">
-          <span>{{
-            releaseInfo.title + "(" + `${releaseInfo.total}` + "部" + ")"
-          }}</span>
-          <span @click="all('release')">全部 ></span>
-        </div>
-        <div class="icon2-main">
-          <div class="item" v-for="action in releaseInfo.data" :key="action.id" @click="filmsDetail(action)">
-            <img :src="action.img" alt="" />
-            <div class="shadow"></div>
-            <span>{{ action.moviename }}</span>
-            <p>{{ action.num }}人想看</p>
-            <div class="want-look">
-              <div class="icon">预告片</div>
-              <div class="icon">预售</div>
-            </div>
-            <p>{{ action.releaseTime }}上映</p>
-          </div>
-        </div>
-      </div>
-      <div class="main-left-icon3">
-        <div class="icon3-header">
-          <span>{{ hotPlayInfo.title }}</span>
-          <ul>
-            <li @click="hotDetail('love')"><a href="javascript:;">爱情</a></li>
-            <li @click="hotDetail('comedy')"><a href="javascript:;">喜剧</a></li>
-            <li @click="hotDetail('action')"><a href="javascript:;">动作</a></li>
-            <li @click="hotDetail('plot')"><a href="javascript:;">剧情</a></li>
-            <li @click="hotDetail('animation')"><a href="javascript:;">动画</a></li>
-          </ul>
-          <span @click="all('classic')">全部 > </span>
-        </div>
-        <div class="icon3-main">
-          <div class="item" v-for="action in hotPlayInfo.data" :key="action.id" @click="filmsDetail(action)">
-            <img :src="action.img" alt="" />
-            <div class="shadow"></div>
-            <span>{{ action.moviename }}</span>
-            <i>{{ action.score }}</i>
-          </div>
-        </div>
-      </div>
-      <div class="main-left-icon4" v-if="hotTvPlayInfo && hotTvPlayList">
-        <div class="icon4-header">
-          <span>{{ hotTvPlayInfo.title }}</span>
-          <ul>
-            <li
-              @click="changeType('domestic')"
-              :class="type.domestic ? 'active' : ''"
-            >
-              国产剧
-            </li>
-            <li
-              @click="changeType('variety')"
-              :class="type.variety ? 'active' : ''"
-            >
-              综艺
-            </li>
-            <li @click="changeType('UsTv')" :class="type.UsTv ? 'active' : ''">
-              美剧
-            </li>
-            <li
-              @click="changeType('KoreanTv')"
-              :class="type.KoreanTv ? 'active' : ''"
-            >
-              韩剧
-            </li>
-            <li
-              @click="changeType('documentary')"
-              :class="type.documentary ? 'active' : ''"
-            >
-              纪录片
-            </li>
-          </ul>
-          <!-- <span>全部 ></span> -->
-        </div>
-        <div class="swiper" ref="mySwiper">
-          <div class="swiper-wrapper">
+          <div class="left-main">
             <div
-              class="swiper-slide"
-              v-for="(action, index) in hotTvPlayList"
-              :key="index"
+              class="item"
+              v-for="action in hotInfo.films.records"
+              :key="action.id"
+              @click="filmsDetail(action)"
             >
-              <div class="icon4-main">
-                <div
-                  class="item"
-                  v-for="item in action.moviceList"
-                  :key="item.id"
-                  @click="filmsDetail(item)"
-                >
-                  <img :src="item.img" alt="" />
-                  <div class="shadow"></div>
-                  <p>{{ item.update }}</p>
-                  <span>{{ item.moviename }}</span>
-                  <i :class="item.score ? '' : 'isactive'">{{
-                    item.score ? item.score : "暂无评分"
-                  }}</i>
+              <div class="image">
+                <img :src="`${action.img}`" alt="" />
+                <div class="shadow"></div>
+                <span>{{ action.movieName }}</span>
+              </div>
+              <p>购票</p>
+            </div>
+          </div>
+        </div>
+        <div class="main-left-icon2">
+          <div class="icon2-header">
+            <span>
+              即将上映
+              {{ "(" + `${releaseInfo.films.total}` + "部" + ")" }}</span
+            >
+            <span @click="all('release')">全部 ></span>
+          </div>
+          <div class="icon2-main">
+            <div
+              class="item"
+              v-for="action in releaseInfo.films.records"
+              :key="action.id"
+              @click="filmsDetail(action)"
+            >
+              <img :src="action.img" alt="" />
+              <div class="shadow"></div>
+              <span>{{ action.movieName }}</span>
+              <p>{{ action.sum }}人想看</p>
+              <div class="want-look">
+                <div class="icon">预告片</div>
+                <div class="icon">预售</div>
+              </div>
+              <!-- <p>{{ action.releaseTime }}上映</p> -->
+            </div>
+          </div>
+        </div>
+        <div class="main-left-icon3">
+          <div class="icon3-header">
+            <span>热播电影</span>
+            <ul>
+              <li @click="hotDetail('love')">
+                <a href="javascript:;">爱情</a>
+              </li>
+              <li @click="hotDetail('comedy')">
+                <a href="javascript:;">喜剧</a>
+              </li>
+              <li @click="hotDetail('action')">
+                <a href="javascript:;">动作</a>
+              </li>
+              <li @click="hotDetail('plot')">
+                <a href="javascript:;">剧情</a>
+              </li>
+              <li @click="hotDetail('animation')">
+                <a href="javascript:;">动画</a>
+              </li>
+            </ul>
+            <span @click="all('classic')">全部 > </span>
+          </div>
+          <div class="icon3-main">
+            <div
+              class="item"
+              v-for="action in hotPlayInfo.films.records"
+              :key="action.id"
+              @click="filmsDetail(action)"
+            >
+              <img :src="action.img" alt="" />
+              <div class="shadow"></div>
+              <span>{{ action.movieName }}</span>
+              <i>{{ action.score }}</i>
+            </div>
+          </div>
+        </div>
+        <div class="main-left-icon4" v-if="hotTvPlayInfo && hotTvPlayList">
+          <div class="icon4-header">
+            <span>热播电视剧</span>
+            <ul>
+              <li
+                @click="changeType('domestic')"
+                :class="type.domestic ? 'active' : ''"
+              >
+                国产剧
+              </li>
+              <li
+                @click="changeType('variety')"
+                :class="type.variety ? 'active' : ''"
+              >
+                综艺
+              </li>
+              <li
+                @click="changeType('UsTv')"
+                :class="type.UsTv ? 'active' : ''"
+              >
+                美剧
+              </li>
+              <li
+                @click="changeType('KoreanTv')"
+                :class="type.KoreanTv ? 'active' : ''"
+              >
+                韩剧
+              </li>
+              <li
+                @click="changeType('documentary')"
+                :class="type.documentary ? 'active' : ''"
+              >
+                纪录片
+              </li>
+            </ul>
+          </div>
+          <div class="swiper" ref="mySwiper">
+            <div class="swiper-wrapper">
+              <div
+                class="swiper-slide"
+                v-for="(action, index) in hotTvPlayList"
+                :key="index"
+              >
+                <div class="icon4-main">
+                  <div
+                    class="item"
+                    v-for="item in action.moviceList"
+                    :key="item.id"
+                    @click="filmsDetail(item)"
+                  >
+                    <img :src="item.img" alt="" />
+                    <div class="shadow"></div>
+                    <p>{{ item.upDate }}</p>
+                    <span>{{ item.movieName }}</span>
+                    <i :class="item.score ? '' : 'isactive'">{{
+                      item.score ? item.score : "暂无评分"
+                    }}</i>
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
           </div>
-          <div class="swiper-pagination"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
         </div>
-      </div>
-      <div class="main-left-icon5">
-        <div class="icon5-header">
-          <span>{{ hotFilmsReview.title }}</span>
-          <span @click="moreReview">更多热门影评>></span>
-        </div>
-        <div class="icon5-main">
-          <ul>
-            <li v-for="action in hotFilmsReview.data" :key="action.id">
-              <img :src="action.img" alt="" />
-              <div class="icon5-title">
-                <span @click="hotspotDetail(action)"> {{ action.title }}</span>
-                <p>{{ action.name }} 评论{{ action.works }}</p>
-                <p>
-                  {{ action.content1 }}
-                  <span @click="hotspotDetail(action)">(全文)</span>
-                </p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="home-main-right" v-if="boxOfficeInfo">
-      <div class="main-right-icon1">
-        <div class="right-header">
-          <span>{{ boxOfficeInfo.title }}</span>
-        </div>
-        <div class="right-main">
-          <div class="icon" @click="filmsDetail(boxOfficeInfo.data[0])">
-            <img :src="`${boxOfficeInfo.data[0].img}`" alt="" />
-            <span>{{ boxOfficeInfo.data[0].moviename }}</span>
-            <i>{{ boxOfficeInfo.data[0].num }}万</i>
+        <div class="main-left-icon5">
+          <div class="icon5-header">
+            <span>最受欢迎影评</span>
+            <span @click="moreReview">更多热门影评>></span>
           </div>
-          <div class="right-main-rank">
+          <div class="icon5-main">
             <ul>
-              <li
-                class="item"
-                v-for="action in boxOfficeList"
-                :key="action.key"
-                @click="filmsDetail(action)"
-              >
-                <div>
-                  <p>
-                    {{ action.key }} <span>{{ action.moviename }}</span>
+              <li v-for="action in hotFilmsReview" :key="action.id">
+                <img :src="action.img" alt="" />
+                <div class="icon5-title">
+                  <span @click="hotspotDetail(action)">
+                    {{ action.title }}</span
+                  >
+                  <p>{{ action.author }} 评论 {{ action.movieName }}</p>
+                  <p class="overlow">
+                    {{ action.content1 }}
+                    <span class="all" @click="hotspotDetail(action)"
+                      >(全文)</span
+                    >
                   </p>
-                  <i>{{ action.num }}万</i>
                 </div>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <div class="main-right-icon2" v-if="profitInfo">
-        <div class="right-earn">{{ profitInfo.title }}</div>
-        <div class="right-data">
-          <p>{{ realData }}<span>万</span></p>
-          <p> 查看更多<span>></span></p>
-        </div>
-        <div class="box-office-data">
-          <span>北京时间：{{ nowDate }}</span>
-          <span>专业版实时票房数据</span>
-        </div>
-      </div>
-      <div class="main-right-icon3" v-if="mostexpectInfo">
-        <div class="icon3-header">
-          <span>{{ mostexpectInfo.title }}</span>
-          <span @click="getcomplete('expect')">查看完整榜单></span>
-        </div>
-        <div class="icon3-main" @click="filmsDetail(mostexpectInfo.data[0])">
-          <img :src="`${mostexpectInfo.data[0].img}`" alt="" />
-          <p>{{ mostexpectInfo.data[0].moviename }}</p>
-          <p>上映时间:{{ mostexpectInfo.data[0].updateTime }}</p>
-          <p>{{ mostexpectInfo.data[0].num }}想看</p>
-        </div>
-        <div class="icon3-intrdus">
-          <div class="icon3-intrdus-item" @click="filmsDetail(mostexpectInfo.data[1])">
-            <img :src="`${mostexpectInfo.data[1].img}`" alt="" />
-            <div class="intrdus-detail">
-              <p>{{ mostexpectInfo.data[1].moviename }}</p>
-              <p>{{ mostexpectInfo.data[1].num }}想看</p>
-            </div>
+      <div class="home-main-right" v-if="boxOfficeList">
+        <div class="main-right-icon1">
+          <div class="right-header">
+            <span>今日票房</span>
           </div>
-          <div class="icon3-intrdus-item" @click="filmsDetail(mostexpectInfo.data[2])">
-            <img :src="`${mostexpectInfo.data[2].img}`" alt="" />
-            <div class="intrdus-detail">
-              <p>{{ mostexpectInfo.data[2].moviename }}</p>
-              <p>{{ mostexpectInfo.data[2].num }}想看</p>
+          <div class="right-main">
+            <div class="icon" @click="filmsDetail(boxOfficeInfo[0])">
+              <img :src="boxOfficeInfo[0].img" alt="" />
+              <span>{{ boxOfficeInfo[0].movieName }}</span>
+              <i>{{ boxOfficeInfo[0].num }}万</i>
+            </div>
+            <div class="right-main-rank">
+              <ul>
+                <li
+                  class="item"
+                  v-for="action in boxOfficeList"
+                  :key="action.key"
+                  @click="filmsDetail(action)"
+                >
+                  <div>
+                    <p>
+                      {{ action.key }} <span>{{ action.movieName }}</span>
+                    </p>
+                    <i>{{ action.num }}万</i>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
-        <div class="icon3-main-rank">
-          <ul>
-            <li class="item" v-for="action in mostexpectList" :key="action.key" @click="filmsDetail(action)">
-              <div>
-                <p>
-                  {{ action.key }}<span>{{ action.moviename }}</span>
-                </p>
-                <i>{{ action.num }}人想看</i>
+        <div class="main-right-icon2">
+          <div class="right-earn">今日收益</div>
+          <div class="right-data">
+            <p>{{ realData }}<span>万</span></p>
+            <p>查看更多<span>></span></p>
+          </div>
+          <div class="box-office-data">
+            <span>北京时间：{{ nowDate }}</span>
+            <span>专业版实时票房数据</span>
+          </div>
+        </div>
+        <div class="main-right-icon3">
+          <div class="icon3-header">
+            <span>最受期待</span>
+            <span @click="getcomplete('expect')">查看完整榜单></span>
+          </div>
+          <div class="icon3-main" @click="filmsDetail(mostexpectInfo[0])">
+            <img :src="mostexpectInfo[0].img" alt="" />
+            <p>{{ mostexpectInfo[0].movieName }}</p>
+            <p>上映时间:{{ mostexpectInfo[0].updateTime }}</p>
+            <p>{{ mostexpectInfo[0].num }}想看</p>
+          </div>
+          <div class="icon3-intrdus">
+            <div
+              class="icon3-intrdus-item"
+              @click="filmsDetail(mostexpectInfo[1])"
+            >
+              <img :src="mostexpectInfo[1].img" alt="" />
+              <div class="intrdus-detail">
+                <p>{{ mostexpectInfo[1].movieName }}</p>
+                <p>{{ mostexpectInfo[0].num }}想看</p>
               </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="main-right-icon4" v-if="TophundredInfo">
-        <div class="icon4-header">
-          <span>{{ TophundredInfo.title }}</span>
-          <span @click="getcomplete('tophundred')">查看完整榜单 ></span>
-        </div>
-        <div class="icon4-image" @click="filmsDetail(TophundredInfo.data[0])">
-          <img :src="`${TophundredInfo.data[0].img}`" alt="" />
-          <span>{{ TophundredInfo.data[0].moviename }}</span>
-          <i>{{ TophundredInfo.data[0].score }}分</i>
-        </div>
-        <div class="icon4-main-rank">
-          <ul>
-            <li class="item" v-for="action in TophundredList" :key="action.key" @click="filmsDetail(action)">
-              <div>
-                <p>
-                  {{ action.key }}<span>{{ action.moviename }}</span>
-                </p>
-                <i>{{ action.score }}分</i>
+            </div>
+            <div
+              class="icon3-intrdus-item"
+              @click="filmsDetail(mostexpectInfo[2])"
+            >
+              <img :src="mostexpectInfo[2].img" alt="" />
+              <div class="intrdus-detail">
+                <p>{{ mostexpectInfo[2].movieName }}</p>
+                <p>{{ mostexpectInfo[0].num }}想看</p>
               </div>
-            </li>
-          </ul>
+            </div>
+          </div>
+          <div class="icon3-main-rank">
+            <ul>
+              <li
+                class="item"
+                v-for="(action, index) in mostexpectList"
+                :key="index"
+                @click="filmsDetail(action)"
+              >
+                <div>
+                  <p>
+                    {{ index + 4 }}<span>{{ action.movieName }}</span>
+                  </p>
+                  <i>{{ action.num }}人想看</i>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="main-right-icon5" v-if="moviemakerInfo">
-        <div class="icon5-header">
-          <span>{{ moviemakerInfo.title }}</span>
+        <div class="main-right-icon4">
+          <div class="icon4-header">
+            <span>TOP 100</span>
+            <span @click="getcomplete('tophundred')">查看完整榜单 ></span>
+          </div>
+          <div class="icon4-image" @click="filmsDetail(7)">
+            <img :src="TophundredInfo[1].img" alt="" />
+            <span>{{ TophundredInfo[0].movieName }}</span>
+            <i>{{ TophundredInfo[0].score }}分</i>
+          </div>
+          <div class="icon4-main-rank">
+            <ul>
+              <li
+                class="item"
+                v-for="(action, index) in TophundredList"
+                :key="index"
+                @click="filmsDetail(action)"
+              >
+                <div>
+                  <p>
+                    {{ index + 1 }}<span>{{ action.movieName }}</span>
+                  </p>
+                  <i>{{ action.score }}分</i>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="icon5-image" @click="movieMaker(moviemakerInfo.data[0])">
-          <img :src="`${moviemakerInfo.data[0].img}`" alt="" />
-          <span>{{ moviemakerInfo.data[0].name }}</span>
-        </div>
-        <div class="icon5-main-rank">
-          <ul>
-            <li class="item" v-for="action in moviemakerList" :key="action.key">
-              <div>
-                <p @click="movieMaker(action)">
-                  {{ action.key }}<span>{{ action.name }}</span>
-                </p>
-              </div>
-            </li>
-          </ul>
+        <div class="main-right-icon5" v-if="moviemakerInfo.length > 0">
+          <div class="icon5-header">
+            <span>热门影人</span>
+          </div>
+          <div class="icon5-image" @click="movieMaker(moviemakerInfo[0])">
+            <img :src="moviemakerInfo[0].img" alt="" />
+            <span>{{ moviemakerInfo[0].movieName }}</span>
+          </div>
+          <div class="icon5-main-rank">
+            <ul>
+              <li
+                class="item"
+                v-for="(action, index) in moviemakerList"
+                :key="index"
+              >
+                <div>
+                  <p @click="movieMaker(action)">
+                    {{ index + 2 }}<span>{{ action.movieName }}</span>
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
+    <p class="maker-empot" v-else>
+      <a-spin size="large" tip="数据加载中..." />
+    </p>
   </div>
 </template>
 
@@ -290,7 +347,11 @@ export default {
       hotFilmsReview: {}, //热门影评
       boxOfficeInfo: null, //今日票房|
       boxOfficeList: [],
-      profitInfo: null, //今日收益
+      profitInfo: [
+        { key: "1", num: 310.7 },
+        { key: "2", num: 957.3 },
+        { key: "3", num: 1301.6 },
+      ], //今日收益
       mostexpectInfo: null, //最受期待
       mostexpectList: [],
       TophundredInfo: null, //TOP100
@@ -307,6 +368,7 @@ export default {
         KoreanTv: false,
         documentary: false,
       },
+      show: false,
     };
   },
   created() {
@@ -316,7 +378,7 @@ export default {
     this.getHotTvPlay("domestic");
     this.getFilmReview();
     this.getboxoffice();
-    this.getprofit();
+    // this.getprofit();
     this.getmostexpect();
     this.getTophundred();
     this.getmoviemaker();
@@ -327,11 +389,11 @@ export default {
   computed: {
     realData: function () {
       return this.nowhour < 8
-        ? this.profitInfo.data[0].num
+        ? this.profitInfo[0].num
         : this.nowhour < 16
-        ? this.profitInfo.data[1].num
+        ? this.profitInfo[1].num
         : this.nowhour < 24
-        ? this.profitInfo.data[2].num
+        ? this.profitInfo[2].num
         : "暂无数据";
     },
   },
@@ -362,13 +424,13 @@ export default {
     },
   },
   methods: {
-    hotspotDetail(action){
+    hotspotDetail(action) {
       this.$router.push({
-        path:'/films-detail',
-        query:{
-          target:encodeURIComponent(JSON.stringify(action))
-        }
-      })
+        path: "/films-detail",
+        query: {
+          target: encodeURIComponent(JSON.stringify(action)),
+        },
+      });
     },
     changeType(type) {
       this.getHotTvPlay(type);
@@ -382,30 +444,50 @@ export default {
       this.type[`${type}`] = true;
     },
     all(type) {
-      sessionStorage.setItem("path", '/films');
+      sessionStorage.setItem("path", "/films");
       this.$router.push({
-        path:`/films/${type}`,
-      })
+        path: `/films/${type}`,
+      });
     },
     getHotMovies() {
-      this.$req.getHotMovies().then((res) => {
+      const params = {
+        pageSize: 8,
+        pageNum: 1,
+        films_type: "screening",
+      };
+      this.$req.getHotMovies(params).then((res) => {
         this.hotInfo = res.data;
       });
     },
     getsoonRelease() {
-      this.$req.getsoonRelease().then((res) => {
+      const params = {
+        pageSize: 8,
+        pageNum: 1,
+        films_type: "soon",
+      };
+      this.$req.getsoonRelease(params).then((res) => {
         this.releaseInfo = res.data;
       });
     },
     getHotPlay() {
-      this.$req.getHotPlay().then((res) => {
+      const params = {
+        pageSize: 8,
+        pageNum: 1,
+        films_type: "soon",
+      };
+      this.$req.getsoonRelease(params).then((res) => {
         this.hotPlayInfo = res.data;
+        this.show = true;
       });
     },
     getHotTvPlay(type) {
-      this.$req.getHotTvPlay().then((res) => {
+      const params = {
+        pageSize: 2,
+        pageNum: 1,
+      };
+      this.$req.getHotTvPlay(params).then((res) => {
         this.hotTvPlayInfo = res.data;
-        this.hotTvPlayList = this.hotTvPlayInfo[`${type}`];
+        this.hotTvPlayList = this.hotTvPlayInfo[`${type}`].records;
       });
     },
     getFilmReview() {
@@ -416,14 +498,14 @@ export default {
     getboxoffice() {
       this.$req.getboxoffice().then((res) => {
         this.boxOfficeInfo = res.data;
-        this.boxOfficeList = this.boxOfficeInfo.data.slice(1);
+        this.boxOfficeList = res.data.slice(0, 4);
       });
     },
-    getprofit() {
-      this.$req.getprofit().then((res) => {
-        this.profitInfo = res.data;
-      });
-    },
+    // getprofit() {
+    //   this.$req.getprofit().then((res) => {
+    //     this.profitInfo = res.data;
+    //   });
+    // },
     getnewDate() {
       var time = new Date();
       var hour = time.getHours();
@@ -433,59 +515,59 @@ export default {
     getmostexpect() {
       this.$req.getmostexpect().then((res) => {
         this.mostexpectInfo = res.data;
-        this.mostexpectList = this.mostexpectInfo.data.slice(3);
+        this.mostexpectList = this.mostexpectInfo.slice(3);
       });
     },
     getTophundred() {
       this.$req.getTophundred().then((res) => {
         this.TophundredInfo = res.data;
-        this.TophundredList = this.TophundredInfo.data.slice(1);
+        this.TophundredList = this.TophundredInfo.slice(1);
       });
     },
     getmoviemaker() {
       this.$req.getmoviemaker().then((res) => {
         this.moviemakerInfo = res.data;
-        this.moviemakerList = this.moviemakerInfo.data.slice(1);
+        this.moviemakerList = this.moviemakerInfo.slice(1);
       });
     },
-    hotDetail(type){
-      sessionStorage.setItem("path", '/films');
+    hotDetail(type) {
+      sessionStorage.setItem("path", "/films");
       this.$router.push({
-        path:'/films/classic',
-        query:{
+        path: "/films/classic",
+        query: {
           type,
-        }
-      })
+        },
+      });
     },
-    moreReview(){
-      sessionStorage.setItem("path", '/hotspot');
+    moreReview() {
+      sessionStorage.setItem("path", "/hotspot");
       this.$router.push({
-        path:'/hotspot'
-      })
+        path: "/hotspot",
+      });
     },
-    getcomplete(path){
-      sessionStorage.setItem("path", '/billboard');
+    getcomplete(path) {
+      sessionStorage.setItem("path", "/billboard");
       this.$router.push({
-        path:`/billboard/${path}`,
-      })
+        path: `/billboard/${path}`,
+      });
     },
-    movieMaker(action){
+    movieMaker(action) {
       this.$router.push({
-        path:'/movie/maker',
-        query:{
-          target:encodeURIComponent(JSON.stringify(action))
-        }
-      })
+        path: "/movie/maker",
+        query: {
+          id: action.id,
+        },
+      });
     },
-    filmsDetail(action){
+    filmsDetail(action) {
       let url = this.$router.resolve({
-        path:'/movie/flims/detail',
-        query:{
-          name:action.moviename
-        }
-      })
-      window.open(url.href,'_blank')
-    }
+        path: "/movie/flims/detail",
+        query: {
+          name: encodeURIComponent(JSON.stringify(action.moviename)),
+        },
+      });
+      window.open(url.href, "_blank");
+    },
   },
 };
 </script>
@@ -713,7 +795,7 @@ export default {
           height: 220px;
           position: relative;
           &:first-child {
-            width: 350px;
+            // width: 350px;
           }
           span {
             color: #fff;
@@ -858,6 +940,7 @@ export default {
               height: 135px;
             }
             .icon5-title {
+              position: relative;
               span {
                 color: #37a;
                 font-size: 18px;
@@ -866,6 +949,13 @@ export default {
                   background: #37a;
                   color: #fff;
                 }
+              }
+              .all {
+                // color: red;
+                // font-size: 14px;
+                // position: absolute;
+                // bottom: 0px;
+                // right: 0px;
               }
               p {
                 color: #666;
@@ -880,6 +970,12 @@ export default {
                     font-size: 16px;
                   }
                 }
+              }
+              .overlow {
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
+                overflow: hidden;
               }
             }
           }
@@ -1302,8 +1398,8 @@ export default {
                 span {
                   color: #333333;
                   margin-left: 14px;
-                  &:hover{
-                  color: #ef4638;
+                  &:hover {
+                    color: #ef4638;
                   }
                 }
               }
@@ -1319,6 +1415,11 @@ export default {
       }
     }
   }
+}
+.maker-empot {
+  height: 500px;
+  width: 70%;
+  margin: 60px auto;
 }
 .active {
   color: #ef4638 !important;

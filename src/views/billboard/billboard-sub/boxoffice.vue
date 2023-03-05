@@ -1,6 +1,6 @@
 <template>
   <div class="board-main">
-    <div class="main-header">
+    <div class="main-header" v-if="show">
       <div class="middle">
         <p>2022-12-29<span v-if="hour > 10">已更新</span></p>
         <p>
@@ -8,40 +8,27 @@
         </p>
       </div>
       <div class="main-wrapper">
-        <div class="item">
-          <img src="@/assets/image/films/即将上映/7.jpg" alt="" />
+        <div class="item" v-for="action in boxofficeList" :key="action.id">
+          <img :src="action.img" alt="" />
           <div class="introduce-wrapper">
             <div class="introduce">
               <div class="title">
-                <p>放牛班的春天</p>
-                <p>主演：热拉尔·朱诺,弗朗西斯·贝尔兰德,凯德·麦拉德</p>
-                <p>上映时间：2004-10-16</p>
+                <p>{{action.movieName}}</p>
+                <p>主演：{{action.act}}</p>
+                <p>上映时间：{{action.updateTime}}</p>
               </div>
               <div class="score">
-                <p>实时票房：<span>6386.2</span>万</p>
-                <i>总票房：11.23亿</i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <img src="@/assets/image/films/即将上映/6.jpg" alt="" />
-          <div class="introduce-wrapper">
-            <div class="introduce">
-              <div class="title">
-                <p>放牛班的春天</p>
-                <p>主演：热拉尔·朱诺,弗朗西斯·贝尔兰德,凯德·麦拉德</p>
-                <p>上映时间：2004-10-16</p>
-              </div>
-              <div class="score">
-                <p>实时票房：<span>2003.5</span>万</p>
-                <i>总票房：1.32亿</i>
+                <p>实时票房：<span>{{action.newIce}}</span>万</p>
+                <i>总票房：{{action.num > 100000000 ? (action.num/100000000).toFixed(2) +'亿' : (action.num/10000).toFixed(2) +'万' }}</i>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <p class="maker-empot" v-else>
+      <a-spin  size="large" tip="数据加载中..."/>
+    </p>
   </div>
 </template>
 
@@ -52,10 +39,13 @@ export default {
     return {
       nowDate: "",
       hour: "",
+      boxofficeList:[],
+      show:false
     };
   },
   created() {
     this.getnowDate();
+    this.getboxoffice()
   },
   methods: {
     getnowDate() {
@@ -63,6 +53,12 @@ export default {
       this.hour = time.getHours();
       this.nowDate = this.$moment(time).format("YYYY-MM-DD");
     },
+    getboxoffice(){
+      this.$req.getboardpraise().then((res)=>{
+        this.boxofficeList = res.data
+        this.show=true
+      })
+    }
   },
 };
 </script>
@@ -91,7 +87,7 @@ export default {
   }
   .main-wrapper {
     width: 76%;
-    height: 500px;
+    // height: 500px;
     // border: 1px solid red;
     margin: 50px auto;
     .item {
@@ -145,6 +141,11 @@ export default {
         }
       }
     }
+  }
+  .maker-empot{
+    height: 150px;
+    width: 80%;
+    margin: 0 auto;
   }
 }
 </style>

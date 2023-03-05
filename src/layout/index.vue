@@ -54,5 +54,4 @@ export default {
 //   background: #000;
 //   height: 28.5rem;
 // }
-
 </style>

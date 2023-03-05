@@ -92,6 +92,7 @@ export default {
       tel: false, //判断手机号校验是否合格
       code: false, //判断验证码?手机号检验是否合格
       loading: false, //回流
+      verPassword:'', // 存放短信验证码
       form: {
         phone: "",
         verification: null,
@@ -128,26 +129,49 @@ export default {
           this.repeat = true;
         }
       }, 1000);
-      this.$message.info(res.code);
+      this.verPassword = res
+      this.$message.info(res);
     },
     onSubmit() {
       if (!this.code) return;
       if (!this.agree)
         return this.$message.info("请仔细阅读并同意勾选用户服务协议等");
-      this.$req.Login().then((res) => {
-        if (res.data.password !== this.form.verification)
-          return this.$message.error("验证码错误");
+      if (this.verPassword !== this.form.verification)
+      return this.$message.error("验证码错误");
+      this.$req.Login(this.form.phone).then((res) => {
+       if(res.data.length<=0){
+        const target={
+          phone:this.form.phone
+        }
+        this.$req.register(target).then(res=>{
+          if(res.status == 0){
+            this.onSubmit()
+          } else{
+            this.$message.error('请求失败,稍后再试..')  
+          }
+        })
+       } else{
         //将用户信息存储Vuex
-        const { avatar, username, token, role } = res.data;
+        this.successLogin(res)
+       }
+      });
+    },
+    successLogin(res){
+      console.log(res);
+      const { avatar, username,birthday,phone,address,id } = res.data[0];
         const obj = {
-          avatar,
+          avatar:avatar ? avatar : 'http://localhost:8080/avatar/10.jpg',
           username,
-          token,
-          role,
+          token:'jnjfdnsksnajfiodngjrjdnsjjifdsnjf',
+          phone,
+          address,
+          birthday,
+          id
         };
+        console.log(obj);
+        this.$router.go(-1)
         this.setUserInfo(obj);
         this.handleCancel()
-      });
     },
     handleCancel(){
       this.form.phone = ''

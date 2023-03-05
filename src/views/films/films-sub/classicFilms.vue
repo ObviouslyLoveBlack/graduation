@@ -1,62 +1,68 @@
 <template>
-  <div class="films-container">
-    <div>
-      <filmsnav
-        @getnavtype="getnavtype"
-        @getNavRegion="getNavRegion"
-        @getNavEra="getNavEra"
-      />
-    </div>
-    <div class="films-main">
-      <div class="main-wrapper">
-        <div
-          class="item"
-          v-for="item in allFilmsList"
-          :key="item.key"
-          @mouseover="getHover(item)"
-          @mouseleave="getleave()"
-          @click="filmsDetail(item)"
-        >
-          <img :src="item.img" alt="" />
-          <p>{{ item.moviename }}</p>
-          <p :class="hoverObj ? 'fonSize' : ''">
-            {{ item.sum ? item.sum + "人想看" : "点映评分" + item.score }}
-          </p>
-          <div class="icon" v-if="hoverObj && hoverObj.key == item.key">
-            <img :src="hoverObj.img" alt="" />
-            <div class="films-info">
-              <div class="info-detail">
-                <div class="info-name">
-                  <p>{{ hoverObj.moviename }}</p>
-                  <span>{{ hoverObj.score }}</span>
+  <div>
+    <div class="films-container" v-show="isShow && allFilmsList.length > 0">
+      <div>
+        <filmsnav
+          @getnavtype="getnavtype"
+          @getNavRegion="getNavRegion"
+          @getNavEra="getNavEra"
+          @show="show"
+        />
+      </div>
+      <div class="films-main">
+        <div class="main-wrapper">
+          <div
+            class="item"
+            v-for="item in allFilmsList"
+            :key="item.key"
+            @mouseover="getHover(item)"
+            @mouseleave="getleave()"
+            @click="filmsDetail(item)"
+          >
+            <img :src="item.img" alt="" />
+            <p>{{ item.movieName }}</p>
+            <p :class="hoverObj ? 'fonSize' : ''">
+              {{ item.sum ? item.sum + "人想看" : "点映评分" + item.score }}
+            </p>
+            <div class="icon" v-if="hoverObj && hoverObj.id == item.id">
+              <img :src="hoverObj.img" alt="" />
+              <div class="films-info">
+                <div class="info-detail">
+                  <div class="info-name">
+                    <p>{{ hoverObj.movieName }}</p>
+                    <span>{{ hoverObj.score }}</span>
+                  </div>
+                  <p>类型:<span>动作/惊险</span></p>
+                  <p>主演:<span>维吉尼亚·加德纳/</span></p>
+                  <p>上映时间:<span>2022-11-18</span></p>
                 </div>
-                <p>类型:<span>动作/惊险</span></p>
-                <p>主演:<span>维吉尼亚·加德纳/</span></p>
-                <p>上映时间:<span>2022-11-18</span></p>
               </div>
             </div>
           </div>
         </div>
+        <div v-if="loading">
+          <span>抱歉，没有找到相关结果，请尝试用其他条件筛选。</span>
+        </div>
       </div>
-      <div v-if="loading">
-        <span>抱歉，没有找到相关结果，请尝试用其他条件筛选。</span>
+      <div class="middle" v-if="total > 30">
+        <a-pagination
+          v-model="current"
+          :total="total"
+          :pageSize="30"
+          @change="change"
+        />
       </div>
     </div>
-    <div class="middle" v-if="total > 30">
-      <a-pagination
-        v-model="current"
-        :total="total"
-        :pageSize="30"
-        @change="change"
-      />
-    </div>
+    <p class="maker-empot" v-if="!isShow">
+      <a-spin size="large" tip="数据加载中..." />
+    </p>
   </div>
 </template>
 
 <script>
 import filmsnav from "./filmsnav.vue";
 export default {
-  name: "classicFilms",
+  name: "releaseFilms",
   components: {
     filmsnav,
   },
@@ -73,42 +79,52 @@ export default {
       current: 1,
       page: 1,
       pagination: false,
+      isShow: false,
     };
   },
   created() {
     this.getReleaseFilms("all", "all", "all");
   },
   methods: {
+    show(type) {
+      this.isShow = type;
+    },
     async getReleaseFilms(type, location, year) {
       this.pagination = false;
       this.loading = false;
-      const res = await this.$req.getReleaseFilms();
+      const params = {
+        pageSize: 5,
+        pageNum: 1,
+        films_type: "soon",
+      };
+      const { data: res1 } = await this.$req.getAllfilms(params);
+      const res = res1.films.records;
       this.total = res.total;
       if (type === "all" && location === "all" && year === "all") {
-        this.allFilmsList = res.data.filter((v) => v.page === this.page);
+        this.allFilmsList = res;
       } else if (location === "all" && year === "all") {
-        this.allFilmsList = res.data.filter(
+        this.allFilmsList = res.filter(
           (v) =>
             v.type === type || v.othertype === type || v.othertypes === type
         );
         this.total = this.allFilmsList.length;
       } else if (type === "all" && year === "all") {
-        this.allFilmsList = res.data.filter(
+        this.allFilmsList = res.filter(
           (v) => v.location === location || v.location1 === location
         );
         this.total = this.allFilmsList.length;
       } else if (type === "all" && location === "all") {
-        this.allFilmsList = res.data.filter((v) => v.year === year);
+        this.allFilmsList = res.filter((v) => v.year === year);
         this.total = this.allFilmsList.length;
       } else if (type === "all") {
-        this.allFilmsList = res.data.filter(
+        this.allFilmsList = res.filter(
           (v) =>
             (v.location === location || v.location1 === location) &&
             v.year === year
         );
         this.total = this.allFilmsList.length;
       } else if (location === "all") {
-        this.allFilmsList = res.data.filter(
+        this.allFilmsList = res.filter(
           (v) =>
             (v.type === type ||
               v.othertype === type ||
@@ -117,14 +133,14 @@ export default {
         );
         this.total = this.allFilmsList.length;
       } else if (year === "all") {
-        this.allFilmsList = res.data.filter(
+        this.allFilmsList = res.filter(
           (v) =>
             (v.location === location || v.location1 === location) &&
             (v.type === type || v.othertype === type || v.othertypes === type)
         );
         this.total = this.allFilmsList.length;
       } else {
-        this.allFilmsList = res.data.filter(
+        this.allFilmsList = res.filter(
           (v) =>
             (v.type === type ||
               v.othertype === type ||
@@ -150,7 +166,7 @@ export default {
       } else {
         this.$req.getReleaseFilms().then((res) => {
           this.total = res.total;
-          this.allFilmsList = res.data.filter((v) => v.page === this.page);
+          this.allFilmsList = res.filter((v) => v.page === this.page);
         });
       }
     },
@@ -172,15 +188,15 @@ export default {
     getleave() {
       this.hoverObj = null;
     },
-    filmsDetail(action){
+    filmsDetail(action) {
       let url = this.$router.resolve({
-        path:'/movie/flims/detail',
-        query:{
-          name:action.moviename
-        }
-      })
-      window.open(url.href,'_blank')
-    }
+        path: "/movie/flims/detail",
+        query: {
+          name: encodeURIComponent(JSON.stringify(action.moviename)),
+        },
+      });
+      window.open(url.href, "_blank");
+    },
   },
 };
 </script>
@@ -293,6 +309,11 @@ export default {
   .middle {
     margin: 30px auto;
   }
+}
+.maker-empot {
+  height: 470px;
+  width: 70%;
+  margin: 50px auto;
 }
 .fonSize {
   font-size: 17px;

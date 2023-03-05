@@ -1,5 +1,6 @@
 <template>
-  <div class="review-container">
+  <div>
+     <div class="review-container" v-if="list.length>0">
     <div class="item" v-for="action in list" :key="action.key">
       <img :src="action.img" alt="" />
       <a-comment>
@@ -53,6 +54,10 @@
         </a-tooltip>
       </a-comment>
     </div>
+     </div>
+     <p style="height:150px" class="maker-empot" v-else>
+      <a-spin size="large" tip="数据加载中..."/>
+     </p>
   </div>
 </template>
 
@@ -74,12 +79,17 @@ export default {
     };
   },
   created(){
-    this.getnewfilmsreview()
+    this.getnewfilmsreview(1)
   },
   methods: {
-    getnewfilmsreview(){
-     this.$req.getnewfilmsreview().then(res=>{
-      this.list = res.data
+    getnewfilmsreview(page){
+      const params = {
+        pageNum:page,
+        pageSize:5
+      }
+     this.$req.getnewfilmsreview(params).then(res=>{
+      // this.total = res.data.total
+      this.list = res.data.records
      })
     },
     like(action) {
@@ -101,7 +111,7 @@ export default {
       this.$router.push({
         path:'/films-detail',
         query:{
-          target:encodeURIComponent(JSON.stringify(action))
+          newId:action.id
         }
       })
     }
