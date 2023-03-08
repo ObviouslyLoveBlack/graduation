@@ -126,17 +126,15 @@
           </div>
           <div class="swiper" ref="mySwiper">
             <div class="swiper-wrapper">
-              <div
-                class="swiper-slide"
+              <div class="swiper-slide"
                 v-for="(action, index) in hotTvPlayList"
                 :key="index"
               >
                 <div class="icon4-main">
                   <div
                     class="item"
-                    v-for="item in action.moviceList"
-                    :key="item.id"
-                    @click="filmsDetail(item)"
+                    v-for="(item,index) in action.moviceList"
+                    :key="index"
                   >
                     <img :src="item.img" alt="" />
                     <div class="shadow"></div>
@@ -343,7 +341,12 @@ export default {
       releaseInfo: {}, //即将上映
       hotPlayInfo: {}, //热播电影
       hotTvPlayInfo: null, //热播电视剧
-      hotTvPlayList: [],
+      hotTvPlayList: [
+        { key: 1, moviceList: [] },
+        { key: 2, moviceList: [] },
+        { key: 3, moviceList: [] },
+        { key: 4, moviceList: [] },
+      ],
       hotFilmsReview: {}, //热门影评
       boxOfficeInfo: null, //今日票房|
       boxOfficeList: [],
@@ -428,7 +431,7 @@ export default {
       this.$router.push({
         path: "/films-detail",
         query: {
-          target: encodeURIComponent(JSON.stringify(action)),
+          newId: action.id,
         },
       });
     },
@@ -487,7 +490,26 @@ export default {
       };
       this.$req.getHotTvPlay(params).then((res) => {
         this.hotTvPlayInfo = res.data;
-        this.hotTvPlayList = this.hotTvPlayInfo[`${type}`].records;
+        const data = this.hotTvPlayInfo[`${type}`];
+        this.hotTvPlayChange(data);
+      });
+    },
+    hotTvPlayChange(data) {
+      const tar1 = data.slice(0, 8);
+      const tar2 = data.slice(8, 16);
+      const tar3 = data.slice(16, 24);
+      const tar4 = data.slice(-8);
+      tar1.forEach((v) => {
+        this.hotTvPlayList[0].moviceList.push(v);
+      });
+      tar2.forEach((v) => {
+        this.hotTvPlayList[1].moviceList.push(v);
+      });
+      tar3.forEach((v) => {
+        this.hotTvPlayList[2].moviceList.push(v);
+      });
+      tar4.forEach((v) => {
+        this.hotTvPlayList[3].moviceList.push(v);
       });
     },
     getFilmReview() {

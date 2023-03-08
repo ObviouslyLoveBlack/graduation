@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="films-container" v-show="isShow && allFilmsList.length > 0">
+    <div class="films-container" v-show="isShow">
       <div>
         <filmsnav
           @getnavtype="getnavtype"
@@ -10,7 +10,7 @@
         />
       </div>
       <div class="films-main" v-if="isShow">
-        <div class="main-wrapper">
+        <div class="main-wrapper" v-if="!loading">
           <div
             class="item"
             v-for="item in allFilmsList"
@@ -40,7 +40,7 @@
             </div>
           </div>
         </div>
-        <div v-if="loading">
+        <div v-else>
           <span>抱歉，没有找到相关结果，请尝试用其他条件筛选。</span>
         </div>
       </div>
@@ -79,58 +79,41 @@ export default {
     async getAllfilms(type, location, year) {
       this.loading = false;
       const params = {
-        pageSize: 30,
+        pageSize: 20,
         pageNum: 1,
-        films_type: "screening",
+        films_type: "process",
       };
       const { data: res1 } = await this.$req.getAllfilms(params);
       const res = res1.films.records;
-      if (type === "all" && location === "all" && year === "all") {
-        type = "1";
+      if (type == "all" && location == "all" && year == "all") {
         this.allFilmsList = res;
-      } else if (location === "all" && year === "all") {
-        this.allFilmsList = res.filter(
-          (v) =>
-            v.type === type || v.otherType === type || v.otherTypes === type
-        );
-      } else if (type === "all" && year === "all") {
-        this.allFilmsList = res.filter(
-          (v) => v.location === location || v.location1 === location
-        );
-      } else if (type === "all" && location === "all") {
+      } else if (location == "all" && year == "all") {
+        this.allFilmsList = res.filter((v) => v.type === type);
+      } else if (type == "all" && year == "all") {
+        this.allFilmsList = res.filter((v) => v.location === location);
+      } else if (type == "all" && location == "all") {
         this.allFilmsList = res.filter((v) => v.year === year);
-      } else if (location === "all") {
+      } else if (type ==="all") {
         this.allFilmsList = res.filter(
-          (v) =>
-            (v.type === type ||
-              v.otherType === type ||
-              v.otherTypes === type) &&
-            v.year === year
+          (v) => v.location === location && v.year === year
         );
-      } else if (type === "all") {
+      } else if (location == "all") {
         this.allFilmsList = res.filter(
-          (v) =>
-            (v.location === location || v.location1 === location) &&
-            v.year === year
+          (v) => v.type === type && v.year === year
         );
-      } else if (year === "all") {
+        this.total = this.allFilmsList.length;
+      } else if (year == "all") {
         this.allFilmsList = res.filter(
-          (v) =>
-            (v.location === location || v.location1 === location) &&
-            (v.type === type || v.otherType === type || v.otherTypes === type)
+          (v) => v.location === location && v.type === type
         );
       } else {
         this.allFilmsList = res.filter(
-          (v) =>
-            (v.type === type ||
-              v.otherType === type ||
-              v.otherTypes === type) &&
-            (v.location === location || v.location1 === location) &&
-            v.year === year
+          (v) => v.type === type && v.location === location && v.year === year
         );
       }
-      if (this.allFilmsList.length == 0) {
-        this.loading = true;
+      console.log(this.allFilmsList);
+      if(this.allFilmsList.length<=0) {
+        this.loading = true
       }
     },
     getAll() {

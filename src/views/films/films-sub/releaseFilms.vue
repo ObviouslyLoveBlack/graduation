@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="films-container" v-show="isShow && allFilmsList.length > 0">
+    <div class="films-container" v-show="isShow">
       <div>
         <filmsnav
           @getnavtype="getnavtype"
@@ -11,7 +11,7 @@
       </div>
       <div>
         <div class="films-main">
-          <div class="main-wrapper">
+          <div class="main-wrapper" v-if="!loading">
             <div
               class="item"
               v-for="item in allFilmsList"
@@ -41,15 +41,15 @@
               </div>
             </div>
           </div>
-          <div v-if="loading">
+          <div v-else>
             <span>抱歉，没有找到相关结果，请尝试用其他条件筛选。</span>
           </div>
         </div>
-        <div class="middle" v-if="total > 30">
+        <div class="middle" v-if="total > 18">
           <a-pagination
             v-model="current"
             :total="total"
-            :pageSize="30"
+            :pageSize="18"
             @change="change"
           />
         </div>
@@ -95,102 +95,66 @@ export default {
       this.pagination = false;
       this.loading = false;
       const params = {
-        pageSize: 30,
+        pageSize: 18,
         pageNum: 1,
         films_type: "soon",
       };
       const { data: res1 } = await this.$req.getAllfilms(params);
       const res = res1.films.records;
       this.total = res1.films.total;
-      if (type === "all" && location === "all" && year === "all") {
+      if (type == "all" && location == "all" && year == "all") {
         this.allFilmsList = res;
-      } else if (location === "all" && year === "all") {
-        this.allFilmsList = res.filter(
-          (v) =>
-            v.type === type || v.othertype === type || v.othertypes === type
-        );
-        this.total = this.allFilmsList.length;
-      } else if (type === "all" && year === "all") {
-        this.allFilmsList = res.filter(
-          (v) => v.location === location || v.location1 === location
-        );
-        this.total = this.allFilmsList.length;
-      } else if (type === "all" && location === "all") {
+      } else if (location == "all" && year == "all") {
+        this.allFilmsList = res.filter((v) => v.type === type);
+      } else if (type == "all" && year == "all") {
+        this.allFilmsList = res.filter((v) => v.location === location);
+      } else if (type == "all" && location == "all") {
         this.allFilmsList = res.filter((v) => v.year === year);
-        this.total = this.allFilmsList.length;
-      } else if (type === "all") {
+      } else if (type ==="all") {
         this.allFilmsList = res.filter(
-          (v) =>
-            (v.location === location || v.location1 === location) &&
-            v.year === year
+          (v) => v.location === location && v.year === year
+        );
+      } else if (location == "all") {
+        this.allFilmsList = res.filter(
+          (v) => v.type === type && v.year === year
         );
         this.total = this.allFilmsList.length;
-      } else if (location === "all") {
+      } else if (year == "all") {
         this.allFilmsList = res.filter(
-          (v) =>
-            (v.type === type ||
-              v.othertype === type ||
-              v.othertypes === type) &&
-            v.year === year
+          (v) => v.location === location && v.type === type
         );
-        this.total = this.allFilmsList.length;
-      } else if (year === "all") {
-        this.allFilmsList = res.filter(
-          (v) =>
-            (v.location === location || v.location1 === location) &&
-            (v.type === type || v.othertype === type || v.othertypes === type)
-        );
-        this.total = this.allFilmsList.length;
       } else {
         this.allFilmsList = res.filter(
-          (v) =>
-            (v.type === type ||
-              v.othertype === type ||
-              v.othertypes === type) &&
-            (v.location === location || v.location1 === location) &&
-            v.year === year
+          (v) => v.type === type && v.location === location && v.year === year
         );
-        this.total = this.allFilmsList.length;
       }
-      if (this.allFilmsList.length > 30) {
-        this.pagination = true;
-        this.list = this.allFilmsList;
-        this.allFilmsList = this.list.slice(0, 30);
-      }
-      if (this.allFilmsList.length <= 0) {
-        this.loading = true;
+      console.log(this.allFilmsList);
+      if(this.allFilmsList.length<=0) {
+        this.loading = true
       }
     },
     change(page) {
       const params = {
-        pageSize: 30,
+        pageSize: 18,
         pageNum: page,
         films_type: "soon",
       };
       this.$req.getAllfilms(params).then((res) => {
         this.allFilmsList = res.data.films.records;
       });
-      // this.page = page;
-      // if (this.pagination) {
-      //   this.allFilmsList = this.list.slice((page - 1) * 30, page * 30);
-      // } else {
-      //   this.$req.getReleaseFilms().then((res) => {
-      //     this.total = res.total;
-      //     this.allFilmsList = res.filter((v) => v.page === this.page);
-      //   });
-      // }
+      window.scroll(0, 0);
     },
     getnavtype(type) {
       this.type = type;
-      this.getReleaseFilms(type, this.location, this.year);
+      this.getReleaseFilms(type,this.location,this.year);
     },
     getNavRegion(location) {
       this.location = location;
-      this.getReleaseFilms(this.type, location, this.year);
+      this.getReleaseFilms(this.type,location,this.year);
     },
     getNavEra(year) {
       this.year = year;
-      this.getReleaseFilms(this.type, this.location, year);
+      this.getReleaseFilms(this.type,this.location,year);
     },
     getHover(item) {
       this.hoverObj = item;

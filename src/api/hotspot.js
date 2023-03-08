@@ -5,6 +5,18 @@ const hotspotApi ={
     getnewfilmsreview:'/newReview/getPage', //获取新片影评
     getReviewById:'/mostPopular/getById', //最受按ID
     getNewReviewById:'/newReview/getNewReview', //最受按ID
+    saveNewReview:'/review/saveReview' //评论新增
+}
+
+export function saveNewReview(params){
+    return request({
+        url:hotspotApi.saveNewReview,
+        method:'post',
+        data:params,
+        headers:{
+            'Content-Type':'application/json;charset=UTF-8'
+        }
+    })
 }
 
 export function getNewReviewById(id){

@@ -24,6 +24,13 @@
           </div>
         </div>
       </div>
+       <div class="middle">
+        <a-pagination
+          :total="total"
+          :pageSize="5"
+          @change="change"
+        />
+      </div>
     </div>
      <p class="maker-empot" v-else>
       <a-spin  size="large" tip="数据加载中..."/>
@@ -38,7 +45,8 @@ export default {
     return {
       nowDate: "",
       hour: "",
-      topList:[]
+      topList:[],
+      total:''
     };
   },
   created() {
@@ -51,14 +59,19 @@ export default {
       this.hour = time.getHours();
       this.nowDate = this.$moment(time).format("YYYY-MM-DD");
     },
-    getTop(){
+    getTop(pageNum=1,pageSize = 5){
        const params = {
-        pageNum:1,
-        pageSize:4
+        pageNum:pageNum,
+        pageSize:pageSize
       }
       this.$req.getTop(params).then(res=>{
         this.topList = res.data.records
+        this.total = res.data.total
       })
+    },
+    change(pageNum,pageSize){
+      this.getTop(pageNum,pageSize)
+      window.scrollTo(0,0)
     }
   },
 };

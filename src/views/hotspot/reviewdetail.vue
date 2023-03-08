@@ -1,57 +1,59 @@
 <template>
   <div>
     <div v-if="loading">
-       <div class="detail-container" v-if="targetObj">
-         <div class="style-content">
-      <div class="content-header">
-        <div class="detail-header">
-          <span>故之电影</span>
-          <div class="search">
-            <a-input-search
-              class="a-input"
-              placeholder="搜索电影、电视剧、综艺、影人"
-              enter-button
-              @search="onSearch"
-            />
+      <div class="detail-container" v-if="targetObj">
+        <div class="style-content">
+          <div class="content-header">
+            <div class="detail-header">
+              <span>故之电影</span>
+              <div class="search">
+                <a-input-search
+                  class="a-input"
+                  placeholder="搜索电影、电视剧、综艺、影人"
+                  enter-button
+                  @search="onSearch"
+                />
+              </div>
+            </div>
+            <div class="detail-image">
+              <img src="@/assets/image/annual_2022.png" alt="" />
+            </div>
           </div>
         </div>
-        <div class="detail-image">
-          <img src="@/assets/image/annual_2022.png" alt="" />
-        </div>
-      </div>
-         </div>
-         <div class="detail-main">
-      <div class="main-left">
-        <p class="title">{{ targetObj.title }}</p>
-        <div class="author-info">
-          <img :src="`${targetObj.avatar}`" alt="" />
-          <p>{{ targetObj.author }}</p>
-          <span>评论</span>
-          <span class="movicname">{{ targetObj.moviename }}</span>
-          <a-rate
-            :default-value="targetObj.score"
-            allow-half
-            disabled
-            class="rate"
-          />
-          <span class="datetime">{{ targetObj.datetime }}</span>
-        </div>
-        <div class="spoiler">这篇有可能有剧透</div>
-        <p v-html="targetObj.content" class="left-content"></p>
-        <p>
-          © 本文版权归作者 {{ targetObj.author }} 所有，任何形式转载请联系作者。
-        </p>
-        <div class="review-info">
-          <button
-            :class="current === index ? 'active' : ''"
-            v-for="(item, index) in arr"
-            :key="index"
-            @click="changeStatus(item, index)"
-          >
-            <a-icon :type="item.type" style="margin-right: 3px" />{{ item.name
-            }}<span>{{ item.num }}</span>
-          </button>
-          <!-- <button @click="like">
+        <div class="detail-main">
+          <div class="main-left">
+            <p class="title">{{ targetObj.title }}</p>
+            <div class="author-info">
+              <img :src="`${targetObj.avatar}`" alt="" />
+              <p>{{ targetObj.author }}</p>
+              <span>评论</span>
+              <span class="movicname">{{ targetObj.movieName }}</span>
+              <a-rate
+                :default-value="targetObj.score"
+                allow-half
+                disabled
+                class="rate"
+              />
+              <span class="datetime">{{ targetObj.dateTime }}</span>
+            </div>
+            <div class="spoiler">这篇有可能有剧透</div>
+            <p v-html="targetObj.content" class="left-content"></p>
+            <p>
+              © 本文版权归作者
+              {{ targetObj.author }} 所有，任何形式转载请联系作者。
+            </p>
+            <div class="review-info">
+              <button
+                :class="current === index ? 'active' : ''"
+                v-for="(item, index) in arr"
+                :key="index"
+                @click="changeStatus(item, index)"
+              >
+                <a-icon :type="item.type" style="margin-right: 3px" />{{
+                  item.name
+                }}<span>{{ item.num }}</span>
+              </button>
+              <!-- <button @click="like">
             <a-icon type="like" style="margin-right: 3px" />有用<span>{{
               targetObj.like
             }}</span>
@@ -61,147 +63,147 @@
               targetObj.dislike
             }}</span>
           </button> -->
-        </div>
-        <div class="old-review">
-          <a-comment
-            class="comment"
-            v-for="action in targetObj.reviewInfo"
-            :key="action.id"
-            @mouseenter="touchComment(action.id)"
-            @mouseleave="touchLeave()"
-          >
-            <a slot="author" class="review-author">
-              <span>{{ action.author }}</span>
-              <span>{{ action.datetime }}</span>
-            </a>
-            <a-avatar
-              slot="avatar"
-              :src="`${action.avatar}`"
-              :alt="action.author"
-            />
-            <p slot="content">
-              {{ action.content }}
-              <span
-                v-show="touch === action.id && token"
-                class="one-res"
-                @click="oneRespone(action)"
-                >回应</span
-              >
-            </p>
-            <div class="reply" v-if="reply === action.id ">
-              <input
-                type="text"
-                v-model="finallyWord"
-                :placeholder="'回复  ' + `${action.author}`"
-              />
-              <button @click="onReply(action)">回复</button>
-              <button @click="handleClose">取消</button>
             </div>
-            <a-comment
-              v-for="item in action.children"
-              :key="item.id"
-              @mouseenter="touchComment(item.id)"
-              @mouseleave="touchLeave()"
-            >
-              <a slot="author" class="review-author">
-                <span>{{ item.author }}</span>
-                <span>{{ item.datetime }}</span>
-              </a>
-              <a-avatar
-                slot="avatar"
-                :src="`${item.avatar}`"
-                :alt="item.author"
-              />
-              <p slot="content">
-                {{ item.content }}
-                <span
-                  v-show="touch === item.id && token"
-                  class="one-res"
-                  @click="oneRespone(item)"
-                  >回应</span
-                >
-              </p>
-              <div class="reply" v-if="reply === item.id">
-                <input
-                  type="text"
-                  v-model="finallyWord"
-                  :placeholder="'回复  ' + `${item.author}`"
-                />
-                <button @click="onReply(item)">回复</button>
-                <button @click="handleClose">取消</button>
-              </div>
-            </a-comment>
-          </a-comment>
-          <div class="respone" v-if="!token" @click="gotoComment">
-            <a-icon type="right" style="margin-right: 5px" />
-            我来评论
-          </div>
-          <div slot="content" v-else>
-            <a-form-item>
-              <a-textarea
-                :rows="4"
-                v-model.trim="textareaValue"
-                @change="handleChange"
-                class="textarea"
-              />
-            </a-form-item>
-            <a-form-item>
-              <a-button
-                html-type="submit"
-                :loading="submitting"
-                type="primary"
-                @click="handleSubmit"
+            <div class="old-review">
+              <a-comment
+                class="comment"
+                v-for="action in targetObj.reviewInfo"
+                :key="action.id"
+                @mouseenter="touchComment(action.id)"
+                @mouseleave="touchLeave()"
               >
-                回应
-              </a-button>
-            </a-form-item>
+                <a slot="author" class="review-author">
+                  <span>{{ action.author }}</span>
+                  <span>{{ action.dateTime }}</span>
+                </a>
+                <a-avatar
+                  slot="avatar"
+                  :src="`${action.avatar}`"
+                  :alt="action.author"
+                />
+                <p slot="content">
+                  {{ action.content }}
+                  <span
+                    v-show="touch === action.id && token"
+                    class="one-res"
+                    @click="oneRespone(action)"
+                    >回应</span
+                  >
+                </p>
+                <div class="reply" v-if="reply === action.id">
+                  <input
+                    type="text"
+                    v-model="finallyWord"
+                    :placeholder="'回复  ' + `${action.author}`"
+                  />
+                  <button @click="onReply(action)">回复</button>
+                  <button @click="handleClose">取消</button>
+                </div>
+                <a-comment
+                  v-for="item in action.children"
+                  :key="item.id"
+                  @mouseenter="touchComment(item.id)"
+                  @mouseleave="touchLeave()"
+                >
+                  <a slot="author" class="review-author">
+                    <span>{{ item.author }}</span>
+                    <span>{{ item.dateTime }}</span>
+                  </a>
+                  <a-avatar
+                    slot="avatar"
+                    :src="`${item.avatar}`"
+                    :alt="item.author"
+                  />
+                  <p slot="content">
+                    {{ item.content }}
+                    <span
+                      v-show="touch === item.id && token"
+                      class="one-res"
+                      @click="oneRespone(item)"
+                      >回应</span
+                    >
+                  </p>
+                  <div class="reply" v-if="reply === item.id">
+                    <input
+                      type="text"
+                      v-model="finallyWord"
+                      :placeholder="'回复  ' + `${item.author}`"
+                    />
+                    <button @click="onReply(item)">回复</button>
+                    <button @click="handleClose">取消</button>
+                  </div>
+                </a-comment>
+              </a-comment>
+              <div class="respone" v-if="!token" @click="gotoComment">
+                <a-icon type="right" style="margin-right: 5px" />
+                我来评论
+              </div>
+              <div slot="content" v-else>
+                <a-form-item>
+                  <a-textarea
+                    :rows="4"
+                    v-model.trim="textareaValue"
+                    @change="handleChange"
+                    class="textarea"
+                  />
+                </a-form-item>
+                <a-form-item>
+                  <a-button
+                    html-type="submit"
+                    :loading="submitting"
+                    type="primary"
+                    @click="handleSubmit"
+                  >
+                    回应
+                  </a-button>
+                </a-form-item>
+              </div>
+              <p class="footer">
+                © 2005－2023 guzhi.com, all rights reserved 故之之科技有限公司
+              </p>
+            </div>
           </div>
-          <p class="footer">
-            © 2005－2023 guzhi.com, all rights reserved 故之之科技有限公司
-          </p>
+          <div class="main-right">
+            <div class="advertise">
+              <img src="@/assets/image/hotspot/advertise/1.jpg" alt="" />
+              <div class="advertise-info">
+                <span>[同人点亮]活动已开启</span>
+              </div>
+              <p class="icon">广告</p>
+            </div>
+            <p class="right-title">
+              <a-icon type="right" style="margin-right: 5px" />{{
+                targetObj.moviename
+              }}
+            </p>
+            <img :src="targetObj.img" alt="" />
+            <div class="films-info">
+              <p v-if="targetObj.director">
+                导演：<span>{{ targetObj.director }}</span>
+              </p>
+              <p>
+                主演：<span>{{ targetObj.tostar }}</span>
+              </p>
+              <p>
+                类型：<span>{{ targetObj.type }}</span>
+              </p>
+              <p>
+                地区：<span>{{ targetObj.location }}</span>
+              </p>
+              <p>
+                上映：<span>{{ targetObj.Shown }}</span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="main-right">
-        <div class="advertise">
-          <img src="@/assets/image/hotspot/advertise/1.jpg" alt="" />
-          <div class="advertise-info">
-            <span>[同人点亮]活动已开启</span>
-          </div>
-          <p class="icon">广告</p>
-        </div>
-        <p class="right-title">
-          <a-icon type="right" style="margin-right: 5px" />{{
-            targetObj.moviename
-          }}
-        </p>
-        <img :src="targetObj.img" alt="" />
-        <div class="films-info">
-          <p>
-            导演：<span>{{ targetObj.director }}</span>
-          </p>
-          <p>
-            主演：<span>{{ targetObj.tostar }}</span>
-          </p>
-          <p>
-            类型：<span>{{ targetObj.type }}</span>
-          </p>
-          <p>
-            地区：<span>{{ targetObj.location }}</span>
-          </p>
-          <p>
-            上映：<span>{{ targetObj.Shown }}</span>
-          </p>
-        </div>
+      <div class="maker-empot" v-else>
+        <p>暂无此数据，请稍后再试</p>
       </div>
-         </div>
-       </div>
-       <div class="maker-empot" v-else>
-         <p>暂无此数据，请稍后再试</p>
-       </div>
     </div>
-     <p style="height:150px" class="maker-empot" v-else>
-      <a-spin  size="large" tip="数据加载中..."/>
-     </p>
+    <p style="height: 150px" class="maker-empot" v-else>
+      <a-spin size="large" tip="数据加载中..." />
+    </p>
   </div>
 </template>
 
@@ -212,7 +214,7 @@ export default {
   data() {
     return {
       targetObj: {},
-      loading:false,
+      loading: false,
       likes: 0,
       dislikes: 0,
       action: null,
@@ -225,11 +227,12 @@ export default {
       token: null,
       arr: [],
       current: "",
+      movieId: "",
     };
   },
-  mounted(){
-   const userInfo = JSON.parse(localStorage.getItem('userInfo')) || ''
-   this.token = userInfo.token
+  mounted() {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
+    this.token = userInfo.token;
   },
   computed: {
     count: {
@@ -239,46 +242,48 @@ export default {
     },
   },
   created() {
-    const { popularId,newId } = this.$route.query;
-    if(popularId){
-      this.getRevieDetail(popularId)
+    const { popularId, newId } = this.$route.query;
+    if (popularId) {
+      this.movieId = popularId;
+      this.getRevieDetail(popularId);
     }
-    if(newId){
-      this.getNewRevieDetail(newId)
+    if (newId) {
+      this.movieId = newId;
+      this.getNewRevieDetail(newId);
     }
   },
   methods: {
-    async getRevieDetail(id){
-     const res = await this.$req.getReviewById(id)
-     this.targetObj = res.data.data
-     this.already(this.targetObj)
+    async getRevieDetail(id) {
+      const res = await this.$req.getReviewById(id);
+      this.targetObj = res.data.data;
+      this.already(this.targetObj);
     },
-    async getNewRevieDetail(id){
-      const res = await this.$req.getNewReviewById(id)
-       this.targetObj = res.data.data
-       this.already(this.targetObj)
+    async getNewRevieDetail(id) {
+      const res = await this.$req.getNewReviewById(id);
+      this.targetObj = res.data.data;
+      this.already(this.targetObj);
     },
-    already(targetObj){
-     document.title = '热门影评--' + targetObj.title
-     this.arr = [
-      { type: "like", name: "有用", num: targetObj.likes },
-      { type: "dislike", name: "没用", num: targetObj.dislike },
-    ];
-     this.loading = true
+    already(targetObj) {
+      document.title = "热门影评--" + targetObj.title;
+      this.arr = [
+        { type: "like", name: "有用", num: targetObj.likes },
+        { type: "dislike", name: "没用", num: targetObj.dislike },
+      ];
+      this.loading = true;
     },
     onSearch(value) {
       let url = this.$router.resolve({
-        path:'/movie/flims/detail',
-        query:{
-          name:encodeURIComponent(JSON.stringify(value)),
-        }
-      })
-      window.open(url.href,'_blank')
+        path: "/movie/flims/detail",
+        query: {
+          name: encodeURIComponent(JSON.stringify(value)),
+        },
+      });
+      window.open(url.href, "_blank");
     },
     changeStatus(item, index) {
-      if(!this.token) return
+      if (!this.token) return;
       if (this.current === index) return;
-      let rate = this.current !== '' ? 1 : 0;
+      let rate = this.current !== "" ? 1 : 0;
       this.current = index;
       let another = index === 0 ? 1 : 0;
       this.arr[index].num += 1;
@@ -289,15 +294,21 @@ export default {
     },
     handleSubmit() {
       if (!this.textareaValue) return;
-      const {username,avatar} = JSON.parse(localStorage.getItem('userInfo'))
-      this.targetObj.reviewInfo.push({
-          content: this.textareaValue,
-          author: username,
-          avatar,
-          datetime: this.moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-          id: this.targetObj.reviewInfo.length + 1,
-      })
-      this.textareaValue = ''
+      const { username, avatar } = JSON.parse(localStorage.getItem("userInfo"));
+      const params = {
+        content: this.textareaValue,
+        pid: this.reply || "",
+        author: username,
+        avatar,
+        dateTime: this.moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+        movieId: this.movieId,
+      };
+      this.$req.saveNewReview(params).then((res) => {
+        if (res.status === 0) {
+          this.getRevieDetail(this.movieId);
+        }
+      });
+      this.textareaValue = "";
     },
     oneRespone(comment) {
       this.reply = comment.id;
@@ -314,21 +325,24 @@ export default {
     //最终提交回复
     onReply(comment) {
       if (!this.finallyWord) return;
-      const {username,avatar} = JSON.parse(localStorage.getItem('userInfo'))
-      if(comment.author == username) return this.$message.error('不可回复自己')
-      if (comment.children) {
-        comment.children.push({
-          content: this.finallyWord,
-          author: username,
-          avatar,
-          datetime: this.moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-          id: Number(comment.id) + 1,
-        });
-      } else {
-        this.$message.info('回复失败')
-      }
+      const { username, avatar } = JSON.parse(localStorage.getItem("userInfo"));
+      if (comment.author == username)
+        return this.$message.error("不可回复自己");
+      const params = {
+        content: this.finallyWord,
+        pid: this.reply || "",
+        author: username,
+        avatar,
+        dateTime: this.moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+        movieId: this.movieId,
+      };
+      this.$req.saveNewReview(params).then((res) => {
+        if (res.status === 0) {
+          this.getRevieDetail(this.movieId);
+        }
+      });
       this.finallyWord = "";
-      this.reply = false
+      this.reply = false;
     },
     handleClose() {
       this.reply = null;
@@ -601,7 +615,7 @@ export default {
     }
   }
 }
-.maker-empot{
+.maker-empot {
   width: 50%;
   min-width: 1000px;
   height: 90px;

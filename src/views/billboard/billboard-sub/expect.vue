@@ -13,21 +13,31 @@
           <div class="introduce-wrapper">
             <div class="introduce">
               <div class="title">
-                <p>{{action.movieName}}</p>
-                <p>主演：{{action.act}}</p>
-                <p>上映时间：{{action.updateTime}}</p>
+                <p>{{ action.movieName }}</p>
+                <p>主演：{{ action.act }}</p>
+                <p>上映时间：{{ action.updateTime }}</p>
               </div>
               <div class="score">
-                <p>本月新增想看：<span>{{action.newIce}}</span>人</p>
-                <i>总想看：{{action.num}}人</i>
+                <p>
+                  本月新增想看：<span>{{ action.newIce }}</span
+                  >人
+                </p>
+                <i>总想看：{{ action.num }}人</i>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="middle">
+        <a-pagination
+          :total="total"
+          :pageSize="5"
+          @change="change"
+        />
+      </div>
     </div>
     <p class="maker-empot" v-else>
-      <a-spin  size="large" tip="数据加载中..."/>
+      <a-spin size="large" tip="数据加载中..." />
     </p>
   </div>
 </template>
@@ -39,13 +49,14 @@ export default {
     return {
       nowDate: "",
       hour: "",
-      expectList:[],
-      show:false
+      expectList: [],
+      show: false,
+      total:''
     };
   },
   created() {
     this.getnowDate();
-    this.getexpect()
+    this.getexpect();
   },
   methods: {
     getnowDate() {
@@ -53,15 +64,20 @@ export default {
       this.hour = time.getHours();
       this.nowDate = this.$moment(time).format("YYYY-MM-DD");
     },
-    getexpect(){
+    getexpect(pageNum=1,pageSize = 5) {
       const params = {
-        pageNum:1,
-        pageSize:4
-      }
-      this.$req.getexpect(params).then(res=>{
-        this.expectList = res.data.records
-        this.show = true
-      })
+        pageNum: pageNum,
+        pageSize: pageSize,
+      };
+      this.$req.getexpect(params).then((res) => {
+        this.expectList = res.data.records;
+        this.total = res.data.total
+        this.show = true;
+      });
+    },
+    change(pageNum,pageSize){
+      this.getexpect(pageNum,pageSize)
+      window.scrollTo(0,0)
     }
   },
 };
@@ -128,11 +144,11 @@ export default {
           }
           .score {
             text-align: right;
-            p{
+            p {
               margin-bottom: 10px;
               color: #ffb400;
               font-size: 16px;
-              span{
+              span {
                 font-size: 26px;
                 font-weight: 700;
               }
@@ -146,7 +162,7 @@ export default {
       }
     }
   }
-  .maker-empot{
+  .maker-empot {
     height: 150px;
     width: 80%;
     margin: 0 auto;

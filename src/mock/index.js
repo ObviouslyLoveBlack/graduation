@@ -54,6 +54,7 @@ const image = {
   home6: require("@/assets/image/home/综艺/11.jpg"),
   home7: require("@/assets/image/home/综艺/10.jpg"),
   home8: require("@/assets/image/home/综艺/6.jpg"),
+
   home9: require("@/assets/image/home/美剧/4.jpg"),
   home10: require("@/assets/image/home/美剧/6.jpg"),
   home11: require("@/assets/image/home/美剧/8.jpg"),
@@ -62,6 +63,7 @@ const image = {
   home14: require("@/assets/image/home/美剧/5.jpg"),
   home15: require("@/assets/image/home/美剧/2.jpg"),
   home16: require("@/assets/image/home/美剧/1.jpg"),
+
   home17: require("@/assets/image/home/韩剧/3.jpg"),
   home18: require("@/assets/image/home/韩剧/6.jpg"),
   home19: require("@/assets/image/home/韩剧/7.jpg"),
@@ -70,6 +72,7 @@ const image = {
   home22: require("@/assets/image/home/韩剧/1.jpg"),
   home23: require("@/assets/image/home/韩剧/4.jpg"),
   home24: require("@/assets/image/home/韩剧/2.jpg"),
+
   home25: require("@/assets/image/home/纪录片/1.jpg"),
   home26: require("@/assets/image/home/纪录片/5.jpg"),
   home27: require("@/assets/image/home/纪录片/9.jpg"),
@@ -87,6 +90,7 @@ const image = {
   home38: require("@/assets/image/豆瓣/48.jpg"),
   home39: require("@/assets/image/豆瓣/31.jpg"),
   home40: require("@/assets/image/豆瓣/37.jpg"),
+
   home41: require("@/assets/image/豆瓣/35.jpg"),
   home42: require("@/assets/image/豆瓣/7.jpg"),
   home43: require("@/assets/image/豆瓣/8.jpg"),
@@ -95,6 +99,7 @@ const image = {
   home46: require("@/assets/image/豆瓣/39.jpg"),
   home47: require("@/assets/image/豆瓣/17.jpg"),
   home48: require("@/assets/image/豆瓣/36.jpg"),
+
   home49: require("@/assets/image/豆瓣/42.jpg"),
   home50: require("@/assets/image/豆瓣/14.jpg"),
   home51: require("@/assets/image/豆瓣/11.jpg"),
@@ -103,6 +108,7 @@ const image = {
   home54: require("@/assets/image/豆瓣/16.jpg"),
   home55: require("@/assets/image/豆瓣/21.jpg"),
   home56: require("@/assets/image/豆瓣/41.jpg"),
+
   home57: require("@/assets/image/豆瓣/57.jpg"),
   home58: require("@/assets/image/豆瓣/55.jpg"),
   home59: require("@/assets/image/豆瓣/52.jpg"),
@@ -120,6 +126,7 @@ const image = {
   variety6: require("@/assets/image/home/综艺/7.jpg"),
   variety7: require("@/assets/image/home/综艺/41.jpg"),
   variety8: require("@/assets/image/home/综艺/30.jpg"),
+
   variety9: require("@/assets/image/home/综艺/27.jpg"),
   variety10: require("@/assets/image/home/综艺/34.jpg"),
   variety11: require("@/assets/image/home/综艺/45.jpg"),
@@ -128,6 +135,7 @@ const image = {
   variety14: require("@/assets/image/home/综艺/20.jpg"),
   variety15: require("@/assets/image/home/综艺/3.jpg"),
   variety16: require("@/assets/image/home/综艺/25.jpg"),
+
   variety17: require("@/assets/image/home/综艺/32.jpg"),
   variety18: require("@/assets/image/home/综艺/19.jpg"),
   variety19: require("@/assets/image/home/综艺/15.jpg"),
@@ -136,6 +144,7 @@ const image = {
   variety22: require("@/assets/image/home/综艺/17.jpg"),
   variety23: require("@/assets/image/home/综艺/23.jpg"),
   variety24: require("@/assets/image/home/综艺/37.jpg"),
+
   variety25: require("@/assets/image/home/综艺/35.jpg"),
   variety26: require("@/assets/image/home/综艺/16.jpg"),
   variety27: require("@/assets/image/home/综艺/39.jpg"),
@@ -153,6 +162,7 @@ const image = {
   UsTv6: require("@/assets/image/home/美剧/10.jpg"),
   UsTv7: require("@/assets/image/home/美剧/13.jpg"),
   UsTv8: require("@/assets/image/home/美剧/30.jpg"),
+
   UsTv9: require("@/assets/image/home/美剧/27.jpg"),
   UsTv10: require("@/assets/image/home/美剧/34.jpg"),
   UsTv11: require("@/assets/image/home/美剧/12.jpg"),
@@ -161,6 +171,7 @@ const image = {
   UsTv14: require("@/assets/image/home/美剧/20.jpg"),
   UsTv15: require("@/assets/image/home/美剧/31.jpg"),
   UsTv16: require("@/assets/image/home/美剧/25.jpg"),
+
   UsTv17: require("@/assets/image/home/美剧/32.jpg"),
   UsTv18: require("@/assets/image/home/美剧/19.jpg"),
   UsTv19: require("@/assets/image/home/美剧/15.jpg"),
@@ -169,6 +180,7 @@ const image = {
   UsTv22: require("@/assets/image/home/美剧/17.jpg"),
   UsTv23: require("@/assets/image/home/美剧/23.jpg"),
   UsTv24: require("@/assets/image/home/美剧/37.jpg"),
+
   UsTv25: require("@/assets/image/home/美剧/35.jpg"),
   UsTv26: require("@/assets/image/home/美剧/16.jpg"),
   UsTv27: require("@/assets/image/home/美剧/39.jpg"),
@@ -186,6 +198,7 @@ const image = {
   KoreanTv6: require("@/assets/image/home/韩剧/10.jpg"),
   KoreanTv7: require("@/assets/image/home/韩剧/13.jpg"),
   KoreanTv8: require("@/assets/image/home/韩剧/30.jpg"),
+
   KoreanTv9: require("@/assets/image/home/韩剧/27.jpg"),
   KoreanTv10: require("@/assets/image/home/韩剧/34.jpg"),
   KoreanTv11: require("@/assets/image/home/韩剧/12.jpg"),
@@ -194,6 +207,7 @@ const image = {
   KoreanTv14: require("@/assets/image/home/韩剧/20.jpg"),
   KoreanTv15: require("@/assets/image/home/韩剧/31.jpg"),
   KoreanTv16: require("@/assets/image/home/韩剧/25.jpg"),
+
   KoreanTv17: require("@/assets/image/home/韩剧/32.jpg"),
   KoreanTv18: require("@/assets/image/home/韩剧/19.jpg"),
   KoreanTv19: require("@/assets/image/home/韩剧/15.jpg"),
@@ -202,6 +216,7 @@ const image = {
   KoreanTv22: require("@/assets/image/home/韩剧/17.jpg"),
   KoreanTv23: require("@/assets/image/home/韩剧/23.jpg"),
   KoreanTv24: require("@/assets/image/home/韩剧/37.jpg"),
+  
   KoreanTv25: require("@/assets/image/home/韩剧/35.jpg"),
   KoreanTv26: require("@/assets/image/home/韩剧/16.jpg"),
   KoreanTv27: require("@/assets/image/home/韩剧/39.jpg"),
@@ -227,6 +242,7 @@ const image = {
   documentary14: require("@/assets/image/home/纪录片/20.jpg"),
   documentary15: require("@/assets/image/home/纪录片/31.jpg"),
   documentary16: require("@/assets/image/home/纪录片/25.jpg"),
+
   documentary17: require("@/assets/image/home/纪录片/32.jpg"),
   documentary18: require("@/assets/image/home/纪录片/19.jpg"),
   documentary19: require("@/assets/image/home/纪录片/15.jpg"),
@@ -235,6 +251,7 @@ const image = {
   documentary22: require("@/assets/image/home/纪录片/17.jpg"),
   documentary23: require("@/assets/image/home/纪录片/23.jpg"),
   documentary24: require("@/assets/image/home/纪录片/37.jpg"),
+
   documentary25: require("@/assets/image/home/纪录片/35.jpg"),
   documentary26: require("@/assets/image/home/纪录片/16.jpg"),
   documentary27: require("@/assets/image/home/纪录片/39.jpg"),
