@@ -1,7 +1,9 @@
 <template>
   <div>
+    <!-- <button @click="goSwiper">swiper</button> -->
     <div class="home-main" v-if="show">
       <div class="home-main-left">
+        <soonSwiper></soonSwiper>
         <div class="main-left-icon1">
           <div class="left-header">
             <span>
@@ -42,7 +44,7 @@
             >
               <img :src="action.img" alt="" />
               <div class="shadow"></div>
-              <span>{{ action.movieName }}</span>
+              <span class="nameBox">{{ action.movieName }}</span>
               <p>{{ action.sum }}人想看</p>
               <div class="want-look">
                 <div class="icon">预告片</div>
@@ -52,106 +54,7 @@
             </div>
           </div>
         </div>
-        <div class="main-left-icon3">
-          <div class="icon3-header">
-            <span>热播电影</span>
-            <ul>
-              <li @click="hotDetail('love')">
-                <a href="javascript:;">爱情</a>
-              </li>
-              <li @click="hotDetail('comedy')">
-                <a href="javascript:;">喜剧</a>
-              </li>
-              <li @click="hotDetail('action')">
-                <a href="javascript:;">动作</a>
-              </li>
-              <li @click="hotDetail('plot')">
-                <a href="javascript:;">剧情</a>
-              </li>
-              <li @click="hotDetail('animation')">
-                <a href="javascript:;">动画</a>
-              </li>
-            </ul>
-            <span @click="all('classic')">全部 > </span>
-          </div>
-          <div class="icon3-main">
-            <div
-              class="item"
-              v-for="action in hotPlayInfo.films.records"
-              :key="action.id"
-              @click="filmsDetail(action)"
-            >
-              <img :src="action.img" alt="" />
-              <div class="shadow"></div>
-              <span>{{ action.movieName }}</span>
-              <i>{{ action.score }}</i>
-            </div>
-          </div>
-        </div>
-        <div class="main-left-icon4" v-if="hotTvPlayInfo && hotTvPlayList">
-          <div class="icon4-header">
-            <span>热播电视剧</span>
-            <ul>
-              <li
-                @click="changeType('domestic')"
-                :class="type.domestic ? 'active' : ''"
-              >
-                国产剧
-              </li>
-              <li
-                @click="changeType('variety')"
-                :class="type.variety ? 'active' : ''"
-              >
-                综艺
-              </li>
-              <li
-                @click="changeType('UsTv')"
-                :class="type.UsTv ? 'active' : ''"
-              >
-                美剧
-              </li>
-              <li
-                @click="changeType('KoreanTv')"
-                :class="type.KoreanTv ? 'active' : ''"
-              >
-                韩剧
-              </li>
-              <li
-                @click="changeType('documentary')"
-                :class="type.documentary ? 'active' : ''"
-              >
-                纪录片
-              </li>
-            </ul>
-          </div>
-          <div class="swiper" ref="mySwiper">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide"
-                v-for="(action, index) in hotTvPlayList"
-                :key="index"
-              >
-                <div class="icon4-main">
-                  <div
-                    class="item"
-                    v-for="(item,index) in action.moviceList"
-                    :key="index"
-                  >
-                    <img :src="item.img" alt="" />
-                    <div class="shadow"></div>
-                    <p>{{ item.upDate }}</p>
-                    <span>{{ item.movieName }}</span>
-                    <i :class="item.score ? '' : 'isactive'">{{
-                      item.score ? item.score : "暂无评分"
-                    }}</i>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-          </div>
-        </div>
+        <classicSwiper></classicSwiper>
         <div class="main-left-icon5">
           <div class="icon5-header">
             <span>最受欢迎影评</span>
@@ -275,7 +178,7 @@
             <span>TOP 100</span>
             <span @click="getcomplete('tophundred')">查看完整榜单 ></span>
           </div>
-          <div class="icon4-image" @click="filmsDetail(7)">
+          <div class="icon4-image" @click="filmsDetail(TophundredInfo[0])">
             <img :src="TophundredInfo[1].img" alt="" />
             <span>{{ TophundredInfo[0].movieName }}</span>
             <i>{{ TophundredInfo[0].score }}分</i>
@@ -331,22 +234,19 @@
 </template>
 
 <script>
-import Swiper from "swiper";
+import soonSwiper from "@/views/home/home-sub/soonSwiper";
+import classicSwiper from "@/views/home/home-sub/classicSwiper.vue";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "home",
+  components: {
+    soonSwiper,
+    classicSwiper,
+  },
   data() {
     return {
       hotInfo: {}, //正在热映
       releaseInfo: {}, //即将上映
-      hotPlayInfo: {}, //热播电影
-      hotTvPlayInfo: null, //热播电视剧
-      hotTvPlayList: [
-        { key: 1, moviceList: [] },
-        { key: 2, moviceList: [] },
-        { key: 3, moviceList: [] },
-        { key: 4, moviceList: [] },
-      ],
       hotFilmsReview: {}, //热门影评
       boxOfficeInfo: null, //今日票房|
       boxOfficeList: [],
@@ -364,21 +264,13 @@ export default {
       nowDate: "",
       nowhour: "",
       swiper: null,
-      type: {
-        domestic: true,
-        variety: false,
-        UsTv: false,
-        KoreanTv: false,
-        documentary: false,
-      },
       show: false,
     };
   },
   created() {
     this.getHotMovies();
     this.getsoonRelease();
-    this.getHotPlay();
-    this.getHotTvPlay("domestic");
+    // this.getHotPlay();
     this.getFilmReview();
     this.getboxoffice();
     // this.getprofit();
@@ -400,33 +292,10 @@ export default {
         : "暂无数据";
     },
   },
-  watch: {
-    hotTvPlayList: {
-      immediate: true,
-      handler() {
-        this.$nextTick(() => {
-          // eslint-disable-next-line no-unused-vars
-          var mySwiper = new Swiper(this.$refs.mySwiper, {
-            // direction: "horizontal", // 垂直切换选项
-            // autoplay: true,
-            loop: true, // 循环模式选项
-            // 如果需要分页器
-            pagination: {
-              el: ".swiper-pagination",
-              clickable: true,
-            },
-            // 如果需要前进后退按钮
-            navigation: {
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            },
-            slidesPerView: 1,
-          });
-        });
-      },
-    },
-  },
   methods: {
+    goSwiper() {
+      this.$router.push("/home/swiper");
+    },
     hotspotDetail(action) {
       this.$router.push({
         path: "/films-detail",
@@ -434,17 +303,6 @@ export default {
           newId: action.id,
         },
       });
-    },
-    changeType(type) {
-      this.getHotTvPlay(type);
-      this.type = {
-        domestic: false,
-        variety: false,
-        UsTv: false,
-        KoreanTv: false,
-        documentary: false,
-      };
-      this.type[`${type}`] = true;
     },
     all(type) {
       sessionStorage.setItem("path", "/films");
@@ -456,7 +314,7 @@ export default {
       const params = {
         pageSize: 8,
         pageNum: 1,
-        films_type: "screening",
+        films_type: "process",
       };
       this.$req.getHotMovies(params).then((res) => {
         this.hotInfo = res.data;
@@ -472,55 +330,16 @@ export default {
         this.releaseInfo = res.data;
       });
     },
-    getHotPlay() {
-      const params = {
-        pageSize: 8,
-        pageNum: 1,
-        films_type: "soon",
-      };
-      this.$req.getsoonRelease(params).then((res) => {
-        this.hotPlayInfo = res.data;
-        this.show = true;
-      });
-    },
-    getHotTvPlay(type) {
-      const params = {
-        pageSize: 2,
-        pageNum: 1,
-      };
-      this.$req.getHotTvPlay(params).then((res) => {
-        this.hotTvPlayInfo = res.data;
-        const data = this.hotTvPlayInfo[`${type}`];
-        this.hotTvPlayChange(data);
-      });
-    },
-    hotTvPlayChange(data) {
-      const tar1 = data.slice(0, 8);
-      const tar2 = data.slice(8, 16);
-      const tar3 = data.slice(16, 24);
-      const tar4 = data.slice(-8);
-      tar1.forEach((v) => {
-        this.hotTvPlayList[0].moviceList.push(v);
-      });
-      tar2.forEach((v) => {
-        this.hotTvPlayList[1].moviceList.push(v);
-      });
-      tar3.forEach((v) => {
-        this.hotTvPlayList[2].moviceList.push(v);
-      });
-      tar4.forEach((v) => {
-        this.hotTvPlayList[3].moviceList.push(v);
-      });
-    },
     getFilmReview() {
       this.$req.getFilmReview().then((res) => {
         this.hotFilmsReview = res.data;
+        // this.show = true
       });
     },
     getboxoffice() {
       this.$req.getboxoffice().then((res) => {
         this.boxOfficeInfo = res.data;
-        this.boxOfficeList = res.data.slice(0, 4);
+        this.boxOfficeList = res.data.slice(1, 5);
       });
     },
     // getprofit() {
@@ -528,6 +347,9 @@ export default {
     //     this.profitInfo = res.data;
     //   });
     // },
+    cancle(){
+      this.$message.info('请查看完整榜单...')
+    },
     getnewDate() {
       var time = new Date();
       var hour = time.getHours();
@@ -550,6 +372,7 @@ export default {
       this.$req.getmoviemaker().then((res) => {
         this.moviemakerInfo = res.data;
         this.moviemakerList = this.moviemakerInfo.slice(1);
+        this.show = true;
       });
     },
     hotDetail(type) {
@@ -585,7 +408,7 @@ export default {
       let url = this.$router.resolve({
         path: "/movie/flims/detail",
         query: {
-          name: encodeURIComponent(JSON.stringify(action.moviename)),
+          id: action.id,
         },
       });
       window.open(url.href, "_blank");
@@ -598,11 +421,10 @@ export default {
 .home-main {
   width: 80%;
   min-width: 1200px;
-  height: 3580px;
-  margin: 0 auto;
+  height: 3180px;
+  margin: 40px auto;
   display: flex;
   justify-content: space-between;
-  margin-top: 40px;
   .home-main-left {
     width: 62%;
     .main-left-icon1 {
@@ -767,162 +589,16 @@ export default {
               }
             }
           }
-        }
-      }
-    }
-    .main-left-icon3 {
-      width: 100%;
-      height: 560px;
-      margin-top: 50px;
-      .icon3-header {
-        display: flex;
-        justify-content: space-between;
-        position: relative;
-        margin-bottom: 20px;
-        span {
-          color: #ef4638;
-          font-size: 27px;
-          &:last-child {
-            font-size: 18px;
-            padding-top: 12px;
-            &:hover {
-              color: #37a;
-              cursor: default;
-            }
-          }
-        }
-        ul {
-          width: 200px;
-          display: flex;
-          justify-content: space-between;
-          position: absolute;
-          top: 13px;
-          left: 135px;
-          a {
-            color: #999;
-            &:hover {
-              color: #ef4638;
-              cursor: default;
-            }
-          }
-        }
-      }
-      .icon3-main {
-        height: 500px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        .item {
-          width: 160px;
-          height: 220px;
-          position: relative;
-          &:first-child {
-            // width: 350px;
-          }
-          span {
-            color: #fff;
-            position: absolute;
-            bottom: 3px;
-            left: 10px;
-            z-index: 3;
-          }
-          .shadow {
-            width: 100%;
-            height: 36px;
-            background: url(../../assets/image/猫眼/yin.png);
-            position: absolute;
-            bottom: 0px;
-            left: 0px;
-            z-index: 2;
-          }
-          i {
-            color: #ffb401;
-            font-size: 17px;
-            position: absolute;
-            right: 10px;
-            bottom: 0px;
-          }
-        }
-      }
-    }
-    .main-left-icon4 {
-      width: 100%;
-      height: 670px;
-      margin-top: 50px;
-
-      .icon4-header {
-        display: flex;
-        justify-content: space-between;
-        position: relative;
-        margin-bottom: 20px;
-        span {
-          color: #ef4638;
-          font-size: 27px;
-          &:last-child {
-            font-size: 18px;
-            padding-top: 12px;
-            &:hover {
-              color: #37a;
-              cursor: default;
-            }
-          }
-        }
-        ul {
-          width: 240px;
-          display: flex;
-          justify-content: space-between;
-          position: absolute;
-          top: 13px;
-          left: 155px;
-          li {
-            color: #999;
-            &:hover {
-              color: #ef4638;
-              cursor: default;
-            }
-          }
-        }
-      }
-      .icon4-main {
-        height: 560px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        .item {
-          width: 160px;
-          height: 230px;
-          position: relative;
-          text-align: center;
-          img {
-            width: 160px;
-            height: 230px;
-            object-fit: cover;
-          }
-          .shadow {
-            width: 100%;
-            height: 36px;
-            background: url(../../assets/image/猫眼/yin.png);
-            position: absolute;
-            bottom: 0px;
-            left: 0px;
-            z-index: 2;
-          }
-          p {
-            color: #fff;
-            position: absolute;
-            bottom: -9px;
-            left: 10px;
-            z-index: 3;
-          }
-          span {
-            color: #37a;
-            font-size: 15px;
-            padding: 10px 0px 0px 8px;
-          }
-          i {
-            color: #e09015;
-            font-size: 13px;
-            padding: 6px 0px 0px 8px;
+          .nameBox {
+            user-select: none;
+            //  border: 1px solid red;
+            display: inline;
+            text-align: left;
+            width: 140px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-bottom: 3px;
           }
         }
       }
@@ -1167,6 +843,10 @@ export default {
         border: 1px solid #e1e1e1;
         position: relative;
         margin-bottom: 30px;
+        img {
+          width: 140px;
+          height: 194px;
+        }
         p {
           color: #ef4638;
           font-size: 20px;

@@ -8,7 +8,7 @@
         </p>
       </div>
       <div class="main-wrapper">
-        <div class="item" v-for="action in boxofficeList" :key="action.id">
+        <div class="item" v-for="action in boxofficeList" :key="action.id" @click="filmsDetail(action)">
           <img :src="action.img" alt="" />
           <div class="introduce-wrapper">
             <div class="introduce">
@@ -48,13 +48,22 @@ export default {
     this.getboxoffice()
   },
   methods: {
+     filmsDetail(action) {
+      let url = this.$router.resolve({
+        path: "/movie/flims/detail",
+        query: {
+          id: action.id,
+        },
+      });
+      window.open(url.href, "_blank");
+    },
     getnowDate() {
       const time = new Date();
       this.hour = time.getHours();
       this.nowDate = this.$moment(time).format("YYYY-MM-DD");
     },
     getboxoffice(){
-      this.$req.getboardpraise().then((res)=>{
+      this.$req.boardboxoffice().then((res)=>{
         this.boxofficeList = res.data
         this.show=true
       })

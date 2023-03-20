@@ -32,9 +32,13 @@
                     <p>{{ hoverObj.movieName }}</p>
                     <span>{{ hoverObj.score }}</span>
                   </div>
-                  <p>类型:<span>{{ hoverObj.type }}</span></p>
-                  <p>主演:<span>{{ hoverObj.act }}</span></p>
-                  <p>上映时间:<span>{{ hoverObj.dateTime }}</span></p>
+                  <p>
+                    类型:<span>{{ hoverObj.otherType }}</span>
+                  </p>
+                  <!-- <p>主演:<span>{{ hoverObj.act }}</span></p> -->
+                  <p>
+                    上映时间:<span>{{ hoverObj.dateTime }}</span>
+                  </p>
                 </div>
               </div>
             </div>
@@ -72,9 +76,9 @@ export default {
       allFilmsList: [],
       list: [],
       hoverObj: null,
-      type: "all",
-      location: "all",
-      year: "all",
+      type: "",
+      location: "",
+      year: "",
       total: "",
       current: 1,
       page: 1,
@@ -83,52 +87,27 @@ export default {
     };
   },
   created() {
-    this.getReleaseFilms("all", "all", "all");
+    this.getReleaseFilms();
   },
   methods: {
     show(type) {
       this.isShow = type;
     },
-    async getReleaseFilms(type, location, year) {
+    async getReleaseFilms() {
       this.pagination = false;
       this.loading = false;
       const params = {
         pageSize: 10,
         pageNum: 1,
-        films_type: "classics",
+        filmsType: "classics",
+        otherType: this.type,
+        location: this.location,
+        year: this.year,
       };
-      const { data: res1 } = await this.$req.getAllfilms(params);
-      const res = res1.films.records;
-      this.total = res.total;
-       if (type == "all" && location == "all" && year == "all") {
-        this.allFilmsList = res;
-      } else if (location == "all" && year == "all") {
-        this.allFilmsList = res.filter((v) => v.type === type);
-      } else if (type == "all" && year == "all") {
-        this.allFilmsList = res.filter((v) => v.location === location);
-      } else if (type == "all" && location == "all") {
-        this.allFilmsList = res.filter((v) => v.year === year);
-      } else if (type ==="all") {
-        this.allFilmsList = res.filter(
-          (v) => v.location === location && v.year === year
-        );
-      } else if (location == "all") {
-        this.allFilmsList = res.filter(
-          (v) => v.type === type && v.year === year
-        );
-        this.total = this.allFilmsList.length;
-      } else if (year == "all") {
-        this.allFilmsList = res.filter(
-          (v) => v.location === location && v.type === type
-        );
-      } else {
-        this.allFilmsList = res.filter(
-          (v) => v.type === type && v.location === location && v.year === year
-        );
-      }
-      console.log(this.allFilmsList);
-      if(this.allFilmsList.length<=0) {
-        this.loading = true
+      const { data: res } = await this.$req.getAllfilms(params);
+      this.allFilmsList = res.films;
+      if (this.allFilmsList.length <= 0) {
+        this.loading = true;
       }
     },
     change(page) {
@@ -164,7 +143,7 @@ export default {
       let url = this.$router.resolve({
         path: "/movie/flims/detail",
         query: {
-          name: encodeURIComponent(JSON.stringify(action.moviename)),
+          id: action.id,
         },
       });
       window.open(url.href, "_blank");

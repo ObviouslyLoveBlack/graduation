@@ -5,7 +5,7 @@ const boardApi = {
 
     getboardpraise:'/boardPraise/getBorderPraise',//获取热映口碑
 
-    getboxoffice:'/boardPraise/getBorderPraise',//获取国内票房
+    boardboxoffice:'/boardPraise/getBorderBoxOffice',//获取国内票房
 
     getexpect:'/boardExpect/getPage',//获取最受期待
 
@@ -34,9 +34,9 @@ export function getexpect(params){
      })
  }
 
-export function getboxoffice(params){
+export function boardboxoffice(params){
     return request({
-         url:boardApi.getboxoffice,
+         url:boardApi.boardboxoffice,
          method:'get',
          params,
          headers:{

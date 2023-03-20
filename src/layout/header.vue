@@ -2,7 +2,7 @@
   <div class="home-header">
     <div class="home-header-logo">
       <div class="logo">故之电影</div>
-      <div class="location">杭州<a-icon type="caret-up" class="icon" /></div>
+      <!-- <div class="location">杭州<a-icon type="caret-up" class="icon" /></div> -->
     </div>
     <div class="home-header-nav">
       <ul v-for="action in menuList" :key="action.id">
@@ -163,7 +163,7 @@ export default {
     justify-content: end;
     align-items: center;
     .logo {
-      width: 7.5rem;
+      width: 9.5rem;
       color: red;
       font-size: 1.6625rem;
     }

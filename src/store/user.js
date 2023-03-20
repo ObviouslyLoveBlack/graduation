@@ -2,8 +2,8 @@ export default {
     namespaced:true,
     state:()=>({
         redirectInfo:null, //记录从何页面跳转到登录页面，登录成功后返回原页面
-        userInfo: {} ,
-        token:'' 
+        userInfo: JSON.parse(localStorage.getItem('userInfo')) || {} ,
+        token:JSON.parse(localStorage.getItem('token')) || ''
     }),
     mutations:{
         setUserInfo(state,info){

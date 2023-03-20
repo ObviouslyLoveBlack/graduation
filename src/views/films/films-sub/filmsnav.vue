@@ -78,7 +78,7 @@ export default {
     this.getFilmsnavRegion();
     this.getFilmsnavEra();
     const type = this.$route.query.type;
-    this.navObj.type = type ? type : "all";
+    this.navObj.type = type ? type : "";
     this.$emit("getnavtype", this.navObj.type);
   },
   methods: {

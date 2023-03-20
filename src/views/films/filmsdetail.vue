@@ -2,102 +2,117 @@
   <div>
     <div v-if="loading">
       <div class="maker-container" v-if="targetObj">
-      <div class="maker-header">
-        <div class="image">
-          <img :src="targetObj.img" alt="" />
-        </div>
-        <div class="maker-info" >
-          <p class="info-name">{{targetObj.moviename}}</p>
-          <p class="info-name1">Where the Wind Blows</p>
-          <br>
-          <p>犯罪 剧情 动作</p>
-          <p>中国大陆 | 中国香港 /143分钟</p>
-          <p>2023-02-05 中国大陆上映</p>
-          <div class="expect-symbol">
-            <div class="want" :class="attention ? 'active' :''" @click="getexpect">
+        <div class="maker-header">
+          <div class="image">
+            <img :src="targetObj.img" alt="" />
+          </div>
+          <div class="maker-info">
+            <p class="info-name">{{ targetObj.movieName }}</p>
+            <p class="info-name1">{{ targetObj.otherName }}</p>
+            <br />
+            <p>导演: {{ castmembers[0].name }}</p>
+            <p>主演: {{ fullAct }}</p>
+            <br />
+            <p>类型: {{ targetObj.otherType }}</p>
+            <p>{{ targetObj.longTime }}</p>
+            <div class="expect-symbol">
+              <div
+                class="want"
+                :class="attention ? 'active' : ''"
+                @click="getexpect"
+              >
                 <a-icon type="heart" />
                 想看
-            </div>
-            <div class="want" @click="getToScore">
-               <a-icon type="star" />
+              </div>
+              <div class="want" @click="getToScore">
+                <a-icon type="star" />
                 评分
+              </div>
+            </div>
+          </div>
+          <div class="films-info">
+            <p>想看数</p>
+            <span class="fans">{{
+              targetObj.sum === null || targetObj.sum === 0
+                ? "暂无"
+                : targetObj.sum
+            }}</span>
+            <p>累计票房</p>
+            <span class="box-office">{{
+              targetObj.office > 10000
+                ? (targetObj.office / 10000).toFixed(2) + "亿"
+                : targetObj.office > 0
+                ? targetObj.office + "万"
+                : "暂无"
+            }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="main" v-if="targetObj">
+        <div class="main-left">
+          <p class="nav-title">故之电影 > 电影 >{{ targetObj.movieName }}</p>
+          <a-tabs default-active-key="1">
+            <a-tab-pane key="1" tab="介绍">
+              <introduce
+                :ReleaseIntroduceinfo="ReleaseIntroduceinfo"
+                :castmembers="castmembers"
+                :shortComments="shortComments"
+                :materials="materials"
+                :honorary="honorary"
+                :awards="awards"
+                :id="targetObj.id"
+                @reload="reload"
+              />
+            </a-tab-pane>
+            <a-tab-pane
+              key="2"
+              tab="奖项"
+              force-render
+              :disabled="awards.length <= 0"
+            >
+              <awards :awards="awards" />
+            </a-tab-pane>
+            <a-tab-pane key="3" tab="图集">
+              <atlas :atlasurls="atlasurls" />
+            </a-tab-pane>
+          </a-tabs>
+        </div>
+        <div class="main-right">
+          <div class="relevantFlims">
+            <h2>相关电影</h2>
+            <div class="relevantFlims-box">
+              <div
+                class="relevantFlims-item"
+                v-for="action in releaseRelates"
+                :key="action.id"
+                @click="filmsDetail(action)"
+              >
+                <img :src="action.img" alt="" />
+                <p>{{ action.movieName }}</p>
+                <p class="score">{{ Number(action.score) || "暂无" }}</p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="films-info">
-          <p>想看数</p>
-          <span class="fans">23542</span>
-          <p>累计票房</p>
-          <span class="box-office">231</span> 亿
-        </div>
-      </div>
-      </div>
-      <div class="main" v-if="targetObj">
-      <div class="main-left">
-        <p class="nav-title">故之电影 > 电影 >{{targetObj.moviename}}</p>
-          <a-tabs default-active-key="1">
-            <a-tab-pane key="1" tab="介绍">
-                <introduce :introduceInfo='targetObj.introduceInfo' :id='targetObj.key'/>
-            </a-tab-pane>
-            <a-tab-pane key="2" tab="奖项" force-render :disabled="targetObj.awards.length<=0">
-                <awards :awards='targetObj.awards'/>
-            </a-tab-pane>
-            <a-tab-pane key="3" tab="图集">
-                <atlas :atlasUrl='targetObj.atlasUrl'/>
-            </a-tab-pane>
-          </a-tabs>
-      </div>
-      <div class="main-right">
-        <div class="relevantFlims">
-            <h2>相关电影</h2>
-            <div class="relevantFlims-box">
-                <div class="relevantFlims-item">
-                    <img src="@/assets/image/films/即将上映/6.jpg" alt="">
-                    <p>绝望主夫</p>
-                    <p class="score">暂无</p>
-                </div>
-                <div class="relevantFlims-item">
-                    <img src="@/assets/image/films/即将上映/7.jpg" alt="">
-                    <p>龙马精神</p>
-                    <p class="score">暂无</p>
-                </div>
-                <div class="relevantFlims-item">
-                    <img src="@/assets/image/films/即将上映/9.jpg" alt="">
-                    <p>前任四:英年早婚</p>
-                    <p class="score">暂无</p>
-                </div>
-                 <div class="relevantFlims-item">
-                    <img src="@/assets/image/films/即将上映/17.jpg" alt="">
-                    <p>中国乒乓</p>
-                    <p class="score">暂无</p>
-                </div>
-                <div class="relevantFlims-item">
-                    <img src="@/assets/image/films/即将上映/19.jpg" alt="">
-                    <p>热爱</p>
-                    <p class="score">暂无</p>
-                </div>
-            </div>
-        </div>
-      </div>
       </div>
       <div class="maker-empot" v-else>
-      <span>抱歉，没有找到相关结果，请尝试用其他条件筛选。...</span>
+        <span>抱歉，没有找到相关结果，请尝试用其他条件筛选。...</span>
       </div>
     </div>
     <p class="maker-empot" v-else>
-       <a-spin tip="数据加载中..."/>
+      <a-spin tip="数据加载中..." />
     </p>
   </div>
 </template>
 
 <script>
-import introduce from './films-detail-tab/introduce.vue'
-import awards from './films-detail-tab/awards.vue'
-import atlas from './films-detail-tab/atlas.vue'
-import {mapState} from 'vuex'
+import introduce from "./films-detail-tab/introduce.vue";
+import awards from "./films-detail-tab/awards.vue";
+import atlas from "./films-detail-tab/atlas.vue";
+import { mapState } from "vuex";
 export default {
   name: "movie-detail",
-  components:{
+  components: {
     // eslint-disable-next-line vue/no-unused-components
     introduce,
     // eslint-disable-next-line vue/no-unused-components
@@ -108,49 +123,110 @@ export default {
   data() {
     return {
       targetObj: null,
-      loading:false,
-      attention:false, //判断是否想看
-      atlasUrl:[],
+      loading: false,
+      id:'',
+      attention: false, //判断是否想看
+      atlasurls: [], //图集
+      ReleaseIntroduceinfo: [], //个人介绍
+      awards: [], //获奖情况
+      honorary: [],
+      materials: [],
+      castmembers: [], //演员表
+      shortComments: [], //影评
+      releaseRelates: [],
       // awards:{title:'第16届亚洲电影大奖',content:'提名:最佳男主角/最佳男配角'}
     };
   },
   created() {
-    const { target,name } = this.$route.query;
-    if(name){
-      this.getTarget(JSON.parse(decodeURIComponent(name)))
+    const { id, name } = this.$route.query;
+    if (id) {
+      this.id = id
+      this.getById(id);
     }
-    if(target){
-      this.targetObj = JSON.parse(decodeURIComponent(target));
+    if (name) {
+      const newName = JSON.parse(decodeURIComponent(name));
+      this.getByName(newName);
     }
-    document.title = '电影--' + JSON.parse(decodeURIComponent(name))
   },
-  computed:{
-    ...mapState('user',['token','userInfo']),
+  computed: {
+    ...mapState("user", ["token", "userInfo"]),
+    fullAct() {
+      const act =
+        this.castmembers[1].name +
+        " / " +
+        this.castmembers[2].name +
+        " / " +
+        this.castmembers[3].name +
+        " / " +
+        this.castmembers[4].name;
+      return act;
+    },
   },
-  methods:{
-    getexpect(){
-      console.log(this.token);
-      console.log(this.userInfo);
-      if(!this.token) return
-      this.attention = !this.attention
-      // this.targetObj.want = this.attention ? '23543' : '23541'
+  methods: {
+    reload(id){
+     this.getById(id)
     },
-    async getTarget(name){
-      const {data:res} = await this.$req.getAllfilms()
-      const {data:res2} = await this.$req.getReleaseFilms()
-      this.targetObj = [...res,...res2].find(v=>v.moviename === name)
-      this.loading = true
+    filmsDetail(action) {
+      let url = this.$router.resolve({
+        path: "/movie/flims/detail",
+        query: {
+          id: action.id,
+        },
+      });
+      window.open(url.href, "_blank");
     },
-    getToScore(){
-      console.log(this.targetObj);
-    }
-  }
+    getexpect() {
+      if (!this.token) return;
+      this.attention = !this.attention;
+      const sum = this.attention
+        ? this.targetObj.sum + 1
+        : this.targetObj.sum - 1;
+      const params = {
+        id:this.id,
+        sum,
+      }
+      this.$req.updateSum(params).then(res=>{
+        if(res.status ===0){
+          this.getById(this.id)
+        }
+      })
+    },
+    async getTarget(res) {
+      this.targetObj = res.release;
+      this.atlasurls = res.atlasurls;
+      this.ReleaseIntroduceinfo = res.ReleaseIntroduceinfo;
+      this.awards = res.awards || [];
+      this.honorary = res.honorary || [];
+      this.materials = res.materials;
+      this.castmembers = res.castmembers;
+      this.shortComments = res.shortComments;
+      this.releaseRelates = res.releaseRelates;
+      this.loading = true;
+      document.title = "电影--" + this.targetObj.movieName;
+    },
+    async getById(id) {
+      const { data: res } = await this.$req.getFilmsDetailById(id);
+      this.getTarget(res);
+    },
+    async getByName(name) {
+      const { data: res } = await this.$req.getFilmsDetailByName(name);
+      if (res.length <= 0) {
+        this.loading = true;
+        this.targetObj = false;
+        return;
+      }
+      this.getById(res[0].id);
+    },
+    getToScore() {
+      this.$message.info("暂不支持...");
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-p{
-    margin-bottom: 0px;
+p {
+  margin-bottom: 0px;
 }
 .maker-container {
   width: 100%;
@@ -192,16 +268,24 @@ p{
         font-size: 18px;
         font-weight: 500;
       }
-      .expect-symbol{
+      .expect-symbol {
+        // border: 1px solid red;
+        position: absolute;
+        left: 0px;
+        bottom: 40px;
         display: flex;
         justify-content: space-between;
         margin-top: 40px;
-        .want{
-            background: #756189;
-            color: #fff;
-            padding: 7px 28px;
-            cursor: pointer;
-            user-select: none;
+        width: 250px;
+        .want {
+          background: #756189;
+          color: #fff;
+          padding: 7px 28px;
+          cursor: pointer;
+          user-select: none;
+          &:first-child {
+            margin-right: 10px;
+          }
         }
       }
     }
@@ -228,14 +312,14 @@ p{
     }
   }
 }
-.main{
+.main {
   width: 80%;
   min-width: 1200px;
   height: 100%;
   margin: 50px auto;
   display: flex;
   justify-content: space-between;
-  .main-left{
+  .main-left {
     width: 58%;
     min-width: 662px;
     // height: 1000px;
@@ -246,35 +330,35 @@ p{
       margin-bottom: 10px;
     }
   }
-  .main-right{
+  .main-right {
     width: 37%;
     height: 470px;
-    .relevantFlims-box{
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 20px;
-        .relevantFlims-item{
-            text-align: center;
-            margin:0px 30px 20px 0px;
-            img{
-                width: 106px;
-                height: 145px;
-            }
-            p{
-                width: 106px;
-                margin-top: 5px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                &:last-child{
-                    color: #ffc600;
-                }
-            }
+    .relevantFlims-box {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      .relevantFlims-item {
+        text-align: center;
+        margin: 0px 30px 20px 0px;
+        img {
+          width: 106px;
+          height: 145px;
         }
+        p {
+          width: 106px;
+          margin-top: 5px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          &:last-child {
+            color: #ffc600;
+          }
+        }
+      }
     }
   }
 }
-.maker-empot{
+.maker-empot {
   width: 50%;
   min-width: 1000px;
   height: 90px;
@@ -295,16 +379,16 @@ h2 {
     margin-right: 6px;
   }
 }
-.active{
+.active {
   background: #ef4238 !important;
 }
-::v-deep .ant-tabs-nav .ant-tabs-tab-active{
+::v-deep .ant-tabs-nav .ant-tabs-tab-active {
   color: #ef4238;
 }
-::v-deep .ant-tabs-nav .ant-tabs-tab:hover{
+::v-deep .ant-tabs-nav .ant-tabs-tab:hover {
   color: #ef4238;
 }
-::v-deep .ant-tabs-ink-bar{
+::v-deep .ant-tabs-ink-bar {
   background: #ef4238;
 }
 ::v-deep .ant-spin::selection {

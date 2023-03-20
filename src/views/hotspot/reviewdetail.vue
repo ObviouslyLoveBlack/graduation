@@ -191,7 +191,7 @@
                 地区：<span>{{ targetObj.location }}</span>
               </p>
               <p>
-                上映：<span>{{ targetObj.Shown }}</span>
+                上映：<span>{{ targetObj.shown }}</span>
               </p>
             </div>
           </div>
@@ -228,6 +228,7 @@ export default {
       arr: [],
       current: "",
       movieId: "",
+      typeReview:false //辨识新增影评还是热门影评
     };
   },
   mounted() {
@@ -244,6 +245,7 @@ export default {
   created() {
     const { popularId, newId } = this.$route.query;
     if (popularId) {
+      this.typeReview = true
       this.movieId = popularId;
       this.getRevieDetail(popularId);
     }
@@ -303,9 +305,11 @@ export default {
         dateTime: this.moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
         movieId: this.movieId,
       };
+      console.log(params);
       this.$req.saveNewReview(params).then((res) => {
         if (res.status === 0) {
-          this.getRevieDetail(this.movieId);
+          this.typeReview ? this.getRevieDetail(this.movieId)
+                          :this.getNewRevieDetail(this.movieId)
         }
       });
       this.textareaValue = "";
@@ -338,7 +342,8 @@ export default {
       };
       this.$req.saveNewReview(params).then((res) => {
         if (res.status === 0) {
-          this.getRevieDetail(this.movieId);
+           this.typeReview ? this.getRevieDetail(this.movieId)
+                          :this.getNewRevieDetail(this.movieId)
         }
       });
       this.finallyWord = "";

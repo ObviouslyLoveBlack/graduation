@@ -8,7 +8,7 @@
         </p>
       </div>
       <div class="main-wrapper">
-        <div class="item" v-for="action in topList" :key="action.id">
+        <div class="item" v-for="action in topList" :key="action.id" @click="filmsDetail(action)">
           <img :src="action.img" alt="" />
           <div class="introduce-wrapper">
             <div class="introduce">
@@ -54,6 +54,15 @@ export default {
     this.getTop()
   },
   methods: {
+      filmsDetail(action) {
+      let url = this.$router.resolve({
+        path: "/movie/flims/detail",
+        query: {
+          id: action.id,
+        },
+      });
+      window.open(url.href, "_blank");
+    },
     getnowDate() {
       const time = new Date();
       this.hour = time.getHours();

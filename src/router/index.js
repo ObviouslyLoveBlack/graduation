@@ -17,7 +17,7 @@ const router = new VueRouter({
           component: () => import("@/views/home"),
           meta:{
             title:'首页'
-          }
+          },
         },
         {
           path: "/films",
@@ -94,7 +94,7 @@ const router = new VueRouter({
         {
           path: "/cinema",
           name: "g-cniema",
-          redirect:'/cinema/aggregate',
+          redirect:'/cinema/office',
           component: () => import("@/views/cinema"),
           meta:{  
            isFooter:true
@@ -171,6 +171,14 @@ const router = new VueRouter({
       path: "/account",
       name: "account",
       component: () => import("@/views/home/account.vue"),
+    },
+    {
+        path:'/home/swiper',
+        name:"swiper",
+        component:()=>import("@/views/home/home-sub/classicSwiper.vue"),
+        meta:{
+          title:'电影--电视剧'
+        }
     },
   ],
 });

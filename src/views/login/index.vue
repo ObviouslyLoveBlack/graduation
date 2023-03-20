@@ -157,7 +157,6 @@ export default {
       });
     },
     successLogin(res){
-      console.log(res);
       const { avatar, username,birthday,phone,address,id } = res.data[0];
         const obj = {
           avatar:avatar ? avatar : 'http://localhost:8080/avatar/10.jpg',
@@ -168,7 +167,6 @@ export default {
           birthday,
           id
         };
-        console.log(obj);
         this.$router.go(-1)
         this.setUserInfo(obj);
         this.handleCancel()

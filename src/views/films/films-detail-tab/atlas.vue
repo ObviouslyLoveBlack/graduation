@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="atlas-box">
-      <div class="atlas-item" v-for="(action,index) in atlasUrl" :key="index">
+      <div class="atlas-item" v-for="(action,index) in atlasurls" :key="index">
         <img :src="action.img" alt="">
       </div>
     </div>
@@ -11,7 +11,7 @@
 <script>
 export default {
   name:'atlas-1',
-  props:['atlasUrl'],
+  props:['atlasurls'],
   created(){
   }
 }
@@ -22,7 +22,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   .atlas-item{
-    margin:0px 16px 20px 0px;
+    margin:0px 14px 20px 0px;
     img{
       width: 104px;
       height: 104px;
