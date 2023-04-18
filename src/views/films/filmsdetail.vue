@@ -11,7 +11,7 @@
             <p class="info-name1">{{ targetObj.otherName }}</p>
             <br />
             <p>导演: {{ castmembers[0].name }}</p>
-            <p>主演: {{ fullAct }}</p>
+            <p class="act">主演: {{ fullAct }}</p>
             <br />
             <p>类型: {{ targetObj.otherType }}</p>
             <p>{{ targetObj.longTime }}</p>
@@ -102,6 +102,15 @@
     <p class="maker-empot" v-else>
       <a-spin tip="数据加载中..." />
     </p>
+    <a-modal :visible="visible" :footer="false" :closable="false">
+      <p class="title">点亮星星-献上你的评分</p>
+      <a-rate v-model="score" @hoverChange="changeScore" allow-half style="margin-bottom: 20px" />
+      <span style="margin-left:20px;color:#FFC600">{{scoreDesci}}</span>
+      <a-form-model-item :wrapper-col="{ span: 14, offset: 8 }">
+        <a-button class="bnt" @click="handleCancel">取消</a-button>
+        <a-button class="bnt" @click="handleOk">提交</a-button>
+      </a-form-model-item>
+    </a-modal>
   </div>
 </template>
 
@@ -124,7 +133,10 @@ export default {
     return {
       targetObj: null,
       loading: false,
-      id:'',
+      visible: false,
+      id: "",
+      score: 0,
+      scoreDesci:'',
       attention: false, //判断是否想看
       atlasurls: [], //图集
       ReleaseIntroduceinfo: [], //个人介绍
@@ -140,7 +152,7 @@ export default {
   created() {
     const { id, name } = this.$route.query;
     if (id) {
-      this.id = id
+      this.id = id;
       this.getById(id);
     }
     if (name) {
@@ -163,8 +175,8 @@ export default {
     },
   },
   methods: {
-    reload(id){
-     this.getById(id)
+    reload(id) {
+      this.getById(id);
     },
     filmsDetail(action) {
       let url = this.$router.resolve({
@@ -182,14 +194,14 @@ export default {
         ? this.targetObj.sum + 1
         : this.targetObj.sum - 1;
       const params = {
-        id:this.id,
+        id: this.id,
         sum,
-      }
-      this.$req.updateSum(params).then(res=>{
-        if(res.status ===0){
-          this.getById(this.id)
+      };
+      this.$req.updateSum(params).then((res) => {
+        if (res.status === 0) {
+          this.getById(this.id);
         }
-      })
+      });
     },
     async getTarget(res) {
       this.targetObj = res.release;
@@ -218,15 +230,75 @@ export default {
       this.getById(res[0].id);
     },
     getToScore() {
-      this.$message.info("暂不支持...");
+      if (!this.token) return;
+      this.visible = true;
     },
+    handleCancel() {
+      this.visible = false;
+      this.score = 0;
+    },
+    handleOk() {
+      const params = {
+        id: this.id,
+        score: this.score * 2,
+      };
+      this.$req.updateSum(params).then((res) => {
+        if (res.status === 0) {
+          this.$message.success('评分成功')
+          this.getById(this.id);
+          this.handleCancel()
+        }
+      });
+    },
+    changeScore(value){
+      if(!value || value < 0.5) {
+        this.scoreDesci = ''
+        return
+      }
+      const map = new Map([
+        [1,'超级烂',],
+        [2,'超级烂'],
+        [3,'比较差'],
+        [4,'比较差'],
+        [5,'一般般'],
+        [6,'一般般'],
+        [7,'比较好'],
+        [8,'比较好'],
+        [9,'棒极了'],
+        [10,'完美']
+      ])
+       const title = map.get(value * 2)
+       this.scoreDesci = value * 2 + ' 分' + title
+    }
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.bnt {
+  margin-right: 15px;
+  &:hover {
+    border: 1px solid #333;
+    color: #666;
+  }
+  &:last-child {
+    &:hover {
+      background: #ef4238;
+      color: white !important;
+      border: 1px solid #ef4238;
+    }
+    &:focus {
+      color: #666;
+      border: 1px solid #d9d9d9;
+    }
+  }
+}
 p {
   margin-bottom: 0px;
+}
+.act {
+  width: 300px;
+  // border: 1px solid red;
 }
 .maker-container {
   width: 100%;

@@ -70,13 +70,12 @@ export default {
   },
   methods: {
     filmsDetail(action) {
-        let url = this.$router.resolve({
-          path: "/movie/flims/detail",
-          query: {
-            id: action.id,
-          },
-        });
-        window.open(url.href, "_blank");
+        this.$router.push({
+        path: "/movie/flims/detail",
+        query: {
+          id: action.id,
+        },
+      });
     },
     getHotPlay() {
       const params = {

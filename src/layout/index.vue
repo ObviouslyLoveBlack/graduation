@@ -41,14 +41,9 @@ export default {
 //   display: flex;
 //   margin-bottom: 40px;
 // }
-// .home-main {
-//   width: 80%;
-//   min-width: 1200px;
-//   // height: 3630px;
-//   margin: 0 auto;
-//   display: flex;
-//   justify-content: space-between;
-// }
+.home-main {
+  margin-top: 70px;
+}
 // .home-footer {
 //   width: 100%;
 //   background: #000;

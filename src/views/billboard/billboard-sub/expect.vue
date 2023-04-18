@@ -2,7 +2,7 @@
   <div class="board-main">
     <div class="main-header" v-if="show">
       <div class="middle">
-        <p>2022-12-29<span v-if="hour > 10">已更新</span></p>
+        <p>{{nowDate}}<span v-if="hour > 10">已更新</span></p>
         <p>
           榜单规则：将昨日国内待映影片，按照之前30天的想看数总量从高到低排列取前50名，每天上午10点更新。相关数据来源于“故之电影库”。
         </p>

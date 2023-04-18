@@ -141,7 +141,9 @@ export default {
       this.$req.Login(this.form.phone).then((res) => {
        if(res.data.length<=0){
         const target={
-          phone:this.form.phone
+          phone:this.form.phone,
+          username:'DZ' + (+new Date()),
+          avatar:'http://localhost:8080/avatar/10.jpg',
         }
         this.$req.register(target).then(res=>{
           if(res.status == 0){

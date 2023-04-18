@@ -10,6 +10,8 @@ const boardApi = {
     getexpect:'/boardExpect/getPage',//获取最受期待
 
     getTop:'/boardTop/getPage',//获取top100
+
+    uploadFile:'file/uploadFile' //上传文件
 }
 
 export function getTop(params){
@@ -64,3 +66,14 @@ export function getboardType(params){
          }
      })
  }
+
+export function uploadFile(params){
+    return request({
+        url:boardApi.uploadFile,
+        method:'post',
+        data:params,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+}

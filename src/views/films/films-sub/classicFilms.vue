@@ -97,15 +97,15 @@ export default {
       this.pagination = false;
       this.loading = false;
       const params = {
-        pageSize: 10,
-        pageNum: 1,
+        size: 10,
+        current: 1,
         filmsType: "classics",
         otherType: this.type,
         location: this.location,
         year: this.year,
       };
       const { data: res } = await this.$req.getAllfilms(params);
-      this.allFilmsList = res.films;
+      this.allFilmsList = res.films.records;
       if (this.allFilmsList.length <= 0) {
         this.loading = true;
       }
@@ -140,13 +140,12 @@ export default {
       this.hoverObj = null;
     },
     filmsDetail(action) {
-      let url = this.$router.resolve({
+      this.$router.push({
         path: "/movie/flims/detail",
         query: {
           id: action.id,
         },
       });
-      window.open(url.href, "_blank");
     },
   },
 };

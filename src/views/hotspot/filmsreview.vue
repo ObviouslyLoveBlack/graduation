@@ -5,7 +5,7 @@
         <img :src="action.img" alt="" />
         <a-comment>
           <template slot="actions">
-            <span key="comment-basic-like">
+            <!-- <span key="comment-basic-like">
               <a-tooltip title="赞成">
                 <a-icon
                   type="like"
@@ -28,14 +28,21 @@
               <span style="padding-left: '8px'; cursor: 'auto'">
                 {{ action.dislike }}
               </span>
+            </span> -->
+            <span
+              @click="viewDetail(action)"
+              class="edit-reply"
+              key="comment-basic-reply-to"
+            >
+              评论
+              <a-icon type="edit" />
             </span>
-            <span key="comment-basic-reply-to">评论</span>
           </template>
           <a slot="author" class="author">
             <div class="author-img">
               <img :src="action.avatar" alt="" />
             </div>
-            <span>{{ action.author }}</span>
+            <span @click="getUserDetail(action)">{{ action.author }}</span>
             <a-tooltip slot="star-score" :title="action.score">
               <a-rate
                 :default-value="action.score"
@@ -50,19 +57,19 @@
           </p>
           <p
             slot="content"
-            :class="full && action.key == key ? 'full-text' : 'content'"
+            :class="full && action.id == key ? 'full-text' : 'content'"
             v-html="
-              full && action.key === key ? action.content : action.content1
+              full && action.id === key ? action.content : action.content1
             "
           ></p>
           <span
-            v-if="!full || action.key !== key"
+            v-if="!full || action.id !== key"
             class="detail-content"
-            @click="fullText(action.key)"
+            @click="fullText(action.id, $event)"
             >(全文展开)</span
           >
           <span
-            v-if="full && action.key === key"
+            v-if="full && action.id === key"
             class="detail-content"
             @click="Stow"
             >(收起)</span
@@ -108,12 +115,21 @@ export default {
       key: "",
       total: 30,
       current: 1,
+      seat: {},
     };
   },
   created() {
     this.getmostPopular(1);
   },
   methods: {
+     getUserDetail(action,author){
+      this.$router.push({
+        path:'/account',
+        query:{
+          name:action.author || author
+        }
+      })
+    },
     getmostPopular(page) {
       const params = {
         pageNum: page,
@@ -132,11 +148,29 @@ export default {
       action.dislike += 1;
       this.action = "disliked";
     },
-    fullText(key) {
+    fullText(key, e) {
+      this.seat = {
+        X: e.pageX,
+        y: this.heightToTop(e.target),
+      };
       this.key = key;
       this.full = true;
     },
+    heightToTop(ele) {
+      //ele为指定跳转到该位置的DOM节点
+      let root = document.body;
+      let height = 0;
+      do {
+        height += ele.offsetTop;
+        ele = ele.offsetParent;
+      } while (ele !== root);
+      return height;
+    },
     Stow() {
+      window.scrollTo({
+        top: this.seat.y - 300,
+        behavior: "smooth",
+      });
       this.full = false;
     },
     viewDetail(action) {
@@ -231,5 +265,11 @@ export default {
 .full-text {
   overflow: auto !important;
   cursor: default;
+}
+.edit-reply {
+  &:hover {
+    color: #fff;
+    background: #37a;
+  }
 }
 </style>

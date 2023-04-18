@@ -14,7 +14,7 @@
           <div
             class="item"
             v-for="item in allFilmsList"
-            :key="item.key"
+            :key="item.id"
             @mouseover="getHover(item)"
             @mouseleave="getleave()"
             @click="filmsDetail(item)"
@@ -79,15 +79,15 @@ export default {
     async getAllfilms() {
       this.loading = false;
       const params = {
-        // pageSize: 20,
-        // pageNum: 1,
+        size: 20,
+        current: 1,
         filmsType: "process",
         otherType:this.type,
         location:this.location,
         year:this.year
       };
       const { data: res } = await this.$req.getAllfilms(params);
-      this.allFilmsList = res.films;
+      this.allFilmsList = res.films.records;
       if(this.allFilmsList.length<=0) {
         this.loading = true
       }
@@ -121,13 +121,12 @@ export default {
       this.hoverObj = null;
     },
     filmsDetail(action) {
-      let url = this.$router.resolve({
+      this.$router.push({
         path: "/movie/flims/detail",
         query: {
           id: action.id,
         },
       });
-      window.open(url.href, "_blank");
     },
   },
 };

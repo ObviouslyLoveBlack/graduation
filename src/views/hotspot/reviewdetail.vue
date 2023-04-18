@@ -25,7 +25,7 @@
             <p class="title">{{ targetObj.title }}</p>
             <div class="author-info">
               <img :src="`${targetObj.avatar}`" alt="" />
-              <p>{{ targetObj.author }}</p>
+              <p @click="getUserDetail({},targetObj.author)">{{ targetObj.author }}</p>
               <span>评论</span>
               <span class="movicname">{{ targetObj.movieName }}</span>
               <a-rate
@@ -71,6 +71,7 @@
                 :key="action.id"
                 @mouseenter="touchComment(action.id)"
                 @mouseleave="touchLeave()"
+                @click="getUserDetail(action)"
               >
                 <a slot="author" class="review-author">
                   <span>{{ action.author }}</span>
@@ -208,6 +209,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import moment from "moment";
 export default {
   name: "review-detail",
@@ -224,7 +226,7 @@ export default {
       submitting: false, //判断回应发表
       textareaValue: "",
       finallyWord: "",
-      token: null,
+      // token: null,
       arr: [],
       current: "",
       movieId: "",
@@ -232,8 +234,6 @@ export default {
     };
   },
   mounted() {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
-    this.token = userInfo.token;
   },
   computed: {
     count: {
@@ -241,6 +241,7 @@ export default {
         return this.arr[0].num + this.arr[1].num;
       },
     },
+    ...mapState('user',['token']),
   },
   created() {
     const { popularId, newId } = this.$route.query;
@@ -255,6 +256,14 @@ export default {
     }
   },
   methods: {
+    getUserDetail(action,author){
+      this.$router.push({
+        path:'/account',
+        query:{
+          name:action.author || author
+        }
+      })
+    },
     async getRevieDetail(id) {
       const res = await this.$req.getReviewById(id);
       this.targetObj = res.data.data;
@@ -358,7 +367,7 @@ export default {
           path: "/login",
         });
       }
-      this.token = "fndgfdj9fndjgf9d9gfmd";
+      // this.token = "fndgfdj9fndjgf9d9gfmd";
     },
   },
 };

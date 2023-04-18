@@ -15,8 +15,11 @@
               :customRequest="(file) => customRequest(file)"
               list-type="picture-card"
               :file-list="fileList"
+              :multiple="true"
               @preview="handlePreview"
               @change="handleChange"
+              :action="url"
+              :headers="headers"
             >
               <div v-if="fileList.length < 8">
                 <a-icon type="plus" />
@@ -25,26 +28,44 @@
             </a-upload>
           </a-form-model-item>
           <a-form-model-item label="昵称">
+            <a-input v-model="form.username" placeholder="请输入昵称"></a-input>
+          </a-form-model-item>
+          <a-form-model-item label="个性签名">
             <a-input
-              v-model="form.username"
-              placeholder="请输入昵称"
+              v-model="form.signature"
+              placeholder="写点什么做一个独特的自己"
             ></a-input>
           </a-form-model-item>
-          <a-form-model-item label="密码">
-            <p class="password">修改密码</p>
-          </a-form-model-item>
-          <a-form-model-item label="家乡">
-            <a-cascader
-              :options="options"
-              placeholder="设置家乡"
-              v-model="form.hometown"
+          <a-form-model-item label="个人介绍">
+            <a-textarea
+              v-model="form.introduction"
+              placeholder="写点什么让别人对你印象深刻吧"
+              :auto-size="{ minRows: 3, maxRows: 5 }"
             />
           </a-form-model-item>
+          <a-form-model-item label="家乡">
+            <a-input v-model="form.address" placeholder="请输入"></a-input>
+          </a-form-model-item>
           <a-form-model-item label="生日">
-            <a-date-picker v-model="timeRange" valueFormat="YYYY-MM-DD" placeholder="设置生日"/>
+            <a-date-picker
+              v-model="form.birthday"
+              valueFormat="YYYY-MM-DD"
+              placeholder="设置生日"
+            />
           </a-form-model-item>
           <a-form-model-item label="手机号">
-            <p>{{form.phone}} <span @click="bind">换绑</span></p>
+            <p>
+              {{ form.phone }}
+              <span @click="phoneBind">{{
+                !phoneVisible ? "换绑" : "取消"
+              }}</span>
+            </p>
+            <a-input
+              v-if="phoneVisible"
+              v-model="form.newPhone"
+              style="width: 50%"
+              placeholder="请输入手机号码"
+            ></a-input>
           </a-form-model-item>
           <a-form-model-item label="第三方">
             <a-icon type="wechat" class="ThreeIcon" />
@@ -54,7 +75,9 @@
           </a-form-model-item>
           <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
             <a-button @click="goback">取消</a-button>
-            <a-button @click="onSumbit" style="margin-left: 20px" type="primary">确定</a-button>
+            <a-button @click="onSumbit" style="margin-left: 20px" type="primary"
+              >确定</a-button
+            >
           </a-form-model-item>
         </a-form-model>
       </div>
@@ -68,7 +91,8 @@
         </div>
         <div class="detail-info">
           <p>
-          <span style="color:#37a">个性化域名:</span>将用作个人主页网址的一部分，最多15个数字或字母，字母开头，一经设定则不可更改。
+            <span style="color: #37a">个性化域名:</span
+            >将用作个人主页网址的一部分，最多15个数字或字母，字母开头，一经设定则不可更改。
             如果现在你不是非常确定，可以先留空，以后再说。
           </p>
         </div>
@@ -89,64 +113,113 @@ function getBase64(file) {
     reader.onerror = (error) => reject(error);
   });
 }
-import {mapMutations} from 'vuex'
+import { mapMutations } from "vuex";
+import { validetePhone } from "../../utils/validate";
 export default {
   name: "Account-a",
   data() {
     return {
       userInfo: {},
+      phoneVisible: false,
       labelCol: { span: 4 },
       wrapperCol: { span: 13 },
       timeRange: undefined,
       form: {
         username: "",
-        hometown: null,
-        phone:null,
+        address: null,
+        phone: null,
+        newPhone: null,
+        birthday: "",
+        signature: "",
+        introduction: "",
+        avatar: "",
       },
-      options: [
-        {
-          value: "浙江",
-          label: "浙江",
-          children: [
-            { value: "杭州", label: "杭州" },
-            { value: "嘉兴", label: "嘉兴" },
-            { value: "温州", label: "温州" },
-          ],
-        },
-        {
-          value: "江西",
-          label: "江西",
-          children: [
-            { value: "赣州", label: "赣州" },
-            { value: "南昌", label: "南昌" },
-            { value: "萍乡", label: "萍乡" },
-          ],
-        },
-      ],
       previewImage: "",
       fileList: [],
+      url: "http://localhost:8080/file/uploadFile",
       previewVisible: false,
+      headers: {
+        authorization: "multipart/form-data",
+      },
     };
   },
   mounted() {
+    const { name } = this.$route.query;
+    if (name) {
+      this.getUserByName(name);
+      return
+    }
     this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.form = this.userInfo;
-    this.timeRange = this.userInfo.birsday
-    document.title = this.userInfo.username + "的账号";
+    this.getUserById(this.userInfo);
+    document.title =  this.userInfo.username + "的账号";
   },
   created() {},
-  computed:{
+  computed: {
     // ...mapState('user',['userInfo'])
   },
   methods: {
-    ...mapMutations('user',['updateUserInfo']),
-    onSumbit(){
-      const info = {
-        ...this.form,
-        time:this.timeRange
+    ...mapMutations("user", ["updateUserInfo"]),
+    getUserByName(name) {
+      this.$req.getUserByName(name).then((res) => {
+        this.form = res.data[0];
+        this.setFileList(this.form.avatar);
+        document.title =  res.data[0].username + "的账号";
+      });
+    },
+    getUserById(info) {
+      this.$req.getUserById(info.id).then((res) => {
+        this.form = res.data;
+        this.setFileList(this.form.avatar);
+      });
+    },
+    setFileList(data) {
+      const file = data.split("/");
+      this.fileList[0] = {
+        uid: data[3],
+        name: file[file.length - 1],
+        status: "done",
+        url: data,
+      };
+    },
+    onSumbit() {
+      if (this.phoneVisible && !validetePhone(this.form.newPhone)) {
+        this.$message.error("请填写正确手机号码");
+        return;
       }
-     this.updateUserInfo(info)
-     this.$message.success('修改成功')
+      const {
+        address,
+        avatar,
+        birthday,
+        id,
+        phone,
+        newPhone,
+        username,
+        signature,
+        introduction,
+      } = this.form;
+      const params = {
+        address,
+        avatar,
+        birthday,
+        id,
+        username,
+        introduction,
+        signature,
+        phone: newPhone ? newPhone : phone,
+      };
+      this.$req.updateUser(params).then((res) => {
+        if (res.data) {
+          this.updateUserInfo(this.form);
+          this.$message.success("修改成功");
+          this.form.phone = newPhone ? newPhone : phone;
+        }
+        this.getUserById(this.userInfo);
+        this.phoneVisible = false;
+        this.form.newPhone = null;
+      });
+    },
+    phoneBind() {
+      this.phoneVisible = !this.phoneVisible;
     },
     bind() {
       this.$message.info("暂未开发...");
@@ -161,7 +234,6 @@ export default {
     handleChange({ fileList, file }) {
       this.fileList = fileList;
       console.log(file);
-      console.log(this.fileList);
     },
     handleCancel() {
       this.previewVisible = false;
@@ -174,12 +246,25 @@ export default {
       const { file, onSuccess } = options;
       const formData = new FormData();
       formData.append("file", file);
+      this.$req.uploadFile(formData).then((res) => {
+        if (res.status === 0) {
+          // 调用组件内方法, 设置为成功状态
+          onSuccess();
+          options.status = "done";
+          this.form.avatar = res.data;
+          this.$message.success({ content: "上传成功" });
+        } else {
+          // onError()
+          options.status = "error";
+          this.$message.error({ content: "上传失败" });
+        }
+      });
       onSuccess("done", file);
       options.statue = "done";
     },
-    goback(){
-      this.$router.go(-1)
-    }
+    goback() {
+      this.$router.go(-1);
+    },
   },
 };
 </script>
@@ -263,7 +348,7 @@ p {
         right: 0px;
         cursor: default;
       }
-      .detail-info{
+      .detail-info {
         width: 30%;
       }
     }

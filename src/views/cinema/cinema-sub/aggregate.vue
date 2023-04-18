@@ -121,6 +121,7 @@ export default {
     width: 95%;
     margin: 20px auto;
     min-width: 1200px;
+    height: calc(100vh - 82px);
     display: flex;
     justify-content: space-between;
     .aggregate-table {
@@ -344,7 +345,7 @@ export default {
           }
         }
         &:last-child {
-          margin-top: 20px;
+          margin-top: 30px;
           p {
             margin-top: 20px;
           }

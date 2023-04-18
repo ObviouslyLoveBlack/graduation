@@ -47,7 +47,7 @@ export default {
   width: 80%;
   min-width: 1200px;
   margin: 0 auto;
-  margin-top: 40px;
+  margin-top: 100px;
   .header-top{
     text-align: left;
     font-size: 20px;

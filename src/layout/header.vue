@@ -29,7 +29,7 @@
         <div class="login-logo" @mouseover="type = true" @mouseleave="type = false">
           <div class="logo">
             <img :src="userInfo.avatar" alt="">
-            <div class="userInfo" v-if="!userInfo.token">
+            <div class="userInfo" v-if="!token">
               <ul>
                 <li @click="gologin"><a href="javascript:;">登录</a></li>
               </ul>
@@ -155,7 +155,10 @@ export default {
   min-width: 1200px;
   border: 1px solid #efefef;
   display: flex;
-  // margin-bottom: 40px;
+  position: fixed;
+  z-index: 999;
+  top: 0px;
+  background: white;
   .home-header-logo {
     width: 25%;
     height: 70px;

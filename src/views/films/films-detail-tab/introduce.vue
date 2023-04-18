@@ -28,7 +28,7 @@
           v-for="(action, index) in shortComments"
           :key="index"
         >
-          <img :src="action.img" alt="" />
+          <img @click="getUserDetail(action)" :src="action.img" alt="" />
           <div class="short-comments-info">
             <p>{{ action.author }}</p>
             <a-tooltip slot="datetime" :title="action.dateTime">
@@ -36,7 +36,7 @@
                 moment(action.dateTime).fromNow()
               }}</span>
               <a-rate
-                :default-value="action.score"
+                :default-value="Number(action.score)"
                 allow-half
                 disabled
                 style="font-size: 14px; margin-left: 5px"
@@ -138,17 +138,28 @@ export default {
     ...mapState("user", ["token", "userInfo"]),
   },
   methods: {
-    makerDetail(action) {
+    getUserDetail(action, author) {
       this.$router.push({
-        path: "/movie/maker",
+        path: "/account",
         query: {
-          name: encodeURIComponent(JSON.stringify(action.name)),
+          name: action.author || author,
         },
       });
+    },
+    makerDetail(action) {
+      // this.$router.push({
+      //   path: "/movie/maker",
+      //   query: {
+      //     name: encodeURIComponent(JSON.stringify(action.name)),
+      //   },
+      // });
+      console.log(action);
+      this.$message.info("暂无");
     },
     goToShortC() {
       if (!this.token) {
         this.$router.push("/login");
+        return;
       }
       this.visible = true;
     },
@@ -197,9 +208,9 @@ export default {
         likes: action.likes,
       };
       console.log(params);
-      this.$req.updateLikes(params).then(res=>{
+      this.$req.updateLikes(params).then((res) => {
         console.log(res);
-      })
+      });
     },
   },
 };

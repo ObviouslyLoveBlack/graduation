@@ -115,7 +115,7 @@
           <div class="right-earn">今日收益</div>
           <div class="right-data">
             <p>{{ realData }}<span>万</span></p>
-            <p>查看更多<span>></span></p>
+            <p @click="moreData">查看更多<span>></span></p>
           </div>
           <div class="box-office-data">
             <span>北京时间：{{ nowDate }}</span>
@@ -175,7 +175,7 @@
         </div>
         <div class="main-right-icon4">
           <div class="icon4-header">
-            <span>TOP 100</span>
+            <span>TOP 50</span>
             <span @click="getcomplete('tophundred')">查看完整榜单 ></span>
           </div>
           <div class="icon4-image" @click="filmsDetail(TophundredInfo[0])">
@@ -201,7 +201,7 @@
             </ul>
           </div>
         </div>
-        <div class="main-right-icon5" v-if="moviemakerInfo.length > 0">
+        <!-- <div class="main-right-icon5" v-if="moviemakerInfo.length > 0">
           <div class="icon5-header">
             <span>热门影人</span>
           </div>
@@ -224,7 +224,7 @@
               </li>
             </ul>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <p class="maker-empot" v-else>
@@ -405,24 +405,30 @@ export default {
       });
     },
     filmsDetail(action) {
-      let url = this.$router.resolve({
+      this.$router.push({
         path: "/movie/flims/detail",
         query: {
           id: action.id,
         },
       });
-      window.open(url.href, "_blank");
+      // window.open(url.href, "_blank");
     },
+    moreData(){
+       this.$router.push({
+        path: "/cinema/office",
+      });
+    }
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .home-main {
+  // border: 1px solid red;
   width: 80%;
   min-width: 1200px;
   height: 3180px;
-  margin: 40px auto;
+  margin: 100px auto;
   display: flex;
   justify-content: space-between;
   .home-main-left {

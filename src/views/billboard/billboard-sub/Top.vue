@@ -2,9 +2,9 @@
   <div class="board-main">
     <div class="main-header" v-if="topList.length">
       <div class="middle">
-        <p>2022-12-29<span v-if="hour > 10">已更新</span></p>
+        <p>{{nowDate}}<span v-if="hour > 10">已更新</span></p>
         <p>
-          榜单规则：将猫眼电影库中的经典影片，按照评分和评分人数从高到低综合排序取前100名，每天上午10点更新。相关数据来源于“故之电影库”。
+          榜单规则：将猫眼电影库中的经典影片，按照评分和评分人数从高到低综合排序取前50名，每天上午10点更新。相关数据来源于“故之电影库”。
         </p>
       </div>
       <div class="main-wrapper">

@@ -19,13 +19,7 @@ export default {
             state.userInfo = {}
         },
         updateUserInfo(state,info){
-            const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-            state.userInfo = {
-                ...userInfo,
-                username:info.username,
-                hometown:info.hometown,
-                birsday:info.time
-            }
+            state.userInfo = info
             localStorage.setItem('userInfo',JSON.stringify(state.userInfo))
         }
     },

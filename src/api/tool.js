@@ -7,8 +7,20 @@ const toolApi={
     register:'/user/savePhone',
     verification:'/user/getRandomNum', //获取验证码
     getmakerById:'/makers/getById',
-    makerAwardById:'awardNominate/getById' //获奖详情
+    makerAwardById:'awardNominate/getById', //获奖详情
+    updateUser:'/user/update/user'
 
+}
+
+export function updateUser(params){
+  return request({
+     url:toolApi.updateUser,
+     method:'put',
+     data:params,
+     headers:{
+      'Content-Type':'application/json;charset=UTF-8'
+     }
+   })
 }
 
 export function makerAwardById(id){

@@ -123,12 +123,6 @@ export default {
         },
       ],
       tabledData: [], //表格--图表数据
-      // form:{
-      //   commontTable1: [], //普通时间段
-      //   commontTable2: [], //黄金时间段
-      //   commontTable3: [], //普通-座位
-      //   commontTable4: [], //黄金-座位
-      // },
       commontTable: [],
       commontSeatTable: [],
       periodTable: [],

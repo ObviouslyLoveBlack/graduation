@@ -86,7 +86,7 @@ const router = new VueRouter({
               name:"tophundred",
               component:()=>import("@/views/billboard/billboard-sub/Top.vue"),
               meta:{
-                title:'榜单--TOP100榜'
+                title:'榜单--TOP50榜'
               }
             },
           ]

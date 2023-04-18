@@ -132,13 +132,19 @@ export default {
       });
     },
     getFilmsDeatil(action) {
-       let url = this.$router.resolve({
-          path: "/movie/flims/detail",
-          query: {
-            id: action.id,
-          },
-        });
-        window.open(url.href, "_blank");
+      //  let url = this.$router.resolve({
+      //     path: "/movie/flims/detail",
+      //     query: {
+      //       id: action.id,
+      //     },
+      //   });
+      //   window.open(url.href, "_blank");
+       this.$router.push({
+        path: "/movie/flims/detail",
+        query: {
+          id: action.id,
+        },
+      });
     },
   },
 };

@@ -11,7 +11,28 @@ const homeApi={
     getprofit:'/getprofit',
     getmostexpect:'/mostExpect/getmostexpect',
     getTophundred:'/tophundred/getTophundred',
-    getmoviemaker:'/homeMaker/getHomeMaker'
+    getmoviemaker:'/homeMaker/getHomeMaker',
+    getUserById:'/user/getById', //根据id查询用户
+    getUserByName:'/user/getByname' //根据name查询用户
+}
+export function getUserByName(name){
+  return request({
+     url:`${homeApi.getUserByName}/${name}`,
+     method:'get',
+     headers:{
+      'Content-Type':'application/x-www-form-urlencoded'
+     }
+   })
+}
+
+export function getUserById(id){
+  return request({
+     url:`${homeApi.getUserById}/${id}`,
+     method:'get',
+     headers:{
+      'Content-Type':'application/x-www-form-urlencoded'
+     }
+   })
 }
 
 export function getHotMovies(params){

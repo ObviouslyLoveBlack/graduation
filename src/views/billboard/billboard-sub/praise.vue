@@ -2,7 +2,7 @@
   <div class="board-main">
     <div class="main-header" v-if="PraiseList.length>0">
       <div class="middle">
-        <p>2022-12-29<span v-if="hour > 10">已更新</span></p>
+        <p>{{nowDate}}<span v-if="hour > 10">已更新</span></p>
         <p>
           榜单规则：将昨日国内热映的影片，按照评分从高到低排列取前10名，每天上午10点更新。相关数据来源于“猫眼专业版”及“故人电影库”。
         </p>
